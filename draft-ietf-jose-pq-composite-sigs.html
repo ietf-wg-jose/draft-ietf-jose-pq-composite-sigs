@@ -4,16 +4,22 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>TODO - Your title</title>
-<meta content="Your Name Here" name="author">
+<title>PQ/T Hybrid Composite Signatures for JOSE and COSE</title>
+<meta content="Lucas Prabel" name="author">
+<meta content="Sun Shuzhou" name="author">
+<meta content="John Gray" name="author">
+<meta content="Tirumaleswar Reddy" name="author">
 <meta content="
-       TODO Abstract 
+       This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for PQ/T hybrid composite signatures. The composite algorithms described combine ML-DSA as the post-quantum component and either ECDSA or EdDSA as the traditional component. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
-<meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
-<meta content="sparkling distributed ledger" name="keyword">
-<meta content="draft-todo-yourname-protocol-latest" name="ietf.draft">
+<meta content="JOSE" name="keyword">
+<meta content="COSE" name="keyword">
+<meta content="PQC" name="keyword">
+<meta content="ML-DSA" name="keyword">
+<meta content="Signature" name="keyword">
+<meta content="Hybrid" name="keyword">
+<meta content="draft-ietf-jose-pq-composite-sigs-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.31.0
     Python 3.12.12
@@ -1045,11 +1051,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TODO - Abbreviation</td>
+<td class="center">JOSE/COSE Composite Signatures</td>
 <td class="right">February 2026</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Here</td>
+<td class="left">Prabel, et al.</td>
 <td class="center">Expires 10 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1058,30 +1064,42 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">Javascript Object Signing and Encryption</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-todo-yourname-protocol-latest</dd>
+<dd class="internet-draft">draft-ietf-jose-pq-composite-sigs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2026-02-06" class="published">6 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
-<dd class="intended-status">Informational</dd>
+<dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
 <dd class="expires"><time datetime="2026-08-10">10 August 2026</time></dd>
-<dt class="label-authors">Author:</dt>
+<dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">Y. N. Here</div>
-<div class="org">Your Organization Here</div>
+      <div class="author-name">L. Prabel</div>
+<div class="org">Huawei</div>
+</div>
+<div class="author">
+      <div class="author-name">S. Sun</div>
+<div class="org">Huawei</div>
+</div>
+<div class="author">
+      <div class="author-name">J. Gray</div>
+<div class="org">Entrust</div>
+</div>
+<div class="author">
+      <div class="author-name">T. Reddy</div>
+<div class="org">Nokia</div>
 </div>
 </dd>
 </dl>
 </div>
-<h1 id="title">TODO - Your title</h1>
+<h1 id="title">PQ/T Hybrid Composite Signatures for JOSE and COSE</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for PQ/T hybrid composite signatures. The composite algorithms described combine ML-DSA as the post-quantum component and either ECDSA or EdDSA as the traditional component.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1089,14 +1107,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/">https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        The latest revision of this draft can be found at <span><a href="https://ietf-wg-jose.github.io/draft-ietf-jose-pq-composite-sigs/draft-ietf-jose-pq-composite-sigs.html">https://ietf-wg-jose.github.io/draft-ietf-jose-pq-composite-sigs/draft-ietf-jose-pq-composite-sigs.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-jose-pq-composite-sigs/">https://datatracker.ietf.org/doc/draft-ietf-jose-pq-composite-sigs/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+        Javascript Object Signing and Encryption Working Group mailing list (<span><a href="mailto:jose@ietf.org">mailto:jose@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/jose/">https://mailarchive.ietf.org/arch/browse/jose/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/jose/">https://www.ietf.org/mailman/listinfo/jose/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+        <span><a href="https://github.com/ietf-wg-jose/draft-ietf-jose-pq-composite-sigs">https://github.com/ietf-wg-jose/draft-ietf-jose-pq-composite-sigs</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1153,19 +1172,120 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-algorithm-key-pair-akp-type" class="internal xref">Algorithm Key Pair (AKP) Type</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-composite-signature-algorit" class="internal xref">Composite Signature Algorithm</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-composite-key-generation" class="internal xref">Composite Key Generation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-composite-sign" class="internal xref">Composite Sign</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-composite-verify" class="internal xref">Composite Verify</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-encoding-rules" class="internal xref">Encoding Rules</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-composite-signature-instant" class="internal xref">Composite Signature Instantiations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-jose-algorithms" class="internal xref">JOSE algorithms</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-cose-algorithms" class="internal xref">COSE algorithms</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-composite-labels-for-jose-a" class="internal xref">Composite Labels for JOSE and COSE</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-jose-algorithms-2" class="internal xref">JOSE Algorithms</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
+                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-ml-dsa-44-es256" class="internal xref">ML-DSA-44-ES256</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.2">
+                    <p id="section-toc.1-1.7.2.1.2.2.1"><a href="#section-7.1.2" class="auto internal xref">7.1.2</a>.  <a href="#name-ml-dsa-65-es256" class="internal xref">ML-DSA-65-ES256</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.3">
+                    <p id="section-toc.1-1.7.2.1.2.3.1"><a href="#section-7.1.3" class="auto internal xref">7.1.3</a>.  <a href="#name-ml-dsa-87-es384" class="internal xref">ML-DSA-87-ES384</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.4">
+                    <p id="section-toc.1-1.7.2.1.2.4.1"><a href="#section-7.1.4" class="auto internal xref">7.1.4</a>.  <a href="#name-ml-dsa-44-ed25519" class="internal xref">ML-DSA-44-Ed25519</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.5">
+                    <p id="section-toc.1-1.7.2.1.2.5.1"><a href="#section-7.1.5" class="auto internal xref">7.1.5</a>.  <a href="#name-ml-dsa-65-ed25519" class="internal xref">ML-DSA-65-Ed25519</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.6">
+                    <p id="section-toc.1-1.7.2.1.2.6.1"><a href="#section-7.1.6" class="auto internal xref">7.1.6</a>.  <a href="#name-ml-dsa-87-ed448" class="internal xref">ML-DSA-87-Ed448</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-cose-algorithms-2" class="internal xref">COSE Algorithms</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.1">
+                    <p id="section-toc.1-1.7.2.2.2.1.1"><a href="#section-7.2.1" class="auto internal xref">7.2.1</a>.  <a href="#name-ml-dsa-44-es256-2" class="internal xref">ML-DSA-44-ES256</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.2">
+                    <p id="section-toc.1-1.7.2.2.2.2.1"><a href="#section-7.2.2" class="auto internal xref">7.2.2</a>.  <a href="#name-ml-dsa-65-es256-2" class="internal xref">ML-DSA-65-ES256</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.3">
+                    <p id="section-toc.1-1.7.2.2.2.3.1"><a href="#section-7.2.3" class="auto internal xref">7.2.3</a>.  <a href="#name-ml-dsa-87-es384-2" class="internal xref">ML-DSA-87-ES384</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.4">
+                    <p id="section-toc.1-1.7.2.2.2.4.1"><a href="#section-7.2.4" class="auto internal xref">7.2.4</a>.  <a href="#name-ml-dsa-44-ed25519-2" class="internal xref">ML-DSA-44-Ed25519</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.5">
+                    <p id="section-toc.1-1.7.2.2.2.5.1"><a href="#section-7.2.5" class="auto internal xref">7.2.5</a>.  <a href="#name-ml-dsa-65-ed25519-2" class="internal xref">ML-DSA-65-Ed25519</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.6">
+                    <p id="section-toc.1-1.7.2.2.2.6.1"><a href="#section-7.2.6" class="auto internal xref">7.2.6</a>.  <a href="#name-ml-dsa-87-ed448-2" class="internal xref">ML-DSA-87-Ed448</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-jose" class="internal xref">JOSE</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-cose" class="internal xref">COSE</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1176,7 +1296,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">The impact of a potential Cryptographically Relevant Quantum Computer (CRQC) on algorithms whose security is based on mathematical problems such as integer factorisation or discrete logarithms over finite fields or elliptic curves raises the need for new algorithms that are perceived to be secure against CRQC as well as classical computers. Such algorithms are called post-quantum, while algorithms based on integer factorisation or discrete logarithms are called traditional.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">While switching from a traditional algorithm to a post-quantum one intends to strengthen the security against an adversary possessing a quantum computer, the lack of maturing time of post-quantum algorithms compared to traditional algorithms raises uncertainty about their security.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Thus, the joint use of a traditional algorithm and a post-quantum algorithm in protocols represents a solution to this problem by providing security as long as at least one of the traditional or post-quantum components remains secure.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for hybrid composite signatures. The composite algorithms described combine ML-DSA as the post-quantum component and either ECDSA or EdDSA as the traditional component.<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1188,60 +1311,1021 @@ svg :is([fill="white"], [fill^="#fff"]) {
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">This document follows the terminology for post-quantum hybrid schemes defined in <span>[<a href="#I-D.draft-ietf-pquip-pqt-hybrid-terminology" class="cite xref">I-D.draft-ietf-pquip-pqt-hybrid-terminology</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">This section recalls some of this terminology, but also adds other definitions used throughout the whole document:<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">"Asymmetric Traditional Cryptographic Algorithm":
+         An asymmetric cryptographic algorithm based on integer factorisation, finite field discrete logarithms, elliptic curve discrete logarithms, or related mathematical problems. A related mathematical problem is one that can be solved by solving the integer factorisation, finite field discrete logarithm or elliptic curve discrete logarithm problem. Where there is little risk of confusion asymmetric traditional cryptographic algorithms can also be referred to as traditional algorithms for brevity.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">"Post-Quantum Algorithm":
+         An asymmetric cryptographic algorithm that is intended to be secure against attacks using quantum computers as well as classical computers. As with all cryptography, it always remains the case that attacks, either quantum or classical, may be found against post-quantum algorithms. Therefore it should not be assumed that just because an algorithm is designed to provide post-quantum security it will not be compromised.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">"Post-Quantum Traditional (PQ/T) Hybrid Scheme":
+         A multi-algorithm scheme where at least one component algorithm is a post-quantum algorithm and at least one is a traditional algorithm.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">"PQ/T Hybrid Digital Signature":
+         A multi-algorithm digital signature scheme made up of two or more component digital signature algorithms where at least one is a post-quantum algorithm and at least one is a traditional algorithm.<a href="#section-2-7" class="pilcrow">¶</a></p>
+<p id="section-2-8">"Composite Algorithm":
+          An algorithm which is a sequence of two component algorithms, as defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-2-8" class="pilcrow">¶</a></p>
+<p id="section-2-9">"Component Algorithm":
+         Each cryptographic algorithm that forms part of a cryptographic scheme.<a href="#section-2-9" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="algorithm-key-pair-akp-type">
+<section id="section-3">
+      <h2 id="name-algorithm-key-pair-akp-type">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-algorithm-key-pair-akp-type" class="section-name selfRef">Algorithm Key Pair (AKP) Type</a>
+      </h2>
+<p id="section-3-1">This document makes use of the Algorithm Key Pair (AKP) type which is defined in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">As a reminder, the AKP type is used to express public and private keys for use with algorithms. The parameters for public and private keys contain byte strings.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">This document makes use of the serialization routines defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">The process to compute JWK Thumbprint and COSE Key Thumbprint as described in <span>[<a href="#RFC7638" class="cite xref">RFC7638</a>]</span> and <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> is detailed in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="composite-signature-algorithm">
+<section id="section-4">
+      <h2 id="name-composite-signature-algorit">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-composite-signature-algorit" class="section-name selfRef">Composite Signature Algorithm</a>
+      </h2>
+<p id="section-4-1">The structures of the composite keys and composite signatures follow an approach similar to <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. The composite design is chosen so that composite keys and signatures can be used as a drop-in replacement in JOSE / COSE object formats. This section gives some details about their construction.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="composite-key-generation">
+<section id="section-4.1">
+        <h3 id="name-composite-key-generation">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-composite-key-generation" class="section-name selfRef">Composite Key Generation</a>
+        </h3>
+<p id="section-4.1-1">Composite public and private keys are generated by calling the key generation functions of the two component algorithms and concatenating the keys in an order given by the registered composite algorithm.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2"><code>
+Composite Public Key &lt;- Public Key of the 1st Algorithm || Public Key of the 2nd Algorithm
+</code>
+and<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-3"><code>
+Composite Private Key &lt;- Private Key of the 1st Algorithm || Private Key of the 2nd Algorithm
+</code><a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4">For the composite algorithms described in this document (ML-DSA with ECDSA or EdDSA), the Key Generation process is as follows:<a href="#section-4.1-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.1-5">
+<pre>
+1. Generate component keys
+
+    mldsaSeed = Random(32)
+    (mldsaPK, mldsaSK) = ML-DSA.KeyGen_internal(mldsaSeed)
+
+    (tradPK, tradSK) = Trad.KeyGen()
+
+2. Check for component key generation failure
+
+    if NOT (mldsaPK, mldsaSK) or NOT (tradPK, tradSK):
+        output "Key generation error"
+
+3. Serialize keys into composite form
+
+    Composite Public Key  &lt;- SerializePublicKey(mldsaPK, tradPK)
+    Composite Private Key &lt;- SerializePrivateKey(mldsaSeed, tradSK)
+
+</pre><a href="#section-4.1-5" class="pilcrow">¶</a>
+</div>
+<p id="section-4.1-6">As in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span>.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.1-7">This document makes use of the serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys. These encodings are then directly used with the AKP Key Type. For more information, see the <code>SerializePublicKey</code>, <code>DeserializePublicKey</code>, <code>SerializePrivateKey</code> and <code>DeserializePrivateKey</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
+<p id="section-4.1-8">Point compression for the ECDSA or EdDSA component is not performed for the AKP JSON Web Key Type but can be performed for the AKP COSE Key Type.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
+<p id="section-4.1-9">In this document, as in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>, the ML-DSA private key <span class="bcp14">MUST</span> be a 32-bytes seed.<a href="#section-4.1-9" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="composite-sign">
+<section id="section-4.2">
+        <h3 id="name-composite-sign">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-composite-sign" class="section-name selfRef">Composite Sign</a>
+        </h3>
+<p id="section-4.2-1">When signing a message M with the composite Sign algorithm, the signature combiner prepends a prefix as well as a label value specific to the composite algorithm used to bind the two component signatures to the composite algorithm and achieve weak non-separability, as defined in <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-2">However, only the pure ML-DSA component algorithm is used internally.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2-3">A composite signature's value <span class="bcp14">MUST</span> include the two signature components and the two components <span class="bcp14">MUST</span> be in the same order as the components from the corresponding signing key.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-4">A composite signature for the message M is generated by:<a href="#section-4.2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.2-5.1">
+            <p id="section-4.2-5.1.1">computing the pre-hash of the message M;<a href="#section-4.2-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-5.2">
+            <p id="section-4.2-5.2.1">concatenating the prefix, the label, a byte 0x00 and the pre-hash;<a href="#section-4.2-5.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-5.3">
+            <p id="section-4.2-5.3.1">encoding the resulting message;<a href="#section-4.2-5.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-5.4">
+            <p id="section-4.2-5.4.1">calling the two signature component algorithms on this new message;<a href="#section-4.2-5.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.2-5.5">
+            <p id="section-4.2-5.5.1">concatenating the two output signatures.<a href="#section-4.2-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-4.2-6">For the composite algorithms described in this document (ML-DSA with ECDSA or EdDSA), the signature process of a message M is as follows:<a href="#section-4.2-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.2-7">
+<pre>
+1. Compute the Message representative M'
+
+    M' &lt;- Prefix || Label || 0x00 || PH(M)
+    M' &lt;- Encode(M')
+
+2. Separate the private key into component keys and re-generate the ML-DSA key from seed
+
+    (mldsaSeed, tradSK) = DeserializePrivateKey(sk)
+    (_, mldsaSK) = ML-DSA.KeyGen_internal(mldsaSeed)
+
+3. Generate the two component signatures
+
+    sig_1 &lt;- ML-DSA.Sign(mldsaSK, M', ctx=Label)
+    sig_2 &lt;- Trad.Sign(tradSK, M')
+
+4. If either ML-DSA.Sign() or Trad.Sign() return an error, then this process MUST return an error.
+
+    if NOT mldsaSig or NOT tradSig:
+      output "Signature generation error"
+
+5. Output the encoded composite signature value.
+
+    CompositeSignature &lt;- SerializeSignatureValue(sig_1, sig_2)
+    return CompositeSignature
+</pre><a href="#section-4.2-7" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2-8">The serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> are again used to obtain the byte string encoding of the composite signature. The <code>SerializeSignatureValue</code> routine simply concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. For more information, see the <code>SerializeSignatureValue</code> and <code>DeserializeSignatureValue</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
+<p id="section-4.2-9">The prefix "Prefix" string is defined as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> as the byte encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 436F6D706F73697465416C676F726974686D5369676E61747572657332303235. It can be used by a traditional verifier to detect if the composite signature has been stripped apart.<a href="#section-4.2-9" class="pilcrow">¶</a></p>
+<p id="section-4.2-10">A signature label "Label" is defined in the same way as <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. It is specific to each composite algorithm. Additionally, the composite label is passed into the underlying ML-DSA primitive as the ctx. Signature Label values can be found in <a href="#tab-sig-alg-label" class="auto internal xref">Table 4</a>.<a href="#section-4.2-10" class="pilcrow">¶</a></p>
+<p id="section-4.2-11">Similarly to <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span> which indicates that the ctx parameter <span class="bcp14">MUST</span> be the empty string, the application context passed in to the composite signature algorithm <span class="bcp14">MUST</span> be the empty string. To align with the structure of the <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> combiner, the byte 0x00 is appended in the message M' after the label to indicate the context has length 0. However, a second non-empty context, defined as the label, is passed down into the underlying pure ML-DSA component algorithm, to bind the Composite-ML-DSA algorithm used.<a href="#section-4.2-11" class="pilcrow">¶</a></p>
+<p id="section-4.2-12"><a href="#tab-jose-algs" class="auto internal xref">Table 2</a> (resp. <a href="#tab-cose-algs" class="auto internal xref">Table 3</a>) indicates the pre-hash algorithms to use for JOSE (resp. COSE).<a href="#section-4.2-12" class="pilcrow">¶</a></p>
+<p id="section-4.2-13">For JOSE (resp. COSE), M' is base64url-encoded (resp. binary encoded) before signature computations.<a href="#section-4.2-13" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="composite-verify">
+<section id="section-4.3">
+        <h3 id="name-composite-verify">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-composite-verify" class="section-name selfRef">Composite Verify</a>
+        </h3>
+<p id="section-4.3-1">The Verify algorithm <span class="bcp14">MUST</span> validate a signature only if all component signatures were successfully validated.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">The verification process of a signature sig is as follows:<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.3-3.1">
+            <p id="section-4.3-3.1.1">separate the composite public key into the component public keys;<a href="#section-4.3-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.3-3.2">
+            <p id="section-4.3-3.2.1">separate the composite signature into its 2 component signatures;<a href="#section-4.3-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.3-3.3">
+            <p id="section-4.3-3.3.1">compute the message M' from the message M whose signature is to be verified;<a href="#section-4.3-3.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.3-3.4">
+            <p id="section-4.3-3.4.1">encode the resulting message M';<a href="#section-4.3-3.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.3-3.5">
+            <p id="section-4.3-3.5.1">verify each component signature.<a href="#section-4.3-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div class="alignLeft art-text artwork" id="section-4.3-4">
+<pre>
+1. Separate the keys and signatures
+
+    (mldsaPK, tradPK) &lt;- DeserializePublicKey(pk)
+    (sig_1, sig_2) &lt;- DeserializeSignatureValue(sig)
+
+    If Error during deserialization, or if any of the component keys or signature values are not of the correct type or length for the given component algorithm then output "Invalid signature" and stop.
+
+2. Compute the message representative M'
+
+    M' &lt;- Prefix || Label || 0x00 || PH(M)
+    M' &lt;- Encode(M')
+
+3. Check each component signature individually, according to its algorithm specification.
+
+    if NOT ML-DSA.Verify(mldsaPK, M', ctx=Label)
+        output "Invalid signature"
+    if NOT Trad.Verify(tradPK, M')
+        output "Invalid signature"
+    if all succeeded, then
+        output "Valid signature"
+</pre><a href="#section-4.3-4" class="pilcrow">¶</a>
+</div>
+<p id="section-4.3-5">The <code>DeserializePublicKey</code> and <code>DeserializeSignatureValue</code> serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> are used to get the component public keys and the component signatures. For more information, see the <code>DeserializePublicKey</code> and <code>DeserializeSignatureValue</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.3-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="encoding-rules">
+<section id="section-4.4">
+        <h3 id="name-encoding-rules">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-encoding-rules" class="section-name selfRef">Encoding Rules</a>
+        </h3>
+<p id="section-4.4-1">In each combination, the byte streams of the keys and of the signatures are directly concatenated.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.4-2"><code>
+Signature of the 1st Algorithm || Signature of the 2nd Algorithm
+</code><a href="#section-4.4-2" class="pilcrow">¶</a></p>
+<p id="section-4.4-3">Since all combinations presented in this document start with the ML-DSA algorithm and the key or signature sizes are fixed as defined in <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span>, it is unambiguous to encode or decode a composite key or signature.<a href="#section-4.4-3" class="pilcrow">¶</a></p>
+<p id="section-4.4-4"><a href="#tab-ml-dsa-size" class="auto internal xref">Table 1</a> lists sizes of the three parameter sets of the ML-DSA algorithm.<a href="#section-4.4-4" class="pilcrow">¶</a></p>
+<span id="name-sizes-in-bytes-of-keys-and-"></span><div id="tab-ml-dsa-size">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-sizes-in-bytes-of-keys-and-" class="selfRef">Sizes (in bytes) of keys and signatures of ML-DSA</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1"> </th>
+              <th class="text-left" rowspan="1" colspan="1">Private Key (seed)</th>
+              <th class="text-left" rowspan="1" colspan="1">Private Key</th>
+              <th class="text-left" rowspan="1" colspan="1">Public Key</th>
+              <th class="text-left" rowspan="1" colspan="1">Signature Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44</td>
+              <td class="text-left" rowspan="1" colspan="1">32</td>
+              <td class="text-left" rowspan="1" colspan="1">2560</td>
+              <td class="text-left" rowspan="1" colspan="1">1312</td>
+              <td class="text-left" rowspan="1" colspan="1">2420</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
+              <td class="text-left" rowspan="1" colspan="1">32</td>
+              <td class="text-left" rowspan="1" colspan="1">4032</td>
+              <td class="text-left" rowspan="1" colspan="1">1952</td>
+              <td class="text-left" rowspan="1" colspan="1">3309</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
+              <td class="text-left" rowspan="1" colspan="1">32</td>
+              <td class="text-left" rowspan="1" colspan="1">4896</td>
+              <td class="text-left" rowspan="1" colspan="1">2592</td>
+              <td class="text-left" rowspan="1" colspan="1">4627</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-4.4-6">Note that the seed is always 32 bytes, and that  ML-DSA.KeyGen_internal from <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> is called to produce the expanded private key from the seed, whose size corresponds to the sizes of the private key in the table above.<a href="#section-4.4-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="composite-signature-instantiations">
+<section id="section-5">
+      <h2 id="name-composite-signature-instant">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-composite-signature-instant" class="section-name selfRef">Composite Signature Instantiations</a>
+      </h2>
+<p id="section-5-1">The ML-DSA signature scheme supports three possible parameter sets, each of which corresponding to a specific security strength. See <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> for more considerations on that matter.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The traditional signature algorithm for each combination in <a href="#tab-jose-algs" class="auto internal xref">Table 2</a> and <a href="#tab-cose-algs" class="auto internal xref">Table 3</a> was chosen to match the security level of the ML-DSA post-quantum component.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">The <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> specification defines both pure and pre-hash modes for ML-DSA, referred to as "ML-DSA" and "HashML-DSA" respectively. This document only specifies a single mode which is similar in construction to HashML-DSA. However, because the pre-hashing is done at the composite level, only the pure ML-DSA algorithm is used as the underlying ML-DSA primitive.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<div id="jose-algorithms">
+<section id="section-5.1">
+        <h3 id="name-jose-algorithms">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-jose-algorithms" class="section-name selfRef">JOSE algorithms</a>
+        </h3>
+<p id="section-5.1-1">The following table defines a list of algorithms associated with specific PQ/T combinations to be registered in <span>[<a href="#IANA.JOSE" class="cite xref">IANA.JOSE</a>]</span>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<span id="name-jose-composite-signature-al"></span><div id="tab-jose-algs">
+<table class="center" id="table-2">
+          <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-jose-composite-signature-al" class="selfRef">JOSE Composite Signature Algorithms for ML-DSA</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">First Algorithm</th>
+              <th class="text-left" rowspan="1" colspan="1">Second Algorithm</th>
+              <th class="text-left" rowspan="1" colspan="1">Pre-Hash</th>
+              <th class="text-left" rowspan="1" colspan="1">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44-ES256</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44</td>
+              <td class="text-left" rowspan="1" colspan="1">ecdsa-with-SHA256 with secp256r1</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA256</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-ES256</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
+              <td class="text-left" rowspan="1" colspan="1">ecdsa-with-SHA256 with secp256r1</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-ES384</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
+              <td class="text-left" rowspan="1" colspan="1">ecdsa-with-SHA384 with secp384r1</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44-Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44</td>
+              <td class="text-left" rowspan="1" colspan="1">Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-44 and Ed25519</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
+              <td class="text-left" rowspan="1" colspan="1">Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-65 and Ed25519</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-Ed448</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
+              <td class="text-left" rowspan="1" colspan="1">Ed448</td>
+              <td class="text-left" rowspan="1" colspan="1">SHAKE256</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-87 and Ed448</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-5.1-3">Examples can be found in <a href="#appdx-jose" class="auto internal xref">Appendix A.1</a>.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="cose-algorithms">
+<section id="section-5.2">
+        <h3 id="name-cose-algorithms">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-cose-algorithms" class="section-name selfRef">COSE algorithms</a>
+        </h3>
+<p id="section-5.2-1">The following table defines a list of algorithms associated with specific PQ/T combinations to be registered in <span>[<a href="#IANA.COSE" class="cite xref">IANA.COSE</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<span id="name-cose-composite-signature-al"></span><div id="tab-cose-algs">
+<table class="center" id="table-3">
+          <caption>
+<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#name-cose-composite-signature-al" class="selfRef">COSE Composite Signature Algorithms for ML-DSA</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">COSE Value</th>
+              <th class="text-left" rowspan="1" colspan="1">First Algorithm</th>
+              <th class="text-left" rowspan="1" colspan="1">Second Algorithm</th>
+              <th class="text-left" rowspan="1" colspan="1">Pre-Hash</th>
+              <th class="text-left" rowspan="1" colspan="1">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44-ES256</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -51)</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44</td>
+              <td class="text-left" rowspan="1" colspan="1">ecdsa-with-SHA256 with secp256r1</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA256</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-ES256</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -52)</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
+              <td class="text-left" rowspan="1" colspan="1">ecdsa-with-SHA256 with secp256r1</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-ES384</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -53)</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
+              <td class="text-left" rowspan="1" colspan="1">ecdsa-with-SHA384 with secp384r1</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44-Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -54)</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44</td>
+              <td class="text-left" rowspan="1" colspan="1">Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-44 and Ed25519</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -55)</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
+              <td class="text-left" rowspan="1" colspan="1">Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-65 and Ed25519</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-Ed448</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -56)</td>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
+              <td class="text-left" rowspan="1" colspan="1">Ed448</td>
+              <td class="text-left" rowspan="1" colspan="1">SHAKE256</td>
+              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-87 and Ed448</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-5.2-3">Examples can be found in <a href="#appdx-cose" class="auto internal xref">Appendix A.2</a>.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="composite-labels-for-jose-and-cose">
+<section id="section-5.3">
+        <h3 id="name-composite-labels-for-jose-a">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-composite-labels-for-jose-a" class="section-name selfRef">Composite Labels for JOSE and COSE</a>
+        </h3>
+<p id="section-5.3-1">The JOSE and COSE composite label values are listed in <a href="#tab-sig-alg-label" class="auto internal xref">Table 4</a>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">They are represented here as ASCII strings, but implementers <span class="bcp14">MUST</span> convert them to byte strings using the obvious ASCII conversions prior to concatenating them with other byte values, as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+<span id="name-jose-cose-composite-label-v"></span><div id="tab-sig-alg-label">
+<table class="center" id="table-4">
+          <caption>
+<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#name-jose-cose-composite-label-v" class="selfRef">JOSE/COSE Composite Label Values</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">"alg" Header Parameter</th>
+              <th class="text-left" rowspan="1" colspan="1">Label (in ASCII)</th>
+              <th class="text-left" rowspan="1" colspan="1">Label (in Hex encoding)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44-ES256</td>
+              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA44-ECDSA-P256-SHA256</td>
+              <td class="text-left" rowspan="1" colspan="1">434F4D505349472D4D4C44534134342D45434453412D503235362D534841323536</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-ES256</td>
+              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA65-ECDSA-P256-SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">434F4D505349472D4D4C44534136352D45434453412D503235362D534841353132</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-ES384</td>
+              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA87-ECDSA-P384-SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">434F4D505349472D4D4C44534138372D45434453412D503338342D534841353132</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44-Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA44-Ed25519-SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">434F4D505349472D4D4C44534134342D456432353531392D534841353132</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-Ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA65-Ed25519-SHA512</td>
+              <td class="text-left" rowspan="1" colspan="1">434F4D505349472D4D4C44534136352D456432353531392D534841353132</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-Ed448</td>
+              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA87-Ed448-SHAKE256</td>
+              <td class="text-left" rowspan="1" colspan="1">434F4D505349472D4D4C44534138372D45643434382D5348414B45323536</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-3">
+<section id="section-6">
       <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">The security considerations of <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span>, <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span> and <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> also apply to this document.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">All security issues that are pertinent to any cryptographic application must be addressed by JWS/JWK agents. Protecting the user's private key and employing countermeasures to various attacks constitute a priority.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">In particular, to avoid key reuse, when generating a new composite key, the key generation functions for both component algorithms <span class="bcp14">MUST</span> be executed. Compliant parties <span class="bcp14">MUST NOT</span> use, import or export component keys that are used in other contexts, combinations, or by themselves as keys for standalone algorithm use.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">For security properties and security issues related to the use of a hybrid signature scheme, the user can refer to <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>. For more information about hybrid composite signature schemes and the different hybrid combinations that appear in this document, the user can read <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">In terms of security properties, Composite ML-DSA will be EUF-CMA secure if at least one of its component algorithms is EUF-CMA secure and the message hash PH is collision resistant.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">Ed25519 and Ed448 are SUF-CMA secure, making the composite SUF-CMA secure against classical adversaries.<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-7">However, Composite ML-DSA will not be SUF-CMA secure against a quantum adversary, since a quantum adversary will be able to break the SUF-CMA security of the traditional component. Consequently, applications where SUF-CMA security is critical <span class="bcp14">SHOULD NOT</span> use Composite ML-DSA.<a href="#section-6-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-7">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="jose-algorithms-1">
+<section id="section-7.1">
+        <h3 id="name-jose-algorithms-2">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-jose-algorithms-2" class="section-name selfRef">JOSE Algorithms</a>
+        </h3>
+<p id="section-7.1-1">The following values of the JWS "alg" (algorithm) are requested to be added to the "JSON Web Signature and Encryption Algorithms" registry.
+They are represented following the registration template provided in <span>[<a href="#RFC7518" class="cite xref">RFC7518</a>]</span>.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<div id="ml-dsa-44-es256">
+<section id="section-7.1.1">
+          <h4 id="name-ml-dsa-44-es256">
+<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-ml-dsa-44-es256" class="section-name selfRef">ML-DSA-44-ES256</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.1.1-1.1">
+              <p id="section-7.1.1-1.1.1">Algorithm Name: ML-DSA-44-ES256<a href="#section-7.1.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.2">
+              <p id="section-7.1.1-1.2.1">Algorithm Description: Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA-256<a href="#section-7.1.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.3">
+              <p id="section-7.1.1-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.4">
+              <p id="section-7.1.1-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.5">
+              <p id="section-7.1.1-1.5.1">Change Controller: IETF<a href="#section-7.1.1-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.6">
+              <p id="section-7.1.1-1.6.1">Specification Document(s): n/a<a href="#section-7.1.1-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.7">
+              <p id="section-7.1.1-1.7.1">Algorithm Analysis Documents(s): TBD<a href="#section-7.1.1-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </section>
 </div>
-<div id="sec-normative-references">
-<section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<div id="ml-dsa-65-es256">
+<section id="section-7.1.2">
+          <h4 id="name-ml-dsa-65-es256">
+<a href="#section-7.1.2" class="section-number selfRef">7.1.2. </a><a href="#name-ml-dsa-65-es256" class="section-name selfRef">ML-DSA-65-ES256</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.1.2-1.1">
+              <p id="section-7.1.2-1.1.1">Algorithm Name: ML-DSA-65-ES256<a href="#section-7.1.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.2-1.2">
+              <p id="section-7.1.2-1.2.1">Algorithm Description: Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA-256<a href="#section-7.1.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.2-1.3">
+              <p id="section-7.1.2-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.2-1.4">
+              <p id="section-7.1.2-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.2-1.5">
+              <p id="section-7.1.2-1.5.1">Change Controller: IETF<a href="#section-7.1.2-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.2-1.6">
+              <p id="section-7.1.2-1.6.1">Specification Document(s): n/a<a href="#section-7.1.2-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.2-1.7">
+              <p id="section-7.1.2-1.7.1">Algorithm Analysis Documents(s): TBD<a href="#section-7.1.2-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-87-es384">
+<section id="section-7.1.3">
+          <h4 id="name-ml-dsa-87-es384">
+<a href="#section-7.1.3" class="section-number selfRef">7.1.3. </a><a href="#name-ml-dsa-87-es384" class="section-name selfRef">ML-DSA-87-ES384</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.1.3-1.1">
+              <p id="section-7.1.3-1.1.1">Algorithm Name: ML-DSA-87-ES384<a href="#section-7.1.3-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.3-1.2">
+              <p id="section-7.1.3-1.2.1">Algorithm Description: Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA-384<a href="#section-7.1.3-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.3-1.3">
+              <p id="section-7.1.3-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.3-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.3-1.4">
+              <p id="section-7.1.3-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.3-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.3-1.5">
+              <p id="section-7.1.3-1.5.1">Change Controller: IETF<a href="#section-7.1.3-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.3-1.6">
+              <p id="section-7.1.3-1.6.1">Specification Document(s): n/a<a href="#section-7.1.3-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.3-1.7">
+              <p id="section-7.1.3-1.7.1">Algorithm Analysis Documents(s): TBD<a href="#section-7.1.3-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-44-ed25519">
+<section id="section-7.1.4">
+          <h4 id="name-ml-dsa-44-ed25519">
+<a href="#section-7.1.4" class="section-number selfRef">7.1.4. </a><a href="#name-ml-dsa-44-ed25519" class="section-name selfRef">ML-DSA-44-Ed25519</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.1.4-1.1">
+              <p id="section-7.1.4-1.1.1">Algorithm Name: ML-DSA-44-Ed25519<a href="#section-7.1.4-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.4-1.2">
+              <p id="section-7.1.4-1.2.1">Algorithm Description: Composite Signature with ML-DSA-44 and Ed25519 using SHA-512<a href="#section-7.1.4-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.4-1.3">
+              <p id="section-7.1.4-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.4-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.4-1.4">
+              <p id="section-7.1.4-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.4-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.4-1.5">
+              <p id="section-7.1.4-1.5.1">Change Controller: IETF<a href="#section-7.1.4-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.4-1.6">
+              <p id="section-7.1.4-1.6.1">Specification Document(s): n/a<a href="#section-7.1.4-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.4-1.7">
+              <p id="section-7.1.4-1.7.1">Algorithm Analysis Document(s): TBD<a href="#section-7.1.4-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-65-ed25519">
+<section id="section-7.1.5">
+          <h4 id="name-ml-dsa-65-ed25519">
+<a href="#section-7.1.5" class="section-number selfRef">7.1.5. </a><a href="#name-ml-dsa-65-ed25519" class="section-name selfRef">ML-DSA-65-Ed25519</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.1.5-1.1">
+              <p id="section-7.1.5-1.1.1">Algorithm Name: ML-DSA-65-Ed25519<a href="#section-7.1.5-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.5-1.2">
+              <p id="section-7.1.5-1.2.1">Algorithm Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512<a href="#section-7.1.5-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.5-1.3">
+              <p id="section-7.1.5-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.5-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.5-1.4">
+              <p id="section-7.1.5-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.5-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.5-1.5">
+              <p id="section-7.1.5-1.5.1">Change Controller: IETF<a href="#section-7.1.5-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.5-1.6">
+              <p id="section-7.1.5-1.6.1">Specification Document(s): n/a<a href="#section-7.1.5-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.5-1.7">
+              <p id="section-7.1.5-1.7.1">Algorithm Analysis Document(s): TBD<a href="#section-7.1.5-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-87-ed448">
+<section id="section-7.1.6">
+          <h4 id="name-ml-dsa-87-ed448">
+<a href="#section-7.1.6" class="section-number selfRef">7.1.6. </a><a href="#name-ml-dsa-87-ed448" class="section-name selfRef">ML-DSA-87-Ed448</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.1.6-1.1">
+              <p id="section-7.1.6-1.1.1">Algorithm Name: ML-DSA-87-Ed448<a href="#section-7.1.6-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.6-1.2">
+              <p id="section-7.1.6-1.2.1">Algorithm Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256<a href="#section-7.1.6-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.6-1.3">
+              <p id="section-7.1.6-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.6-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.6-1.4">
+              <p id="section-7.1.6-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.6-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.6-1.5">
+              <p id="section-7.1.6-1.5.1">Change Controller: IETF<a href="#section-7.1.6-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.6-1.6">
+              <p id="section-7.1.6-1.6.1">Specification Document(s): n/a<a href="#section-7.1.6-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.6-1.7">
+              <p id="section-7.1.6-1.7.1">Algorithm Analysis Document(s): TBD<a href="#section-7.1.6-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="cose-algorithms-1">
+<section id="section-7.2">
+        <h3 id="name-cose-algorithms-2">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-cose-algorithms-2" class="section-name selfRef">COSE Algorithms</a>
+        </h3>
+<p id="section-7.2-1">The following values are requested to be added to the "COSE Algorithms" registry.
+They are represented following the registration template provided in <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>, <span>[<a href="#RFC9054" class="cite xref">RFC9054</a>]</span>.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<div id="ml-dsa-44-es256-1">
+<section id="section-7.2.1">
+          <h4 id="name-ml-dsa-44-es256-2">
+<a href="#section-7.2.1" class="section-number selfRef">7.2.1. </a><a href="#name-ml-dsa-44-es256-2" class="section-name selfRef">ML-DSA-44-ES256</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.1-1.1">
+              <p id="section-7.2.1-1.1.1">Name: ML-DSA-44-ES256<a href="#section-7.2.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.2">
+              <p id="section-7.2.1-1.2.1">Value: TBD (request assignment -51)<a href="#section-7.2.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.3">
+              <p id="section-7.2.1-1.3.1">Description: Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA-256<a href="#section-7.2.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.4">
+              <p id="section-7.2.1-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.5">
+              <p id="section-7.2.1-1.5.1">Change Controller: IETF<a href="#section-7.2.1-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.6">
+              <p id="section-7.2.1-1.6.1">Reference: n/a<a href="#section-7.2.1-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.7">
+              <p id="section-7.2.1-1.7.1">Recommended: Yes<a href="#section-7.2.1-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-65-es256-1">
+<section id="section-7.2.2">
+          <h4 id="name-ml-dsa-65-es256-2">
+<a href="#section-7.2.2" class="section-number selfRef">7.2.2. </a><a href="#name-ml-dsa-65-es256-2" class="section-name selfRef">ML-DSA-65-ES256</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.2-1.1">
+              <p id="section-7.2.2-1.1.1">Name: ML-DSA-65-ES256<a href="#section-7.2.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.2">
+              <p id="section-7.2.2-1.2.1">Value: TBD (request assignment -52)<a href="#section-7.2.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.3">
+              <p id="section-7.2.2-1.3.1">Description: Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA-256<a href="#section-7.2.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.4">
+              <p id="section-7.2.2-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.5">
+              <p id="section-7.2.2-1.5.1">Change Controller: IETF<a href="#section-7.2.2-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.6">
+              <p id="section-7.2.2-1.6.1">Reference: n/a<a href="#section-7.2.2-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.7">
+              <p id="section-7.2.2-1.7.1">Recommended: Yes<a href="#section-7.2.2-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-87-es384-1">
+<section id="section-7.2.3">
+          <h4 id="name-ml-dsa-87-es384-2">
+<a href="#section-7.2.3" class="section-number selfRef">7.2.3. </a><a href="#name-ml-dsa-87-es384-2" class="section-name selfRef">ML-DSA-87-ES384</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.3-1.1">
+              <p id="section-7.2.3-1.1.1">Name: ML-DSA-87-ES384<a href="#section-7.2.3-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.2">
+              <p id="section-7.2.3-1.2.1">Value: TBD (request assignment -53)<a href="#section-7.2.3-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.3">
+              <p id="section-7.2.3-1.3.1">Description: Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA-384<a href="#section-7.2.3-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.4">
+              <p id="section-7.2.3-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.3-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.5">
+              <p id="section-7.2.3-1.5.1">Change Controller: IETF<a href="#section-7.2.3-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.6">
+              <p id="section-7.2.3-1.6.1">Reference: n/a<a href="#section-7.2.3-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.7">
+              <p id="section-7.2.3-1.7.1">Recommended: Yes<a href="#section-7.2.3-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-44-ed25519-1">
+<section id="section-7.2.4">
+          <h4 id="name-ml-dsa-44-ed25519-2">
+<a href="#section-7.2.4" class="section-number selfRef">7.2.4. </a><a href="#name-ml-dsa-44-ed25519-2" class="section-name selfRef">ML-DSA-44-Ed25519</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.4-1.1">
+              <p id="section-7.2.4-1.1.1">Name: ML-DSA-44-Ed25519<a href="#section-7.2.4-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.4-1.2">
+              <p id="section-7.2.4-1.2.1">Value: TBD (request assignment -54)<a href="#section-7.2.4-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.4-1.3">
+              <p id="section-7.2.4-1.3.1">Description: Composite Signature with ML-DSA-44 and Ed25519 using SHA-512<a href="#section-7.2.4-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.4-1.4">
+              <p id="section-7.2.4-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.4-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.4-1.5">
+              <p id="section-7.2.4-1.5.1">Change Controller: IETF<a href="#section-7.2.4-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.4-1.6">
+              <p id="section-7.2.4-1.6.1">Reference: n/a<a href="#section-7.2.4-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.4-1.7">
+              <p id="section-7.2.4-1.7.1">Recommended: Yes<a href="#section-7.2.4-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-65-ed25519-1">
+<section id="section-7.2.5">
+          <h4 id="name-ml-dsa-65-ed25519-2">
+<a href="#section-7.2.5" class="section-number selfRef">7.2.5. </a><a href="#name-ml-dsa-65-ed25519-2" class="section-name selfRef">ML-DSA-65-Ed25519</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.5-1.1">
+              <p id="section-7.2.5-1.1.1">Name: ML-DSA-65-Ed25519<a href="#section-7.2.5-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.5-1.2">
+              <p id="section-7.2.5-1.2.1">Value: TBD (request assignment -55)<a href="#section-7.2.5-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.5-1.3">
+              <p id="section-7.2.5-1.3.1">Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512<a href="#section-7.2.5-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.5-1.4">
+              <p id="section-7.2.5-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.5-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.5-1.5">
+              <p id="section-7.2.5-1.5.1">Change Controller: IETF<a href="#section-7.2.5-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.5-1.6">
+              <p id="section-7.2.5-1.6.1">Reference: n/a<a href="#section-7.2.5-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.5-1.7">
+              <p id="section-7.2.5-1.7.1">Recommended: Yes<a href="#section-7.2.5-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="ml-dsa-87-ed448-1">
+<section id="section-7.2.6">
+          <h4 id="name-ml-dsa-87-ed448-2">
+<a href="#section-7.2.6" class="section-number selfRef">7.2.6. </a><a href="#name-ml-dsa-87-ed448-2" class="section-name selfRef">ML-DSA-87-Ed448</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.6-1.1">
+              <p id="section-7.2.6-1.1.1">Name: ML-DSA-87-Ed448<a href="#section-7.2.6-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.6-1.2">
+              <p id="section-7.2.6-1.2.1">Value: TBD (request assignment -56)<a href="#section-7.2.6-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.6-1.3">
+              <p id="section-7.2.6-1.3.1">Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256<a href="#section-7.2.6-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.6-1.4">
+              <p id="section-7.2.6-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.6-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.6-1.5">
+              <p id="section-7.2.6-1.5.1">Change Controller: IETF<a href="#section-7.2.6-1.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.6-1.6">
+              <p id="section-7.2.6-1.6.1">Reference: n/a<a href="#section-7.2.6-1.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.6-1.7">
+              <p id="section-7.2.6-1.7.1">Recommended: Yes<a href="#section-7.2.6-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-8">
+      <h2 id="name-references">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-8.1">
+        <h3 id="name-normative-references">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
+<dt id="FIPS.204">[FIPS.204]</dt>
+        <dd>
+<span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Module-Lattice-Based Digital Signature Standard"</span>, <time datetime="2024-08" class="refDate">August 2024</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.COSE">[IANA.COSE]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/cose/cose.xhtml">https://www.iana.org/assignments/cose/cose.xhtml</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.JOSE">[IANA.JOSE]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"JSON Object Signing and Encryption (JOSE)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/jose/jose.xhtml">https://www.iana.org/assignments/jose/jose.xhtml</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7515">[RFC7515]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7515">https://www.rfc-editor.org/rfc/rfc7515</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7517">[RFC7517]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refTitle">"JSON Web Key (JWK)"</span>, <span class="seriesInfo">RFC 7517</span>, <span class="seriesInfo">DOI 10.17487/RFC7517</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7518">[RFC7518]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refTitle">"JSON Web Algorithms (JWA)"</span>, <span class="seriesInfo">RFC 7518</span>, <span class="seriesInfo">DOI 10.17487/RFC7518</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7518">https://www.rfc-editor.org/rfc/rfc7518</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7638">[RFC7638]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span> and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Key (JWK) Thumbprint"</span>, <span class="seriesInfo">RFC 7638</span>, <span class="seriesInfo">DOI 10.17487/RFC7638</span>, <time datetime="2015-09" class="refDate">September 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7638">https://www.rfc-editor.org/rfc/rfc7638</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9679">[RFC9679]</dt>
+      <dd>
+<span class="refAuthor">Isobe, K.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE) Key Thumbprint"</span>, <span class="seriesInfo">RFC 9679</span>, <span class="seriesInfo">DOI 10.17487/RFC9679</span>, <time datetime="2024-12" class="refDate">December 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9679">https://www.rfc-editor.org/rfc/rfc9679</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
 </div>
-<div id="acknowledgments">
+<div id="sec-informative-references">
+<section id="section-8.2">
+        <h3 id="name-informative-references">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.draft-ietf-cose-dilithium">[I-D.draft-ietf-cose-dilithium]</dt>
+        <dd>
+<span class="refAuthor">Prorock, M.</span> and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"ML-DSA for JOSE and COSE"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-dilithium-11</span>, <time datetime="2025-11-15" class="refDate">15 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-dilithium-11">https://datatracker.ietf.org/doc/html/draft-ietf-cose-dilithium-11</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.draft-ietf-lamps-pq-composite-sigs">[I-D.draft-ietf-lamps-pq-composite-sigs]</dt>
+        <dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite ML-DSA for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-14</span>, <time datetime="2026-01-07" class="refDate">7 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-14">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-14</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.draft-ietf-pquip-hybrid-signature-spectrums">[I-D.draft-ietf-pquip-hybrid-signature-spectrums]</dt>
+        <dd>
+<span class="refAuthor">Bindel, N.</span>, <span class="refAuthor">Hale, B.</span>, <span class="refAuthor">Connolly, D.</span>, and <span class="refAuthor">F. D</span>, <span class="refTitle">"Hybrid signature spectrums"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-hybrid-signature-spectrums-07</span>, <time datetime="2025-06-20" class="refDate">20 June 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-hybrid-signature-spectrums-07">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-hybrid-signature-spectrums-07</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.draft-ietf-pquip-pqt-hybrid-terminology">[I-D.draft-ietf-pquip-pqt-hybrid-terminology]</dt>
+        <dd>
+<span class="refAuthor">D, F.</span>, <span class="refAuthor">P, M.</span>, and <span class="refAuthor">B. Hale</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqt-hybrid-terminology-06</span>, <time datetime="2025-01-10" class="refDate">10 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-06">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9053">[RFC9053]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Initial Algorithms"</span>, <span class="seriesInfo">RFC 9053</span>, <span class="seriesInfo">DOI 10.17487/RFC9053</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9053">https://www.rfc-editor.org/rfc/rfc9053</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9054">[RFC9054]</dt>
+      <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Hash Algorithms"</span>, <span class="seriesInfo">RFC 9054</span>, <span class="seriesInfo">DOI 10.17487/RFC9054</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9054">https://www.rfc-editor.org/rfc/rfc9054</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="appdx">
 <section id="appendix-A">
-      <h2 id="name-acknowledgments">
-<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      <h2 id="name-examples">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div id="appdx-jose">
+<section id="appendix-A.1">
+        <h3 id="name-jose">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-jose" class="section-name selfRef">JOSE</a>
+        </h3>
+<p id="appendix-A.1-1">Will be completed in later versions.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="appdx-cose">
+<section id="appendix-A.2">
+        <h3 id="name-cose">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-cose" class="section-name selfRef">COSE</a>
+        </h3>
+<p id="appendix-A.2-1">Will be completed in later versions.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-B">
+      <h2 id="name-acknowledgments">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-B-1">We thank Orie Steele for his valuable comments on this document.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-B">
-      <h2 id="name-authors-address">
-<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+<section id="appendix-C">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Your Name Here</span></div>
-<div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Lucas Prabel</span></div>
+<div dir="auto" class="left"><span class="org">Huawei</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:your.email@example.com" class="email">your.email@example.com</a>
+<a href="mailto:lucas.prabel@huawei.com" class="email">lucas.prabel@huawei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Sun Shuzhou</span></div>
+<div dir="auto" class="left"><span class="org">Huawei</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:sunshuzhou@huawei.com" class="email">sunshuzhou@huawei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">John Gray</span></div>
+<div dir="auto" class="left"><span class="org">Entrust Limited</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:john.gray@entrust.com" class="email">john.gray@entrust.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Tirumaleswar Reddy</span></div>
+<div dir="auto" class="left"><span class="org">Nokia</span></div>
+<div dir="auto" class="left">
+<span class="locality">Bangalore</span> </div>
+<div dir="auto" class="left"><span class="region">Karnataka</span></div>
+<div dir="auto" class="left"><span class="country-name">India</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:kondtir@gmail.com" class="email">kondtir@gmail.com</a>
 </div>
 </address>
 </section>
