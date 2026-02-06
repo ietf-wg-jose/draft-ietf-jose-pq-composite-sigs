@@ -1,8 +1,8 @@
 <!-- regenerate: on (set to off if you edit this file) -->
 
-# TODO - Your title
+# PQ/T Hybrid Composite Signatures for JOSE and COSE
 
-This is the working area for the IETF [JOSE Working Group](https://datatracker.ietf.org/group/jose/documents/) Internet-Draft, "TODO - Your title".
+This is the working area for the IETF [JOSE Working Group](https://datatracker.ietf.org/group/jose/documents/) Internet-Draft, "PQ/T Hybrid Composite Signatures for JOSE and COSE".
 
 * [Editor's Copy](https://ietf-wg-jose.github.io/draft-ietf-jose-pq-composite-sigs/#go.draft-ietf-jose-pq-composite-sigs.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-jose-pq-composite-sigs)
