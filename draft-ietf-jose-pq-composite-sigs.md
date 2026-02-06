@@ -49,7 +49,6 @@ author:
     email: "kondtir@gmail.com"
 
 normative:
- RFC2119:
  RFC7515:
  RFC7517:
  RFC7518:
@@ -93,7 +92,7 @@ This document describes JSON Object Signing and Encryption (JOSE) and CBOR Objec
 
 The impact of a potential Cryptographically Relevant Quantum Computer (CRQC) on algorithms whose security is based on mathematical problems such as integer factorisation or discrete logarithms over finite fields or elliptic curves raises the need for new algorithms that are perceived to be secure against CRQC as well as classical computers. Such algorithms are called post-quantum, while algorithms based on integer factorisation or discrete logarithms are called traditional.
 
-While switching from a traditional algorithm to a post-quantum one intends to strengthen the security against an adversary possessing a quantum computer, the lack of maturing time of post-quantum algorithms compared to traditional algorithms raises uncertainty about their security. 
+While switching from a traditional algorithm to a post-quantum one intends to strengthen the security against an adversary possessing a quantum computer, the lack of maturing time of post-quantum algorithms compared to traditional algorithms raises uncertainty about their security.
 
 Thus, the joint use of a traditional algorithm and a post-quantum algorithm in protocols represents a solution to this problem by providing security as long as at least one of the traditional or post-quantum components remains secure.
 
@@ -174,7 +173,7 @@ For the composite algorithms described in this document (ML-DSA with ECDSA or Ed
     Composite Private Key <- SerializePrivateKey(mldsaSeed, tradSK)
 
 ~~~
-As in {{-COMPOSITE-LAMPS}}, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of {{FIPS.204}}. 
+As in {{-COMPOSITE-LAMPS}}, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of {{FIPS.204}}.
 
 This document makes use of the serialization routines from {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys. These encodings are then directly used with the AKP Key Type. For more information, see the `SerializePublicKey`, `DeserializePublicKey`, `SerializePrivateKey` and `DeserializePrivateKey` algorithms from {{-COMPOSITE-LAMPS}}.
 
@@ -310,14 +309,14 @@ The {{FIPS.204}} specification defines both pure and pre-hash modes for ML-DSA, 
 
 The following table defines a list of algorithms associated with specific PQ/T combinations to be registered in {{IANA.JOSE}}.
 
-| Name | First Algorithm | Second Algorithm | Pre-Hash | Description 
+| Name | First Algorithm | Second Algorithm | Pre-Hash | Description
 | ----------- | ----------- |  ----------- | ----------- | ----------- |
 | ML-DSA-44-ES256 | ML-DSA-44  | ecdsa-with-SHA256 with secp256r1 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
 | ML-DSA-65-ES256  | ML-DSA-65 | ecdsa-with-SHA256 with secp256r1 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
 | ML-DSA-87-ES384  | ML-DSA-87 | ecdsa-with-SHA384 with secp384r1 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-44-Ed25519 | ML-DSA-44  | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
 | ML-DSA-65-Ed25519 | ML-DSA-65  | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
-| ML-DSA-87-Ed448   | ML-DSA-87  | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448   |
+| ML-DSA-87-Ed448   | ML-DSA-87  | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
 {: #tab-jose-algs title="JOSE Composite Signature Algorithms for ML-DSA"}
 
 Examples can be found in {{appdx-jose}}.
@@ -448,7 +447,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Name: ML-DSA-44-ES256
 * Value: TBD (request assignment -51)
 * Description: Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA-256
-* Capabilities: [kty]
+* Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: n/a
 * Recommended: Yes
@@ -458,7 +457,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Name: ML-DSA-65-ES256
 * Value: TBD (request assignment -52)
 * Description: Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA-256
-* Capabilities: [kty]
+* Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: n/a
 * Recommended: Yes
@@ -468,7 +467,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Name: ML-DSA-87-ES384
 * Value: TBD (request assignment -53)
 * Description: Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA-384
-* Capabilities: [kty]
+* Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: n/a
 * Recommended: Yes
@@ -478,7 +477,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Name: ML-DSA-44-Ed25519
 * Value: TBD (request assignment -54)
 * Description: Composite Signature with ML-DSA-44 and Ed25519 using SHA-512
-* Capabilities: [kty]
+* Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: n/a
 * Recommended: Yes
@@ -488,7 +487,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Name: ML-DSA-65-Ed25519
 * Value: TBD (request assignment -55)
 * Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512
-* Capabilities: [kty]
+* Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: n/a
 * Recommended: Yes
@@ -498,7 +497,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Name: ML-DSA-87-Ed448
 * Value: TBD (request assignment -56)
 * Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256
-* Capabilities: [kty]
+* Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: n/a
 * Recommended: Yes
