@@ -77,6 +77,7 @@ normative:
 informative:
  RFC9053:
  RFC9054:
+ RFC7519:
  I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYB-TERMINO
  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYB-SIG-SPECTRUMS
