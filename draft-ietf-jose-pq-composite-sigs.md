@@ -78,6 +78,8 @@ informative:
  RFC9053:
  RFC9054:
  RFC7519:
+ RFC8392:
+ RFC9360:
  I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYB-TERMINO
  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYB-SIG-SPECTRUMS
@@ -365,13 +367,18 @@ In particular, to avoid key reuse, when generating a new composite key, the key 
 
 For security properties and security issues related to the use of a hybrid signature scheme, the user can refer to {{-HYB-SIG-SPECTRUMS}}. For more information about hybrid composite signature schemes and the different hybrid combinations that appear in this document, the user can read {{-COMPOSITE-LAMPS}}.
 
-In JOSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload. Verifiers do not rely on signature uniqueness, and replay protection is addressed through claims defined in {{RFC7519, Section 4.1}} (e.g., exp, nbf, and jti).
+In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload. Verifiers do not rely on signature uniqueness, and replay protection is addressed through claims defined in {{RFC7519, Section 4.1}} (e.g., exp, nbf, and jti) and in COSE, these correspond to the equivalent claims defined in {{RFC8392, Section 3}}.
 
-Under a CRQC, traditional signature algorithms such as RSA, ECDSA, and EdDSA are vulnerable to private-key recovery, enabling attackers to forge arbitrary JWS objects and fully impersonate the signer. When Composite ML-DSA is used, a valid JOSE signature requires successful verification of both the ML-DSA component and the traditional component. As a result, an adversary that compromises only the traditional algorithm cannot produce valid JOSE objects as long as ML-DSA remains secure. This prevents JOSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
+Under a CRQC, traditional signature algorithms such as RSA, ECDSA, and EdDSA are vulnerable to private-key recovery, enabling attackers to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and fully impersonate the signer. When Composite ML-DSA is used, a valid JOSE/COSE signature requires successful verification of both the ML-DSA component and the traditional component. As a result, an adversary that compromises only the traditional algorithm cannot produce valid JOSE/COSE objects as long as ML-DSA remains secure. This prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
 
-Furthermore, even if the traditional component algorithm is compromised, an attacker cannot spoof the certificate used to sign a JOSE object. The integrity of the composite public key is protected through mandatory validation of the x5c header, as specified in {{RFC7515, Section 4.1.6}}, which requires validation of the composite signature on the certificate.
+Furthermore, even if the traditional component algorithm is compromised, an attacker cannot spoof the certificate used to sign a JOSE/COSE object. The integrity of the composite public key is protected through mandatory validation of the certificate header:
 
-Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals. Composite ML-DSA provides EUF-CMA security if at least one of its component signature algorithms is EUF-CMA secure and the pre-hash function PH is collision resistant.
+* In JOSE: The x5c header as specified in {{RFC7515, Section 4.1.6}}.
+* In COSE: The x5chain header as specified in {{RFC9360, Section 3.2}}.
+
+These specifications require the validation of the composite signature on the certificate itself. This means the certificate itself is protected by a composite signature. Even if an attacker can break the traditional algorithm, they cannot forge a fake certificate to swap your public key for theirs, because the ML-DSA component of the CA's signature remains secure.
+
+Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE/COSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals. Composite ML-DSA provides EUF-CMA security if at least one of its component signature algorithms is EUF-CMA secure and the pre-hash function PH is collision resistant.
 
 When paired with traditional algorithms such as Ed25519 or Ed448, which are SUF-CMA secure, the composite construction is SUF-CMA secure against classical adversaries. However, Composite ML-DSA is not SUF-CMA secure against quantum adversaries, since a quantum adversary can break the SUF-CMA security of the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement MUST NOT use Composite ML-DSA.
 
