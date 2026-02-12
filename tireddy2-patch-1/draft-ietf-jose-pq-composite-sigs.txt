@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 11 August 2026                                          J. Gray
+Expires: 16 August 2026                                          J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                         7 February 2026
+                                                        12 February 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 August 2026.
+   This Internet-Draft will expire on 16 August 2026.
 
 Copyright Notice
 
@@ -652,7 +652,7 @@ Table of Contents
    repudiation or signature uniqueness guarantees.  In the JOSE threat
    model described above, existential unforgeability under chosen-
    message attack (EUF-CMA) is sufficient to meet the intended security
-   goals.Composite ML-DSA provides EUF-CMA security if at least one of
+   goals.  Composite ML-DSA provides EUF-CMA security if at least one of
    its component signature algorithms is EUF-CMA secure and the pre-hash
    function PH is collision resistant.
 
