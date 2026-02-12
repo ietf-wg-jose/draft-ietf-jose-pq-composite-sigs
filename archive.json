@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-10T01:15:34.665955+00:00",
+  "timestamp": "2026-02-12T01:05:55.530600+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -63,7 +63,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-02-07T07:24:30Z",
-      "updatedAt": "2026-02-07T07:31:53Z",
+      "updatedAt": "2026-02-10T15:30:35Z",
       "baseRepository": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
       "baseRefName": "main",
       "baseRefOid": "87a07406f1b5bca7df8deb9eb12401747b76d93a",
@@ -75,7 +75,40 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDORJ8q987hSdj4",
+          "commit": {
+            "abbreviatedOid": "a3e2a55"
+          },
+          "author": "lucasprabel",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Let's not forget about COSE as the document covers both JOSE and COSE.",
+          "createdAt": "2026-02-10T15:25:30Z",
+          "updatedAt": "2026-02-10T15:30:35Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "Does this paragraph assume the certificate itself must be signed with a composite signature? It it's the case, I think it should be stated clearly, as a composite public key can be carried in a certificate signed by a traditional CA.\n",
+              "createdAt": "2026-02-10T15:25:30Z",
+              "updatedAt": "2026-02-10T15:30:35Z"
+            },
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\nComposite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals. Composite ML-DSA provides EUF-CMA security if at least one of its component signature algorithms is EUF-CMA secure and the pre-hash function PH is collision resistant.\n```",
+              "createdAt": "2026-02-10T15:27:34Z",
+              "updatedAt": "2026-02-10T15:30:35Z"
+            },
+            {
+              "originalPosition": 13,
+              "body": "We should also mention COSE. The equivalent would be x5chain?",
+              "createdAt": "2026-02-10T15:30:08Z",
+              "updatedAt": "2026-02-10T15:30:35Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
