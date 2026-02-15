@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-12T01:05:55.530600+00:00",
+  "timestamp": "2026-02-15T01:08:30.601178+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -63,13 +63,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-02-07T07:24:30Z",
-      "updatedAt": "2026-02-10T15:30:35Z",
+      "updatedAt": "2026-02-12T14:02:46Z",
       "baseRepository": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
       "baseRefName": "main",
       "baseRefOid": "87a07406f1b5bca7df8deb9eb12401747b76d93a",
       "headRepository": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
       "headRefName": "tireddy2-patch-1",
-      "headRefOid": "a3e2a55b7b0d6f6a5b231fc18f1006065f663887",
+      "headRefOid": "ce5794e81e6863a973b6cd8f43a8764db9ab4944",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -105,6 +105,46 @@
               "body": "We should also mention COSE. The equivalent would be x5chain?",
               "createdAt": "2026-02-10T15:30:08Z",
               "updatedAt": "2026-02-10T15:30:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDORJ8q987h-OWa",
+          "commit": {
+            "abbreviatedOid": "a3e2a55"
+          },
+          "author": "tireddy2",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-12T13:58:41Z",
+          "updatedAt": "2026-02-12T13:58:41Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "Fixed. ",
+              "createdAt": "2026-02-12T13:58:41Z",
+              "updatedAt": "2026-02-12T13:58:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDORJ8q987h-OnM",
+          "commit": {
+            "abbreviatedOid": "a3e2a55"
+          },
+          "author": "tireddy2",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-12T13:58:54Z",
+          "updatedAt": "2026-02-12T13:58:54Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "Yes, updated text. ",
+              "createdAt": "2026-02-12T13:58:54Z",
+              "updatedAt": "2026-02-12T13:58:54Z"
             }
           ]
         }
