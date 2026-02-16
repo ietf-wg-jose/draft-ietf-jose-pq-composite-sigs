@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 10 August 2026                                          J. Gray
+Expires: 20 August 2026                                          J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                         6 February 2026
+                                                        16 February 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 August 2026.
+   This Internet-Draft will expire on 20 August 2026.
 
 Copyright Notice
 
@@ -624,18 +624,57 @@ Table of Contents
    different hybrid combinations that appear in this document, the user
    can read [I-D.draft-ietf-lamps-pq-composite-sigs].
 
-   In terms of security properties, Composite ML-DSA will be EUF-CMA
-   secure if at least one of its component algorithms is EUF-CMA secure
-   and the message hash PH is collision resistant.
+   In JOSE/COSE, the security objective of digital signatures is to
+   ensure that only an authorized signer can produce a valid signature
+   over a given protected header and payload.  Verifiers do not rely on
+   signature uniqueness, and replay protection is addressed through
+   claims defined in [RFC7519], Section 4.1 (e.g., exp, nbf, and jti)
+   and in COSE, these correspond to the equivalent claims defined in
+   [RFC8392], Section 3.
 
-   Ed25519 and Ed448 are SUF-CMA secure, making the composite SUF-CMA
-   secure against classical adversaries.
+   Under a CRQC, traditional signature algorithms such as RSA, ECDSA,
+   and EdDSA are vulnerable to private-key recovery, enabling attackers
+   to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and
+   fully impersonate the signer.  When Composite ML-DSA is used, a valid
+   JOSE/COSE signature requires successful verification of both the ML-
+   DSA component and the traditional component.  As a result, an
+   adversary that compromises only the traditional algorithm cannot
+   produce valid JOSE/COSE objects as long as ML-DSA remains secure.
+   This prevents JOSE/COSE signature spoofing and impersonation attacks
+   even if the traditional signature component is compromised.
 
-   However, Composite ML-DSA will not be SUF-CMA secure against a
-   quantum adversary, since a quantum adversary will be able to break
-   the SUF-CMA security of the traditional component.  Consequently,
-   applications where SUF-CMA security is critical SHOULD NOT use
-   Composite ML-DSA.
+   Furthermore, even if the traditional component algorithm is
+   compromised, an attacker cannot spoof the certificate used to sign a
+   JOSE/COSE object.  The integrity of the composite public key is
+   protected through mandatory validation of the certificate header:
+
+   *  In JOSE: The x5c header as specified in [RFC7515], Section 4.1.6.
+
+   *  In COSE: The x5chain header as specified in [RFC9360],
+      Section 3.2.
+
+   These specifications require the validation of the composite
+   signature on the certificate itself.  This means the certificate
+   itself is protected by a composite signature.  Even if an attacker
+   can break the traditional algorithm, they cannot forge a fake
+   certificate to swap your public key for theirs, because the ML-DSA
+   component of the CA's signature remains secure.
+
+   Composite ML-DSA is not suitable for use cases that require non-
+   repudiation or signature uniqueness guarantees.  In the JOSE/COSE
+   threat model described above, existential unforgeability under
+   chosen-message attack (EUF-CMA) is sufficient to meet the intended
+   security goals.  Composite ML-DSA provides EUF-CMA security if at
+   least one of its component signature algorithms is EUF-CMA secure and
+   the pre-hash function PH is collision resistant.
+
+   When paired with traditional algorithms such as Ed25519 or Ed448,
+   which are SUF-CMA secure, the composite construction is SUF-CMA
+   secure against classical adversaries.  However, Composite ML-DSA is
+   not SUF-CMA secure against quantum adversaries, since a quantum
+   adversary can break the SUF-CMA security of the traditional
+   component.  Consequently, applications for which SUF-CMA security is
+   a strict requirement MUST NOT use Composite ML-DSA.
 
 7.  IANA Considerations
 
@@ -934,6 +973,14 @@ Table of Contents
               January 2025, <https://datatracker.ietf.org/doc/html/
               draft-ietf-pquip-pqt-hybrid-terminology-06>.
 
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
+              (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7519>.
+
+   [RFC8392]  Jones, M., Wahlstroem, E., Erdtman, S., and H. Tschofenig,
+              "CBOR Web Token (CWT)", RFC 8392, DOI 10.17487/RFC8392,
+              May 2018, <https://www.rfc-editor.org/rfc/rfc8392>.
+
    [RFC9053]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
               Initial Algorithms", RFC 9053, DOI 10.17487/RFC9053,
               August 2022, <https://www.rfc-editor.org/rfc/rfc9053>.
@@ -941,6 +988,11 @@ Table of Contents
    [RFC9054]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
               Hash Algorithms", RFC 9054, DOI 10.17487/RFC9054, August
               2022, <https://www.rfc-editor.org/rfc/rfc9054>.
+
+   [RFC9360]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Header Parameters for Carrying and Referencing X.509
+              Certificates", RFC 9360, DOI 10.17487/RFC9360, February
+              2023, <https://www.rfc-editor.org/rfc/rfc9360>.
 
 Appendix A.  Examples
 

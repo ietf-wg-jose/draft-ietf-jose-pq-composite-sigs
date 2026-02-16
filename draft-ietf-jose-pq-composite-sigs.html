@@ -173,7 +173,7 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -181,7 +181,8 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -1056,7 +1057,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Prabel, et al.</td>
-<td class="center">Expires 10 August 2026</td>
+<td class="center">Expires 20 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-jose-pq-composite-sigs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-06" class="published">6 February 2026</time>
+<time datetime="2026-02-16" class="published">16 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-10">10 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-20">20 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1136,7 +1137,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1777,9 +1778,20 @@ Signature of the 1st Algorithm || Signature of the 2nd Algorithm
 <p id="section-6-2">All security issues that are pertinent to any cryptographic application must be addressed by JWS/JWK agents. Protecting the user's private key and employing countermeasures to various attacks constitute a priority.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">In particular, to avoid key reuse, when generating a new composite key, the key generation functions for both component algorithms <span class="bcp14">MUST</span> be executed. Compliant parties <span class="bcp14">MUST NOT</span> use, import or export component keys that are used in other contexts, combinations, or by themselves as keys for standalone algorithm use.<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">For security properties and security issues related to the use of a hybrid signature scheme, the user can refer to <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>. For more information about hybrid composite signature schemes and the different hybrid combinations that appear in this document, the user can read <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-6-4" class="pilcrow">¶</a></p>
-<p id="section-6-5">In terms of security properties, Composite ML-DSA will be EUF-CMA secure if at least one of its component algorithms is EUF-CMA secure and the message hash PH is collision resistant.<a href="#section-6-5" class="pilcrow">¶</a></p>
-<p id="section-6-6">Ed25519 and Ed448 are SUF-CMA secure, making the composite SUF-CMA secure against classical adversaries.<a href="#section-6-6" class="pilcrow">¶</a></p>
-<p id="section-6-7">However, Composite ML-DSA will not be SUF-CMA secure against a quantum adversary, since a quantum adversary will be able to break the SUF-CMA security of the traditional component. Consequently, applications where SUF-CMA security is critical <span class="bcp14">SHOULD NOT</span> use Composite ML-DSA.<a href="#section-6-7" class="pilcrow">¶</a></p>
+<p id="section-6-5">In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload. Verifiers do not rely on signature uniqueness, and replay protection is addressed through claims defined in <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>], <a href="https://rfc-editor.org/rfc/rfc7519#section-4.1" class="relref">Section 4.1</a></span> (e.g., exp, nbf, and jti) and in COSE, these correspond to the equivalent claims defined in <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>], <a href="https://rfc-editor.org/rfc/rfc8392#section-3" class="relref">Section 3</a></span>.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">Under a CRQC, traditional signature algorithms such as RSA, ECDSA, and EdDSA are vulnerable to private-key recovery, enabling attackers to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and fully impersonate the signer. When Composite ML-DSA is used, a valid JOSE/COSE signature requires successful verification of both the ML-DSA component and the traditional component. As a result, an adversary that compromises only the traditional algorithm cannot produce valid JOSE/COSE objects as long as ML-DSA remains secure. This prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-7">Furthermore, even if the traditional component algorithm is compromised, an attacker cannot spoof the certificate used to sign a JOSE/COSE object. The integrity of the composite public key is protected through mandatory validation of the certificate header:<a href="#section-6-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-8.1">
+          <p id="section-6-8.1.1">In JOSE: The x5c header as specified in <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>], <a href="https://rfc-editor.org/rfc/rfc7515#section-4.1.6" class="relref">Section 4.1.6</a></span>.<a href="#section-6-8.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-8.2">
+          <p id="section-6-8.2.1">In COSE: The x5chain header as specified in <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>], <a href="https://rfc-editor.org/rfc/rfc9360#section-3.2" class="relref">Section 3.2</a></span>.<a href="#section-6-8.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-6-9">These specifications require the validation of the composite signature on the certificate itself. This means the certificate itself is protected by a composite signature. Even if an attacker can break the traditional algorithm, they cannot forge a fake certificate to swap your public key for theirs, because the ML-DSA component of the CA's signature remains secure.<a href="#section-6-9" class="pilcrow">¶</a></p>
+<p id="section-6-10">Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE/COSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals. Composite ML-DSA provides EUF-CMA security if at least one of its component signature algorithms is EUF-CMA secure and the pre-hash function PH is collision resistant.<a href="#section-6-10" class="pilcrow">¶</a></p>
+<p id="section-6-11">When paired with traditional algorithms such as Ed25519 or Ed448, which are SUF-CMA secure, the composite construction is SUF-CMA secure against classical adversaries. However, Composite ML-DSA is not SUF-CMA secure against quantum adversaries, since a quantum adversary can break the SUF-CMA security of the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">MUST NOT</span> use Composite ML-DSA.<a href="#section-6-11" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -2243,13 +2255,25 @@ They are represented following the registration template provided in <span>[<a h
         <dd>
 <span class="refAuthor">D, F.</span>, <span class="refAuthor">P, M.</span>, and <span class="refAuthor">B. Hale</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqt-hybrid-terminology-06</span>, <time datetime="2025-01-10" class="refDate">10 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-06">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7519">[RFC7519]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8392">[RFC8392]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"CBOR Web Token (CWT)"</span>, <span class="seriesInfo">RFC 8392</span>, <span class="seriesInfo">DOI 10.17487/RFC8392</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8392">https://www.rfc-editor.org/rfc/rfc8392</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9053">[RFC9053]</dt>
         <dd>
 <span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Initial Algorithms"</span>, <span class="seriesInfo">RFC 9053</span>, <span class="seriesInfo">DOI 10.17487/RFC9053</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9053">https://www.rfc-editor.org/rfc/rfc9053</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9054">[RFC9054]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Hash Algorithms"</span>, <span class="seriesInfo">RFC 9054</span>, <span class="seriesInfo">DOI 10.17487/RFC9054</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9054">https://www.rfc-editor.org/rfc/rfc9054</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9360">[RFC9360]</dt>
+      <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Header Parameters for Carrying and Referencing X.509 Certificates"</span>, <span class="seriesInfo">RFC 9360</span>, <span class="seriesInfo">DOI 10.17487/RFC9360</span>, <time datetime="2023-02" class="refDate">February 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9360">https://www.rfc-editor.org/rfc/rfc9360</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
