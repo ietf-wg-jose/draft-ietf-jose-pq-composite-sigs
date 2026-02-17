@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-15T01:08:30.601178+00:00",
+  "timestamp": "2026-02-17T01:04:45.265863+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -56,24 +56,26 @@
       "id": "PR_kwDORJ8q987CJaGi",
       "title": "Updates to Security Considerations Section",
       "url": "https://github.com/ietf-wg-jose/draft-ietf-jose-pq-composite-sigs/pull/1",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "tireddy2",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-02-07T07:24:30Z",
-      "updatedAt": "2026-02-12T14:02:46Z",
+      "updatedAt": "2026-02-16T15:07:48Z",
       "baseRepository": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
       "baseRefName": "main",
       "baseRefOid": "87a07406f1b5bca7df8deb9eb12401747b76d93a",
       "headRepository": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
       "headRefName": "tireddy2-patch-1",
       "headRefOid": "ce5794e81e6863a973b6cd8f43a8764db9ab4944",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-16T15:07:48Z",
+      "mergedAt": "2026-02-16T15:07:48Z",
+      "mergedBy": "lucasprabel",
+      "mergeCommit": {
+        "oid": "54387895709da8f132f0c8cc4b36ca7988854f5d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -147,6 +149,19 @@
               "updatedAt": "2026-02-12T13:58:54Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDORJ8q987jCr7m",
+          "commit": {
+            "abbreviatedOid": "ce5794e"
+          },
+          "author": "lucasprabel",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks!",
+          "createdAt": "2026-02-16T15:07:19Z",
+          "updatedAt": "2026-02-16T15:07:19Z",
+          "comments": []
         }
       ]
     }
