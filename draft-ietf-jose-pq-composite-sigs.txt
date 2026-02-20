@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 20 August 2026                                          J. Gray
+Expires: 24 August 2026                                          J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                        16 February 2026
+                                                        20 February 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 August 2026.
+   This Internet-Draft will expire on 24 August 2026.
 
 Copyright Notice
 
@@ -228,6 +228,8 @@ Table of Contents
    For the composite algorithms described in this document (ML-DSA with
    ECDSA or EdDSA), the Key Generation process is as follows:
 
+   Composite-ML-DSA.KeyGen() -> (pk, sk)
+
    1. Generate component keys
 
        mldsaSeed = Random(32)
@@ -242,8 +244,12 @@ Table of Contents
 
    3. Serialize keys into composite form
 
-       Composite Public Key  <- SerializePublicKey(mldsaPK, tradPK)
-       Composite Private Key <- SerializePrivateKey(mldsaSeed, tradSK)
+       pk <- SerializePublicKey(mldsaPK, tradPK)
+       sk <- SerializePrivateKey(mldsaSeed, tradSK)
+
+   4. Output the composite public and private keys
+
+       return (pk, sk)
 
    As in [I-D.draft-ietf-lamps-pq-composite-sigs], this keygen routine
    uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of
@@ -295,20 +301,22 @@ Table of Contents
    For the composite algorithms described in this document (ML-DSA with
    ECDSA or EdDSA), the signature process of a message M is as follows:
 
+Composite-ML-DSA.Sign(sk, M) -> s
+
 1. Compute the Message representative M'
 
     M' <- Prefix || Label || 0x00 || PH(M)
     M' <- Encode(M')
 
-2. Separate the private key into component keys and re-generate the ML-DSA key from seed
+2. Separate the private key sk into component keys and re-generate the ML-DSA key from seed
 
     (mldsaSeed, tradSK) = DeserializePrivateKey(sk)
     (_, mldsaSK) = ML-DSA.KeyGen_internal(mldsaSeed)
 
 3. Generate the two component signatures
 
-    sig_1 <- ML-DSA.Sign(mldsaSK, M', ctx=Label)
-    sig_2 <- Trad.Sign(tradSK, M')
+    mldsaSig <- ML-DSA.Sign(mldsaSK, M', ctx=Label)
+    tradSig <- Trad.Sign(tradSK, M')
 
 4. If either ML-DSA.Sign() or Trad.Sign() return an error, then this process MUST return an error.
 
@@ -317,8 +325,8 @@ Table of Contents
 
 5. Output the encoded composite signature value.
 
-    CompositeSignature <- SerializeSignatureValue(sig_1, sig_2)
-    return CompositeSignature
+    s <- SerializeSignatureValue(mldsaSig, tradSig)
+    return s
 
    The serialization routines from
    [I-D.draft-ietf-lamps-pq-composite-sigs] are again used to obtain the
@@ -376,10 +384,12 @@ Table of Contents
 
    *  verify each component signature.
 
+Composite-ML-DSA.Verify(pk, M, s) -> true or false
+
 1. Separate the keys and signatures
 
     (mldsaPK, tradPK) <- DeserializePublicKey(pk)
-    (sig_1, sig_2) <- DeserializeSignatureValue(sig)
+    (mldsaSig, tradSig) <- DeserializeSignatureValue(s)
 
     If Error during deserialization, or if any of the component keys or signature values are not of the correct type or length for the given component algorithm then output "Invalid signature" and stop.
 
