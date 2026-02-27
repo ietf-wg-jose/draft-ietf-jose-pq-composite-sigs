@@ -49,6 +49,8 @@ author:
     email: "kondtir@gmail.com"
 
 normative:
+ RFC6090:
+ RFC8032:
  RFC7515:
  RFC7517:
  RFC7518:
@@ -369,28 +371,47 @@ They are represented here as ASCII strings, but implementers MUST convert them t
 
 # Security Considerations
 
-The security considerations of {{RFC7515}}, {{RFC7517}}, {{RFC9053}} and {{FIPS.204}} also apply to this document.
+The security considerations of the component algorithms (ML-DSA, ECDSA, and EdDSA) as described in {{FIPS.204}}, {{RFC6090}}, and {{RFC8032}} apply to this document.
 
-All security issues that are pertinent to any cryptographic application must be addressed by JWS/JWK agents. Protecting the user's private key and employing countermeasures to various attacks constitute a priority.
+Similarly, the security considerations relative to the JWS, JWK, and COSE structures {{RFC7515}}, {{RFC7517}} and {{RFC9053}} apply to this document.
 
-In particular, to avoid key reuse, when generating a new composite key, the key generation functions for both component algorithms MUST be executed. Compliant parties MUST NOT use, import or export component keys that are used in other contexts, combinations, or by themselves as keys for standalone algorithm use.
+In addition, the following considerations specific to the composite design and its use in JOSE/COSE must be taken into account.
 
-For security properties and security issues related to the use of a hybrid signature scheme, the user can refer to {{-HYB-SIG-SPECTRUMS}}. For more information about hybrid composite signature schemes and the different hybrid combinations that appear in this document, the user can read {{-COMPOSITE-LAMPS}}.
+## Hybrid Security and Quantum Resistance
 
-In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload. Verifiers do not rely on signature uniqueness, and replay protection is addressed through claims defined in {{RFC7519, Section 4.1}} (e.g., exp, nbf, and jti) and in COSE, these correspond to the equivalent claims defined in {{RFC8392, Section 3}}.
+An important objective of Composite ML-DSA is to provide protection against CRQCs. Under a CRQC, traditional signature algorithms (RSA, ECDSA, and EdDSA) are vulnerable to private-key recovery, enabling attackers to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and fully impersonate the signer.
 
-Under a CRQC, traditional signature algorithms such as RSA, ECDSA, and EdDSA are vulnerable to private-key recovery, enabling attackers to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and fully impersonate the signer. When Composite ML-DSA is used, a valid JOSE/COSE signature requires successful verification of both the ML-DSA component and the traditional component. As a result, an adversary that compromises only the traditional algorithm cannot produce valid JOSE/COSE objects as long as ML-DSA remains secure. This prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
+By requiring the successful verification of both the ML-DSA component and the traditional component, this construction ensures:
 
-Furthermore, even if the traditional component algorithm is compromised, an attacker cannot spoof the certificate used to sign a JOSE/COSE object. The integrity of the composite public key is protected through mandatory validation of the certificate header:
+* **Dual-Algorithm Security:** An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure.
+* **Impersonation Prevention:** In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
+* **EUF-CMA Security:** The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function `PH` is collision-resistant. This is the case for all combinations present in this document.
 
-* In JOSE: The x5c header as specified in {{RFC7515, Section 4.1.6}}.
-* In COSE: The x5chain header as specified in {{RFC9360, Section 3.2}}.
+## Component Key Integrity and Reuse
 
-These specifications require the validation of the composite signature on the certificate itself. This means the certificate itself is protected by a composite signature. Even if an attacker can break the traditional algorithm, they cannot forge a fake certificate to swap your public key for theirs, because the ML-DSA component of the CA's signature remains secure.
+To maintain the security properties of the composite scheme, strict key management is required:
 
-Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE/COSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals. Composite ML-DSA provides EUF-CMA security if at least one of its component signature algorithms is EUF-CMA secure and the pre-hash function PH is collision resistant.
+* **No Key Reuse:** To avoid key reuse, when generating a new composite key, the generation functions for both component algorithms MUST be executed. Moreover, compliant parties MUST NOT use, import, or export component keys that are used in other contexts, combinations, or as standalone keys.
+* **Certificate-Level Protection:** The integrity of the composite public key is protected through mandatory validation of the certificate header (the `x5c` header in JOSE per {{RFC7515}} or the `x5chain` header in COSE per {{RFC9360}}). Because the certificate itself is protected by a composite signature, an attacker cannot forge a fake certificate to swap a public key even if the traditional algorithm is broken. These specifications require the validation of the composite signature on the certificate itself.
 
-When paired with traditional algorithms such as Ed25519 or Ed448, which are SUF-CMA secure, the composite construction is SUF-CMA secure against classical adversaries. However, Composite ML-DSA is not SUF-CMA secure against quantum adversaries, since a quantum adversary can break the SUF-CMA security of the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement MUST NOT use Composite ML-DSA.
+## Domain Separation and Non-Separability
+
+This document uses a signature combiner that prepends a fixed `Prefix` and a specific `Label` to the message representative `M'`. 
+
+* **Non-separability:** By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in {{-HYB-SIG-SPECTRUMS}}.
+* **Cross-Algorithm Prevention:** The unique label, specific to each composite algorithm, ensures that signatures cannot be removed from the composite and used in other contexts.
+
+For more information about the security properties relative to the signature combiner, the user can read {{-COMPOSITE-LAMPS}}.
+
+## Security Objectives and Limitations
+
+In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload. 
+
+Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:
+
+* **SUF-CMA Security:** While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement MUST NOT use Composite ML-DSA.
+* **Non-repudiation:** Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE/COSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals.
+* **Replay Protection:** This is not handled by the signature itself but must be addressed through claims such as `exp`, `nbf`, and `jti` in JOSE ({{Section 4.1 of RFC7519}}) or the equivalent claims in COSE ({{Section 3 of RFC8392}}).
 
 # IANA Considerations
 
