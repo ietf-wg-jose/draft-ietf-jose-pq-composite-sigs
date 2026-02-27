@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 24 August 2026                                          J. Gray
+Expires: 31 August 2026                                          J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                        20 February 2026
+                                                        27 February 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 August 2026.
+   This Internet-Draft will expire on 31 August 2026.
 
 Copyright Notice
 
@@ -88,6 +88,10 @@ Table of Contents
      5.2.  COSE algorithms
      5.3.  Composite Labels for JOSE and COSE
    6.  Security Considerations
+     6.1.  Hybrid Security and Quantum Resistance
+     6.2.  Component Key Integrity and Reuse
+     6.3.  Domain Separation and Non-Separability
+     6.4.  Security Objectives and Limitations
    7.  IANA Considerations
      7.1.  JOSE Algorithms
        7.1.1.  ML-DSA-44-ES256
@@ -613,78 +617,107 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
 
 6.  Security Considerations
 
-   The security considerations of [RFC7515], [RFC7517], [RFC9053] and
-   [FIPS.204] also apply to this document.
+   The security considerations of the component algorithms (ML-DSA,
+   ECDSA, and EdDSA) as described in [FIPS.204], [RFC6090], and
+   [RFC8032] apply to this document.
 
-   All security issues that are pertinent to any cryptographic
-   application must be addressed by JWS/JWK agents.  Protecting the
-   user's private key and employing countermeasures to various attacks
-   constitute a priority.
+   Similarly, the security considerations relative to the JWS, JWK, and
+   COSE structures [RFC7515], [RFC7517] and [RFC9053] apply to this
+   document.
 
-   In particular, to avoid key reuse, when generating a new composite
-   key, the key generation functions for both component algorithms MUST
-   be executed.  Compliant parties MUST NOT use, import or export
-   component keys that are used in other contexts, combinations, or by
-   themselves as keys for standalone algorithm use.
+   In addition, the following considerations specific to the composite
+   design and its use in JOSE/COSE must be taken into account.
 
-   For security properties and security issues related to the use of a
-   hybrid signature scheme, the user can refer to
-   [I-D.draft-ietf-pquip-hybrid-signature-spectrums].  For more
-   information about hybrid composite signature schemes and the
-   different hybrid combinations that appear in this document, the user
-   can read [I-D.draft-ietf-lamps-pq-composite-sigs].
+6.1.  Hybrid Security and Quantum Resistance
+
+   An important objective of Composite ML-DSA is to provide protection
+   against CRQCs.  Under a CRQC, traditional signature algorithms (RSA,
+   ECDSA, and EdDSA) are vulnerable to private-key recovery, enabling
+   attackers to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1
+   structures and fully impersonate the signer.
+
+   By requiring the successful verification of both the ML-DSA component
+   and the traditional component, this construction ensures:
+
+   *  *Dual-Algorithm Security:* An adversary that compromises only one
+      of the component algorithms cannot produce cryptographically
+      protected JOSE/COSE objects as long as the other component remains
+      secure.
+
+   *  *Impersonation Prevention:* In particular, this prevents JOSE/COSE
+      signature spoofing and impersonation attacks even if the
+      traditional signature component is compromised.
+
+   *  *EUF-CMA Security:* The scheme provides existential unforgeability
+      under chosen-message attack (EUF-CMA) provided that at least one
+      component algorithm is EUF-CMA secure and the pre-hash function PH
+      is collision-resistant.  This is the case for all combinations
+      present in this document.
+
+6.2.  Component Key Integrity and Reuse
+
+   To maintain the security properties of the composite scheme, strict
+   key management is required:
+
+   *  *No Key Reuse:* To avoid key reuse, when generating a new
+      composite key, the generation functions for both component
+      algorithms MUST be executed.  Moreover, compliant parties MUST NOT
+      use, import, or export component keys that are used in other
+      contexts, combinations, or as standalone keys.
+
+   *  *Certificate-Level Protection:* The integrity of the composite
+      public key is protected through mandatory validation of the
+      certificate header (the x5c header in JOSE per [RFC7515] or the
+      x5chain header in COSE per [RFC9360]).  Because the certificate
+      itself is protected by a composite signature, an attacker cannot
+      forge a fake certificate to swap a public key even if the
+      traditional algorithm is broken.  These specifications require the
+      validation of the composite signature on the certificate itself.
+
+6.3.  Domain Separation and Non-Separability
+
+   This document uses a signature combiner that prepends a fixed Prefix
+   and a specific Label to the message representative M'.
+
+   *  *Non-separability:* By binding the two component signatures to the
+      specific composite algorithm, the composite scheme achieves "weak
+      non-separability" as defined in
+      [I-D.draft-ietf-pquip-hybrid-signature-spectrums].
+
+   *  *Cross-Algorithm Prevention:* The unique label, specific to each
+      composite algorithm, ensures that signatures cannot be removed
+      from the composite and used in other contexts.
+
+   For more information about the security properties relative to the
+   signature combiner, the user can read
+   [I-D.draft-ietf-lamps-pq-composite-sigs].
+
+6.4.  Security Objectives and Limitations
 
    In JOSE/COSE, the security objective of digital signatures is to
    ensure that only an authorized signer can produce a valid signature
-   over a given protected header and payload.  Verifiers do not rely on
-   signature uniqueness, and replay protection is addressed through
-   claims defined in [RFC7519], Section 4.1 (e.g., exp, nbf, and jti)
-   and in COSE, these correspond to the equivalent claims defined in
-   [RFC8392], Section 3.
+   over a given protected header and payload.
 
-   Under a CRQC, traditional signature algorithms such as RSA, ECDSA,
-   and EdDSA are vulnerable to private-key recovery, enabling attackers
-   to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and
-   fully impersonate the signer.  When Composite ML-DSA is used, a valid
-   JOSE/COSE signature requires successful verification of both the ML-
-   DSA component and the traditional component.  As a result, an
-   adversary that compromises only the traditional algorithm cannot
-   produce valid JOSE/COSE objects as long as ML-DSA remains secure.
-   This prevents JOSE/COSE signature spoofing and impersonation attacks
-   even if the traditional signature component is compromised.
+   Therefore, users should be aware of specific scenarios where
+   Composite ML-DSA may not be appropriate:
 
-   Furthermore, even if the traditional component algorithm is
-   compromised, an attacker cannot spoof the certificate used to sign a
-   JOSE/COSE object.  The integrity of the composite public key is
-   protected through mandatory validation of the certificate header:
+   *  *SUF-CMA Security:* While the construction is SUF-CMA secure
+      against classical adversaries when paired with Ed25519 or Ed448,
+      it is not SUF-CMA secure against quantum adversaries (who can
+      break the traditional component).  Consequently, applications for
+      which SUF-CMA security is a strict requirement MUST NOT use
+      Composite ML-DSA.
 
-   *  In JOSE: The x5c header as specified in [RFC7515], Section 4.1.6.
+   *  *Non-repudiation:* Composite ML-DSA is not suitable for use cases
+      that require non-repudiation or signature uniqueness guarantees.
+      In the JOSE/COSE threat model described above, existential
+      unforgeability under chosen-message attack (EUF-CMA) is sufficient
+      to meet the intended security goals.
 
-   *  In COSE: The x5chain header as specified in [RFC9360],
-      Section 3.2.
-
-   These specifications require the validation of the composite
-   signature on the certificate itself.  This means the certificate
-   itself is protected by a composite signature.  Even if an attacker
-   can break the traditional algorithm, they cannot forge a fake
-   certificate to swap your public key for theirs, because the ML-DSA
-   component of the CA's signature remains secure.
-
-   Composite ML-DSA is not suitable for use cases that require non-
-   repudiation or signature uniqueness guarantees.  In the JOSE/COSE
-   threat model described above, existential unforgeability under
-   chosen-message attack (EUF-CMA) is sufficient to meet the intended
-   security goals.  Composite ML-DSA provides EUF-CMA security if at
-   least one of its component signature algorithms is EUF-CMA secure and
-   the pre-hash function PH is collision resistant.
-
-   When paired with traditional algorithms such as Ed25519 or Ed448,
-   which are SUF-CMA secure, the composite construction is SUF-CMA
-   secure against classical adversaries.  However, Composite ML-DSA is
-   not SUF-CMA secure against quantum adversaries, since a quantum
-   adversary can break the SUF-CMA security of the traditional
-   component.  Consequently, applications for which SUF-CMA security is
-   a strict requirement MUST NOT use Composite ML-DSA.
+   *  *Replay Protection:* This is not handled by the signature itself
+      but must be addressed through claims such as exp, nbf, and jti in
+      JOSE (Section 4.1 of [RFC7519]) or the equivalent claims in COSE
+      (Section 3 of [RFC8392]).
 
 7.  IANA Considerations
 
@@ -927,6 +960,11 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC6090]  McGrew, D., Igoe, K., and M. Salter, "Fundamental Elliptic
+              Curve Cryptography Algorithms", RFC 6090,
+              DOI 10.17487/RFC6090, February 2011,
+              <https://www.rfc-editor.org/rfc/rfc6090>.
+
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
               2015, <https://www.rfc-editor.org/rfc/rfc7515>.
@@ -942,6 +980,11 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    [RFC7638]  Jones, M. and N. Sakimura, "JSON Web Key (JWK)
               Thumbprint", RFC 7638, DOI 10.17487/RFC7638, September
               2015, <https://www.rfc-editor.org/rfc/rfc7638>.
+
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032,
+              DOI 10.17487/RFC8032, January 2017,
+              <https://www.rfc-editor.org/rfc/rfc8032>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -965,9 +1008,9 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
               Ounsworth, M., Gray, J., Pala, M., Klaußner, J., and S.
               Fluhrer, "Composite ML-DSA for use in X.509 Public Key
               Infrastructure", Work in Progress, Internet-Draft, draft-
-              ietf-lamps-pq-composite-sigs-14, 7 January 2026,
+              ietf-lamps-pq-composite-sigs-15, 24 February 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
-              pq-composite-sigs-14>.
+              pq-composite-sigs-15>.
 
    [I-D.draft-ietf-pquip-hybrid-signature-spectrums]
               Bindel, N., Hale, B., Connolly, D., and F. D, "Hybrid
