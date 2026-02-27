@@ -396,7 +396,7 @@ To maintain the security properties of the composite scheme, strict key manageme
 
 ## Domain Separation and Non-Separability
 
-This document uses a signature combiner that prepends a fixed `Prefix` and a specific `Label` to the message representative `M'`. 
+This document uses a signature combiner that prepends a fixed `Prefix` and a specific `Label` to the message representative `M'`.
 
 * **Non-separability:** By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in {{-HYB-SIG-SPECTRUMS}}.
 * **Cross-Algorithm Prevention:** The unique label, specific to each composite algorithm, ensures that signatures cannot be removed from the composite and used in other contexts.
@@ -405,7 +405,7 @@ For more information about the security properties relative to the signature com
 
 ## Security Objectives and Limitations
 
-In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload. 
+In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload.
 
 Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:
 
