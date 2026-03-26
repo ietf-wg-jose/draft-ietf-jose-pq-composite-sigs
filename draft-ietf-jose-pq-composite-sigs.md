@@ -188,7 +188,7 @@ As in {{-COMPOSITE-LAMPS}}, this keygen routine uses the seed-based ML-DSA.KeyGe
 
 This document makes use of the serialization routines from {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys. These encodings are then directly used with the AKP Key Type. For more information, see the `SerializePublicKey`, `DeserializePublicKey`, `SerializePrivateKey` and `DeserializePrivateKey` algorithms from {{-COMPOSITE-LAMPS}}.
 
-Point compression for the ECDSA or EdDSA component is not performed for the AKP JSON Web Key Type but can be performed for the AKP COSE Key Type.
+For the AKP JSON Web Key Type and AKP COSE Key Type, point compression is performed for the EdDSA component, but not for the ECDSA component.
 
 In this document, as in {{-COSE-MLDSA}}, the ML-DSA private key MUST be a 32-bytes seed.
 
