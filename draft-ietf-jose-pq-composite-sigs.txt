@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 15 September 2026                                       J. Gray
+Expires: 27 September 2026                                       J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                           14 March 2026
+                                                           26 March 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 September 2026.
+   This Internet-Draft will expire on 27 September 2026.
 
 Copyright Notice
 
@@ -267,9 +267,9 @@ Table of Contents
    and DeserializePrivateKey algorithms from
    [I-D.draft-ietf-lamps-pq-composite-sigs].
 
-   Point compression for the ECDSA or EdDSA component is not performed
-   for the AKP JSON Web Key Type but can be performed for the AKP COSE
-   Key Type.
+   For the AKP JSON Web Key Type and AKP COSE Key Type, point
+   compression is performed for the EdDSA component, but not for the
+   ECDSA component.
 
    In this document, as in [I-D.draft-ietf-cose-dilithium], the ML-DSA
    private key MUST be a 32-bytes seed.
