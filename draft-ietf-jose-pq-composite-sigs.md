@@ -83,6 +83,7 @@ informative:
  RFC8392:
  RFC9360:
  RFC3279:
+ RFC5915:
  I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYB-TERMINO
  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYB-SIG-SPECTRUMS
