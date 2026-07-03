@@ -138,7 +138,7 @@ This document makes use of the Algorithm Key Pair (AKP) type which is defined in
 
 As a reminder, the AKP type is used to express public and private keys for use with algorithms. The parameters for public and private keys contain byte strings.
 
-This document makes use of the serialization routines defined in {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys.
+This document makes use of the serialization routines defined in {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys, adapted to use raw fixed-length encodings for ECDSA components.
 
 The process to compute JWK Thumbprint and COSE Key Thumbprint as described in {{RFC7638}} and {{RFC9679}} is detailed in {{-COSE-MLDSA}}.
 
