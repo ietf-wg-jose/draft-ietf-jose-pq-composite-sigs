@@ -82,6 +82,7 @@ informative:
  RFC7519:
  RFC8392:
  RFC9360:
+ RFC3279:
  I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYB-TERMINO
  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYB-SIG-SPECTRUMS
@@ -186,7 +187,8 @@ Composite-ML-DSA.KeyGen() -> (pk, sk)
 
 As in {{-COMPOSITE-LAMPS}}, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of {{FIPS.204}}.
 
-This document makes use of the serialization routines from {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys. These encodings are then directly used with the AKP Key Type. For more information, see the `SerializePublicKey`, `DeserializePublicKey`, `SerializePrivateKey` and `DeserializePrivateKey` algorithms from {{-COMPOSITE-LAMPS}}.
+This document makes use of the serialization routines from {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys. However, for the ECDSA component, this document departs from {{-COMPOSITE-LAMPS}}, which requires Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}}. Instead, the ECDSA signature, private key, and public key MUST use the raw fixed-length encodings already defined for ECDSA in JOSE {{Section 3.4 and 6.2.1.1 of RFC7518}} and in COSE {{Sections 2.1 and 7.1 of RFC9053}}.
+These encodings are then used with the AKP Key Type. For more information, see the `SerializePublicKey`, `DeserializePublicKey`, `SerializePrivateKey` and `DeserializePrivateKey` algorithms from {{-COMPOSITE-LAMPS}}. 
 
 For the AKP JSON Web Key Type and AKP COSE Key Type, point compression is performed for the EdDSA component, but not for the ECDSA component.
 
@@ -240,7 +242,7 @@ Composite-ML-DSA.Sign(sk, M) -> s
     return s
 ~~~
 
-The serialization routines from {{-COMPOSITE-LAMPS}} are again used to obtain the byte string encoding of the composite signature. The `SerializeSignatureValue` routine simply concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. For more information, see the `SerializeSignatureValue` and `DeserializeSignatureValue` algorithms from {{-COMPOSITE-LAMPS}}.
+The serialization routines from {{-COMPOSITE-LAMPS}} are again used to obtain the byte string encoding of the composite signature. The `SerializeSignatureValue` routine simply concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. However, for the ECDSA component, this document departs from {{-COMPOSITE-LAMPS}}, which requires Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}}. Instead, the ECDSA signature, private key, and public key MUST use the raw fixed-length encodings already defined for ECDSA in JOSE {{Section 3.4 and 6.2.1.1 of RFC7518}} and in COSE {{Sections 2.1 and 7.1 of RFC9053}}. For more information, see the `SerializeSignatureValue` and `DeserializeSignatureValue` algorithms from {{-COMPOSITE-LAMPS}}.
 
 The prefix "Prefix" string is defined as in {{-COMPOSITE-LAMPS}} as the byte encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 436F6D706F73697465416C676F726974686D5369676E61747572657332303235. It can be used by a traditional verifier to detect if the composite signature has been stripped apart.
 
