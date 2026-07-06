@@ -189,7 +189,7 @@ Composite-ML-DSA.KeyGen() -> (pk, sk)
 As in {{-COMPOSITE-LAMPS}}, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of {{FIPS.204}}.
 
 This document makes use of the serialization routines from {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys. However, for the ECDSA component, this document departs from {{-COMPOSITE-LAMPS}}, which requires Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}}. Instead, the ECDSA signature, private key, and public key MUST use the raw fixed-length encodings already defined for ECDSA in JOSE ({{Section 3.4 of RFC7518}} and {{Section 6.2.1.1 of RFC7518}}) and in COSE ({{Section 2.1 of RFC9053}} and {{Section 7.1 of RFC9053}}).
-These encodings are then used with the AKP Key Type. For more information, see the `SerializePublicKey`, `DeserializePublicKey`, `SerializePrivateKey` and `DeserializePrivateKey` algorithms from {{-COMPOSITE-LAMPS}}. 
+These encodings are then used with the AKP Key Type. For more information, see the `SerializePublicKey`, `DeserializePublicKey`, `SerializePrivateKey` and `DeserializePrivateKey` algorithms from {{-COMPOSITE-LAMPS}}.
 
 For the AKP JSON Web Key Type and AKP COSE Key Type, point compression is performed for the EdDSA component, but not for the ECDSA component.
 
