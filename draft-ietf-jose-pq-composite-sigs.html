@@ -12,7 +12,7 @@
 <meta content="
        This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for PQ/T hybrid composite signatures. The composite algorithms described combine ML-DSA as the post-quantum component and either ECDSA or EdDSA as the traditional component. 
     " name="description">
-<meta content="xml2rfc 3.32.0" name="generator">
+<meta content="xml2rfc 3.34.0" name="generator">
 <meta content="JOSE" name="keyword">
 <meta content="COSE" name="keyword">
 <meta content="PQC" name="keyword">
@@ -21,18 +21,19 @@
 <meta content="Hybrid" name="keyword">
 <meta content="draft-ietf-jose-pq-composite-sigs-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.32.0
-    Python 3.12.12
-    ConfigArgParse 1.7
+  xml2rfc 3.34.0
+    Python 3.14.5
+    ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 6.0.2
-    platformdirs 4.9.4
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.10.0
     pycountry 24.6.1
     PyYAML 6.0.3
-    requests 2.32.5
-    wcwidth 0.6.0
+    requests 2.33.1
+    wcwidth 0.8.2
 -->
 <link href="draft-ietf-jose-pq-composite-sigs.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -299,16 +300,19 @@ h1, h2, h3, h4, h5, h6 {
   font-size-adjust: 0.5;
   color: var(--title-color);
 }
-h1#title {
-  font-size: 32px;
-  line-height: 40px;
-  clear: both;
-}
-h1#title, h1#rfcnum {
-  margin: 1.5em 0 0.2em;
-}
-h1#rfcnum + h1#title {
-  margin: 0.2em 0;
+h1 {
+  &#title {
+    font-size: 32px;
+    line-height: 40px;
+    clear: both;
+    margin: 1.5em 0 0.2em;
+  }
+  &#rfcnum {
+    margin: 1.5em 0 0.2em;
+    & + h1#title {
+      margin: 0.2em 0;
+    }
+  }
 }
 
 h1, h2, h3 {
@@ -328,10 +332,10 @@ h4, h5, h6 {
 #abstract+p {
   font-size: 18px;
   line-height: 24px;
-}
-#abstract+p code, #abstract+p samp, #abstract+p tt {
-  font-size: 16px;
-  line-height: 0;
+  & code, & samp, & tt {
+    font-size: 16px;
+    line-height: 0;
+  }
 }
 
 p {
@@ -342,59 +346,59 @@ p {
 div {
   margin: 0;
 }
-.alignRight.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignRight.art-text pre {
-  padding: 0;
-  width: auto;
-}
 .alignRight {
   margin: 1em 0;
-}
-.alignRight > *:first-child {
-  border: none;
-  margin: 0;
-  float: right;
-  clear: both;
-}
-.alignRight > *:nth-child(2) {
-  clear: both;
-  display: block;
-  border: none;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    margin: 0;
+    float: right;
+    clear: both;
+  }
+  & > *:nth-child(2) {
+    clear: both;
+    display: block;
+    border: none;
+  }
 }
 svg {
   display: block;
-}
-/* font-family isn't space-separated, but =~ will have to do */
-svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
-  font-family: var(--font-mono);
-}
-.alignCenter.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignCenter.art-text pre {
-  padding: 0;
-  width: auto;
+  /* font-family isn't space-separated, but =~ will have to do */
+  &[font-family~="monospace" i], & [font-family~="monospace" i] {
+    font-family: var(--font-mono);
+  }
 }
 .alignCenter {
   margin: 1em 0;
-}
-.alignCenter > *:first-child {
-  border: none;
-  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
-     support flexbox yet.
-  */
-  display: table;
-  margin: 0 auto;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+       support flexbox yet.
+    */
+    display: table;
+    margin: 0 auto;
+  }
 }
 
 /* lists */
@@ -432,26 +436,25 @@ dl {
     --indent: 5ch;
     & > dt {
       min-width: calc(var(--indent) - 2ch);
+      float: none;
     }
-  }
-  &.olPercent > dt {
-    float: none;
   }
 
   dl > dd > & {
     margin-top: 0.5em;
     margin-bottom: 0;
   }
-}
-dl:not(.dlNewline) > dt {
-  float: left;
-  margin-right: 2ch;
-  min-width: 8ch;
-}
-dl > dd {
-  margin-bottom: .8em;
-  margin-left: var(--indent) !important; /* stupid element overrides */
-  min-height: 2ex;
+
+  &:not(.dlNewline) > dt {
+    float: left;
+    margin-right: 2ch;
+    min-width: 8ch;
+  }
+  & > dd {
+    margin-bottom: .8em;
+    margin-left: var(--indent) !important; /* stupid element overrides */
+    min-height: 2ex;
+  }
 }
 :is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0;
@@ -467,20 +470,22 @@ dl > dd {
 }
 
 /* links */
-a, a[href].selfRef:hover {
+a {
   text-decoration: none;
+  &[href] {
+    color: var(--link-color);
+    &:hover { text-decoration: underline; }
+    &.selfRef {
+      color: var(--text-color);
+      &:hover {
+        text-decoration: none;
+        background-color: var(--highlight-color);
+      }
+    }
+  }
 }
-a[href] {
-  color: var(--link-color);
-}
-a[href].selfRef, .iref + a[href].internal {
+.iref + a[href].internal {
   color: var(--text-color);
-}
-a[href]:hover {
-  text-decoration: underline;
-}
-a[href].selfRef:hover {
-  background-color: var(--highlight-color);
 }
 a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
   white-space: nowrap;
@@ -516,9 +521,9 @@ img {
 figure {
   margin: 0.5em 0;
   padding: 0;
-}
-figure blockquote {
-  margin: 0.8em 0.4em 0.4em;
+  & blockquote {
+    margin: 0.8em 0.4em 0.4em;
+  }
 }
 figcaption, caption {
   font-style: italic;
@@ -528,17 +533,19 @@ figcaption, caption {
 }
 @media screen {
   /* Auto-collapse boilerplate. */
-  :is(#status-of-memo, #copyright) p {
-    margin: -2px 0;
-    max-height: 0;
-    transition: max-height 2s ease, margin 0.5s ease 0.5s;
-    overflow: hidden;
-  }
-  :is(#status-of-memo, #copyright):hover p,
-  :is(#status-of-memo, #copyright) h2:target ~ p {
-    margin: 0.5em 0;
-    max-height: 500px;
-    overflow: auto;
+  :is(#status-of-memo, #copyright) {
+    & p {
+      margin: -2px 0;
+      max-height: 0;
+      transition: max-height 2s ease, margin 0.5s ease 0.5s;
+      overflow: hidden;
+    }
+    &:hover p,
+    & h2:target ~ p {
+      margin: 0.5em 0;
+      max-height: 500px;
+      overflow: auto;
+    }
   }
   pre, svg {
     display: inline-block;
@@ -588,25 +595,17 @@ table {
   max-width: 100%;
   margin: 0 0 1em;
   border-collapse: collapse;
-}
-table.right {
-  margin-left: auto;
-}
-table.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-table.left {
-  margin-right: auto;
-}
-table .text-left {
-  text-align: left;
-}
-table .text-center {
-  text-align: center;
-}
-table .text-right {
-  text-align: right;
+  &.right { margin-left: auto; }
+  &.center { margin-left: auto; margin-right: auto; }
+  &.left { margin-right: auto; }
+  & .text-left { text-align: left; }
+  & .text-center { text-align: center; }
+  & .text-right { text-align: right; }
+  & caption {
+    margin: 0;
+    padding: 3px 0 3px 1em;
+  }
+  & p { margin: 0; }
 }
 
 thead, tbody {
@@ -626,13 +625,6 @@ th {
 :is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
   background-color: var(--highlight-color);
 }
-table caption {
-  margin: 0;
-  padding: 3px 0 3px 1em;
-}
-table p {
-  margin: 0;
-}
 
 /* pilcrow */
 a.pilcrow {
@@ -643,18 +635,16 @@ a.pilcrow {
     color: var(--pilcrow-weak);
     &:hover { text-decoration: none; }
   }
-}
-@media not print {
-  :hover > a.pilcrow, a.pilcrow:focus {
-    opacity: 1;
+  @media not print {
+    :hover > &, &:focus {
+      opacity: 1;
+    }
+    &[href]:hover {
+      color: var(--pilcrow-strong);
+      background-color: transparent;
+    }
   }
-  a.pilcrow[href]:hover {
-    color: var(--pilcrow-strong);
-    background-color: transparent;
-  }
-}
-@media print {
-  a.pilcrow {
+  @media print {
     display: none;
   }
 }
@@ -713,9 +703,9 @@ sub, sup {
   font-size: 0.9em;
   font-style: italic;
   margin-top: 2em;
-}
-.docInfo .prepared {
-  float: right;
+  & .prepared {
+    float: right;
+  }
 }
 
 /* table of contents */
@@ -805,23 +795,27 @@ hr.addr {
   max-width: calc(100% - 16px);
 }
 @media (min-width: 500px) {
-  #authors-addresses > section {
-    column-count: 2;
-    column-gap: 20px;
-  }
-  #authors-addresses > section > h2 {
-    column-span: all;
-  }
-  /* hack for break-inside: avoid-column */
-  #authors-addresses address {
-    display: inline-block;
-    break-inside: avoid-column;
+  #authors-addresses {
+    & > section {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    & > section > h2 {
+      column-span: all;
+    }
+    /* hack for break-inside: avoid-column */
+    & address {
+      display: inline-block;
+      break-inside: avoid-column;
+    }
   }
 }
 
 /* Comments */
-.rfcEditorRemove p:first-of-type {
-  font-style: italic;
+.rfcEditorRemove {
+  & p:first-of-type {
+    font-style: italic;
+  }
 }
 .cref {
   background-color: rgba(249, 232, 105, 0.3);
@@ -832,19 +826,21 @@ hr.addr {
 }
 
 @media screen {
-  #toc nav {
-    font-family: var(--font-title);
-    font-weight: 360;
-    & > ul { margin-bottom: 2em; }
-    & ul {
-      margin: 0 0 0 4px;
-      & :is(p, li) {
-        margin: 2px 0;
+  #toc {
+    & nav {
+      font-family: var(--font-title);
+      font-weight: 360;
+      & > ul { margin-bottom: 2em; }
+      & ul {
+        margin: 0 0 0 4px;
+        & :is(p, li) {
+          margin: 2px 0;
+        }
       }
     }
-  }
-  #toc a.toplink {
-    float: right;
+    & a.toplink {
+      float: right;
+    }
   }
 }
 @media not screen {
@@ -865,54 +861,54 @@ hr.addr {
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 2px 0 2px 6px;
-    padding-right: 1em;
-    font-size: 18px;
-    line-height: 24px;
-    min-width: 190px;
-    text-align: right;
-    background-color: #444;
-    color: white;
-    cursor: pointer;
-    &::before { /* css hamburger */
-      float: right;
-      position: relative;
-      width: 1em;
-      height: 1px;
-      left: -164px;
-      margin: 8px 0 0 0;
-      background: white none repeat scroll 0 0;
-      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
-      content: "";
+    & h2 {
+      margin: 0;
+      padding: 2px 0 2px 6px;
+      padding-right: 1em;
+      font-size: 18px;
+      line-height: 24px;
+      min-width: 190px;
+      text-align: right;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      &::before { /* css hamburger */
+        float: right;
+        position: relative;
+        width: 1em;
+        height: 1px;
+        left: -164px;
+        margin: 8px 0 0 0;
+        background: white none repeat scroll 0 0;
+        box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+        content: "";
+      }
     }
-  }
-  #toc nav {
-    display: none;
-    background-color: var(--background-color);
-    padding: 0.5em 1em 1em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    height: calc(100vh - 48px);
-    border-left: 1px solid #ddd;
-  }
-  #toc.active {
-    opacity: 1;
-    & nav { display: block; }
-  }
-  /* Make the collapsed ToC header render white on gray also when it's a link */
-  #toc h2 a,
-  #toc h2 a:is(:link, :focus, :hover),
-  #toc a.toplink,
-  #toc a.toplink:hover {
-    color: white;
-    background-color: #444;
-    text-decoration: none;
-  }
-  #toc a.toplink {
-    margin: 2px 0.5em 0;
+    & nav {
+      display: none;
+      background-color: var(--background-color);
+      padding: 0.5em 1em 1em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      height: calc(100vh - 48px);
+      border-left: 1px solid #ddd;
+    }
+    &.active {
+      opacity: 1;
+      & nav { display: block; }
+    }
+    /* Make the collapsed ToC header render white on gray also when it's a link */
+    & h2 a,
+    & h2 a:is(:link, :focus, :hover),
+    & a.toplink,
+    & a.toplink:hover {
+      color: white;
+      background-color: #444;
+      text-decoration: none;
+    }
+    & a.toplink {
+      margin: 2px 0.5em 0;
+    }
   }
 }
 
@@ -931,26 +927,26 @@ hr.addr {
     margin: 0;
     padding: 0;
     z-index: 1;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 0.25em 1em 1em 0;
-  }
-  #toc nav {
-    display: block;
-    height: calc(90vh - 84px);
-    bottom: 0;
-    padding: 0.5em 0 2em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
+    & h2 {
+      margin: 0;
+      padding: 0.25em 1em 1em 0;
+    }
+    & nav {
+      display: block;
+      height: calc(90vh - 84px);
+      bottom: 0;
+      padding: 0.5em 0 2em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    & a.toplink {
+      margin: 8px 0.5em 0;
+    }
   }
   img { /* future proofing */
     max-width: 100%;
     height: auto;
-  }
-  #toc a.toplink {
-    margin: 8px 0.5em 0;
   }
 }
 
@@ -966,12 +962,13 @@ hr.addr {
   #n-copyright-notice {
     border-bottom: none;
   }
-  #toc, #n-introduction {
-    page-break-before: always;
-  }
   #toc {
+    page-break-before: always;
     border-top: none;
     padding-top: 0;
+  }
+  #n-introduction {
+    page-break-before: always;
   }
   figure, pre, .vcard {
     page-break-inside: avoid;
@@ -1033,17 +1030,19 @@ hr.addr {
 }
 
 /* SVG Trick: a prefix match works because only black and white are allowed */
-svg :is([stroke="black"], [stroke^="#000"]) {
-  stroke: var(--text-color);
-}
-svg :is([stroke="white"], [stroke^="#fff"]) {
-  stroke: var(--background-color);
-}
-svg :is([fill="black"], [fill^="#000"], :not([fill])) {
-  fill: var(--text-color);
-}
-svg :is([fill="white"], [fill^="#fff"]) {
-  fill: var(--background-color);
+svg {
+  & :is([stroke="black"], [stroke^="#000"]) {
+    stroke: var(--text-color);
+  }
+  & :is([stroke="white"], [stroke^="#fff"]) {
+    stroke: var(--background-color);
+  }
+  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+    fill: var(--text-color);
+  }
+  & :is([fill="white"], [fill^="#fff"]) {
+    fill: var(--background-color);
+  }
 }
 </style>
 
@@ -1053,11 +1052,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">JOSE/COSE Composite Signatures</td>
-<td class="right">March 2026</td>
+<td class="right">July 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Prabel, et al.</td>
-<td class="center">Expires 27 September 2026</td>
+<td class="center">Expires 7 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1069,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-jose-pq-composite-sigs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-26" class="published">26 March 2026</time>
+<time datetime="2026-07-06" class="published">6 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-27">27 September 2026</time></dd>
+<dd class="expires"><time datetime="2027-01-07">7 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1136,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1349,7 +1348,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       </h2>
 <p id="section-3-1">This document makes use of the Algorithm Key Pair (AKP) type which is defined in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">As a reminder, the AKP type is used to express public and private keys for use with algorithms. The parameters for public and private keys contain byte strings.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">This document makes use of the serialization routines defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">This document makes use of the serialization routines defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys, adapted to use raw fixed-length encodings for ECDSA components.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The process to compute JWK Thumbprint and COSE Key Thumbprint as described in <span>[<a href="#RFC7638" class="cite xref">RFC7638</a>]</span> and <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> is detailed in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1400,7 +1399,8 @@ Composite-ML-DSA.KeyGen() -&gt; (pk, sk)
 </pre><a href="#section-4.1-5" class="pilcrow">¶</a>
 </div>
 <p id="section-4.1-6">As in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span>.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
-<p id="section-4.1-7">This document makes use of the serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys. These encodings are then directly used with the AKP Key Type. For more information, see the <code>SerializePublicKey</code>, <code>DeserializePublicKey</code>, <code>SerializePrivateKey</code> and <code>DeserializePrivateKey</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
+<p id="section-4.1-7">This document makes use of the serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys. However, for the ECDSA component, this document departs from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, which requires Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> and ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span>. Instead, the ECDSA signature, private key, and public key <span class="bcp14">MUST</span> use the raw fixed-length encodings already defined for ECDSA in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7518#section-3.4" class="relref">Section 3.4</a> of [<a href="#RFC7518" class="cite xref">RFC7518</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc7518#section-6.2.1.1" class="relref">Section 6.2.1.1</a> of [<a href="#RFC7518" class="cite xref">RFC7518</a>]</span>) and in COSE (<span><a href="https://rfc-editor.org/rfc/rfc9053#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC9053" class="cite xref">RFC9053</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc9053#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>).
+These encodings are then used with the AKP Key Type. For more information, see the <code>SerializePublicKey</code>, <code>DeserializePublicKey</code>, <code>SerializePrivateKey</code> and <code>DeserializePrivateKey</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 <p id="section-4.1-8">For the AKP JSON Web Key Type and AKP COSE Key Type, point compression is performed for the EdDSA component, but not for the ECDSA component.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
 <p id="section-4.1-9">In this document, as in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>, the ML-DSA private key <span class="bcp14">MUST</span> be a 32-bytes seed.<a href="#section-4.1-9" class="pilcrow">¶</a></p>
 </section>
@@ -1462,7 +1462,7 @@ Composite-ML-DSA.Sign(sk, M) -&gt; s
     return s
 </pre><a href="#section-4.2-7" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-8">The serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> are again used to obtain the byte string encoding of the composite signature. The <code>SerializeSignatureValue</code> routine simply concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. For more information, see the <code>SerializeSignatureValue</code> and <code>DeserializeSignatureValue</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
+<p id="section-4.2-8">The serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> are again used to obtain the byte string encoding of the composite signature. The <code>SerializeSignatureValue</code> routine simply concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. However, for the ECDSA component, this document departs from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, which requires Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> and ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span>. Instead, the ECDSA signature, private key, and public key <span class="bcp14">MUST</span> use the raw fixed-length encodings already defined for ECDSA in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7518#section-3.4" class="relref">Section 3.4</a> of [<a href="#RFC7518" class="cite xref">RFC7518</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc7518#section-6.2.1.1" class="relref">Section 6.2.1.1</a> of [<a href="#RFC7518" class="cite xref">RFC7518</a>]</span>) and in COSE (<span><a href="https://rfc-editor.org/rfc/rfc9053#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC9053" class="cite xref">RFC9053</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc9053#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>). For more information, see the <code>SerializeSignatureValue</code> and <code>DeserializeSignatureValue</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
 <p id="section-4.2-9">The prefix "Prefix" string is defined as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> as the byte encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 436F6D706F73697465416C676F726974686D5369676E61747572657332303235. It can be used by a traditional verifier to detect if the composite signature has been stripped apart.<a href="#section-4.2-9" class="pilcrow">¶</a></p>
 <p id="section-4.2-10">A signature label "Label" is defined in the same way as <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. It is specific to each composite algorithm. Additionally, the composite label is passed into the underlying ML-DSA primitive as the ctx. Signature Label values can be found in <a href="#tab-sig-alg-label" class="auto internal xref">Table 4</a>.<a href="#section-4.2-10" class="pilcrow">¶</a></p>
 <p id="section-4.2-11">Similarly to <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span> which indicates that the ctx parameter <span class="bcp14">MUST</span> be the empty string, the application context passed in to the composite signature algorithm <span class="bcp14">MUST</span> be the empty string. To align with the structure of the <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> combiner, the byte 0x00 is appended in the message M' after the label to indicate the context has length 0. However, a second non-empty context, defined as the label, is passed down into the underlying pure ML-DSA component algorithm, to bind the Composite-ML-DSA algorithm used.<a href="#section-4.2-11" class="pilcrow">¶</a></p>
@@ -2334,7 +2334,7 @@ They are represented following the registration template provided in <span>[<a h
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-lamps-pq-composite-sigs">[I-D.draft-ietf-lamps-pq-composite-sigs]</dt>
         <dd>
-<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite ML-DSA for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-15</span>, <time datetime="2026-02-24" class="refDate">24 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-15">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-15</a>&gt;</span>. </dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite Module-Lattice-Based Digital Signature Algorithm (ML-DSA) for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-19</span>, <time datetime="2026-04-21" class="refDate">21 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-pquip-hybrid-signature-spectrums">[I-D.draft-ietf-pquip-hybrid-signature-spectrums]</dt>
         <dd>
@@ -2343,6 +2343,14 @@ They are represented following the registration template provided in <span>[<a h
 <dt id="I-D.draft-ietf-pquip-pqt-hybrid-terminology">[I-D.draft-ietf-pquip-pqt-hybrid-terminology]</dt>
         <dd>
 <span class="refAuthor">D, F.</span>, <span class="refAuthor">P, M.</span>, and <span class="refAuthor">B. Hale</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-pqt-hybrid-terminology-06</span>, <time datetime="2025-01-10" class="refDate">10 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-06">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-pqt-hybrid-terminology-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3279">[RFC3279]</dt>
+        <dd>
+<span class="refAuthor">Bassham, L.</span>, <span class="refAuthor">Polk, W.</span>, and <span class="refAuthor">R. Housley</span>, <span class="refTitle">"Algorithms and Identifiers for the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 3279</span>, <span class="seriesInfo">DOI 10.17487/RFC3279</span>, <time datetime="2002-05" class="refDate">May 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3279">https://www.rfc-editor.org/rfc/rfc3279</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5915">[RFC5915]</dt>
+        <dd>
+<span class="refAuthor">Turner, S.</span> and <span class="refAuthor">D. Brown</span>, <span class="refTitle">"Elliptic Curve Private Key Structure"</span>, <span class="seriesInfo">RFC 5915</span>, <span class="seriesInfo">DOI 10.17487/RFC5915</span>, <time datetime="2010-06" class="refDate">June 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5915">https://www.rfc-editor.org/rfc/rfc5915</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7519">[RFC7519]</dt>
         <dd>
