@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 7 January 2027                                          J. Gray
+Expires: 11 January 2027                                         J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                             6 July 2026
+                                                            10 July 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 11 January 2027.
 
 Copyright Notice
 
@@ -303,8 +303,6 @@ Table of Contents
 
    *  concatenating the prefix, the label, a byte 0x00 and the pre-hash;
 
-   *  encoding the resulting message;
-
    *  calling the two signature component algorithms on this new
       message;
 
@@ -318,7 +316,6 @@ Composite-ML-DSA.Sign(sk, M) -> s
 1. Compute the Message representative M'
 
     M' <- Prefix || Label || 0x00 || PH(M)
-    M' <- Encode(M')
 
 2. Separate the private key sk into component keys and re-generate the ML-DSA key from seed
 
@@ -381,8 +378,7 @@ Composite-ML-DSA.Sign(sk, M) -> s
    Table 2 (resp. Table 3) indicates the pre-hash algorithms to use for
    JOSE (resp. COSE).
 
-   For JOSE (resp. COSE), M' is base64url-encoded (resp. binary encoded)
-   before signature computations.
+   M' is signed as a raw octet string in both JOSE and COSE.
 
 4.3.  Composite Verify
 
@@ -398,8 +394,6 @@ Composite-ML-DSA.Sign(sk, M) -> s
    *  compute the message M' from the message M whose signature is to be
       verified;
 
-   *  encode the resulting message M';
-
    *  verify each component signature.
 
 Composite-ML-DSA.Verify(pk, M, s) -> true or false
@@ -414,7 +408,6 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
 2. Compute the message representative M'
 
     M' <- Prefix || Label || 0x00 || PH(M)
-    M' <- Encode(M')
 
 3. Check each component signature individually, according to its algorithm specification.
 
