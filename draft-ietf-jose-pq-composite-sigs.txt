@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 11 January 2027                                         J. Gray
+Expires: 20 January 2027                                         J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                            10 July 2026
+                                                            19 July 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 January 2027.
+   This Internet-Draft will expire on 20 January 2027.
 
 Copyright Notice
 
@@ -543,7 +543,7 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    |ML-DSA-   | TBD        |ML-DSA-44|ecdsa-   |SHA256  | Composite   |
    |44-ES256  | (request   |         |with-    |        | Signature   |
    |          | assignment |         |SHA256   |        | with ML-    |
-   |          | -51)       |         |with     |        | DSA-44 and  |
+   |          | -54)       |         |with     |        | DSA-44 and  |
    |          |            |         |secp256r1|        | ECDSA using |
    |          |            |         |         |        | P-256 curve |
    |          |            |         |         |        | and SHA256  |
@@ -551,7 +551,7 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    |ML-DSA-   | TBD        |ML-DSA-65|ecdsa-   |SHA512  | Composite   |
    |65-ES256  | (request   |         |with-    |        | Signature   |
    |          | assignment |         |SHA256   |        | with ML-    |
-   |          | -52)       |         |with     |        | DSA-65 and  |
+   |          | -55)       |         |with     |        | DSA-65 and  |
    |          |            |         |secp256r1|        | ECDSA using |
    |          |            |         |         |        | P-256 curve |
    |          |            |         |         |        | and SHA256  |
@@ -559,7 +559,7 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    |ML-DSA-   | TBD        |ML-DSA-87|ecdsa-   |SHA512  | Composite   |
    |87-ES384  | (request   |         |with-    |        | Signature   |
    |          | assignment |         |SHA384   |        | with ML-    |
-   |          | -53)       |         |with     |        | DSA-87 and  |
+   |          | -56)       |         |with     |        | DSA-87 and  |
    |          |            |         |secp384r1|        | ECDSA using |
    |          |            |         |         |        | P-384 curve |
    |          |            |         |         |        | and SHA384  |
@@ -567,19 +567,19 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    |ML-DSA-   | TBD        |ML-DSA-44|Ed25519  |SHA512  | Composite   |
    |44-Ed25519| (request   |         |         |        | Signature   |
    |          | assignment |         |         |        | with ML-    |
-   |          | -54)       |         |         |        | DSA-44 and  |
+   |          | -57)       |         |         |        | DSA-44 and  |
    |          |            |         |         |        | Ed25519     |
    +----------+------------+---------+---------+--------+-------------+
    |ML-DSA-   | TBD        |ML-DSA-65|Ed25519  |SHA512  | Composite   |
    |65-Ed25519| (request   |         |         |        | Signature   |
    |          | assignment |         |         |        | with ML-    |
-   |          | -55)       |         |         |        | DSA-65 and  |
+   |          | -58)       |         |         |        | DSA-65 and  |
    |          |            |         |         |        | Ed25519     |
    +----------+------------+---------+---------+--------+-------------+
    |ML-DSA-   | TBD        |ML-DSA-87|Ed448    |SHAKE256| Composite   |
    |87-Ed448  | (request   |         |         |        | Signature   |
    |          | assignment |         |         |        | with ML-    |
-   |          | -56)       |         |         |        | DSA-87 and  |
+   |          | -59)       |         |         |        | DSA-87 and  |
    |          |            |         |         |        | Ed448       |
    +----------+------------+---------+---------+--------+-------------+
 
