@@ -342,12 +342,12 @@ The following table defines a list of algorithms associated with specific PQ/T c
 
 | Name | COSE Value | First Algorithm | Second Algorithm | Pre-Hash | Description
 | ----------- | ----------- | ----------- |  ----------- | ----------- |
-| ML-DSA-44-ES256           | TBD (request assignment -51) | ML-DSA-44 | ecdsa-with-SHA256 with secp256r1 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
-| ML-DSA-65-ES256           | TBD (request assignment -52) | ML-DSA-65 | ecdsa-with-SHA256 with secp256r1 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
-| ML-DSA-87-ES384           | TBD (request assignment -53) | ML-DSA-87 | ecdsa-with-SHA384 with secp384r1 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
-| ML-DSA-44-Ed25519         | TBD (request assignment -54) | ML-DSA-44 | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
-| ML-DSA-65-Ed25519         | TBD (request assignment -55) | ML-DSA-65 | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
-| ML-DSA-87-Ed448           | TBD (request assignment -56) | ML-DSA-87 | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
+| ML-DSA-44-ES256           | TBD (request assignment -54) | ML-DSA-44 | ecdsa-with-SHA256 with secp256r1 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
+| ML-DSA-65-ES256           | TBD (request assignment -55) | ML-DSA-65 | ecdsa-with-SHA256 with secp256r1 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
+| ML-DSA-87-ES384           | TBD (request assignment -56) | ML-DSA-87 | ecdsa-with-SHA384 with secp384r1 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
+| ML-DSA-44-Ed25519         | TBD (request assignment -57) | ML-DSA-44 | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
+| ML-DSA-65-Ed25519         | TBD (request assignment -58) | ML-DSA-65 | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
+| ML-DSA-87-Ed448           | TBD (request assignment -59) | ML-DSA-87 | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
 {: #tab-cose-algs title="COSE Composite Signature Algorithms for ML-DSA"}
 
 Examples can be found in {{appdx-cose}}.
