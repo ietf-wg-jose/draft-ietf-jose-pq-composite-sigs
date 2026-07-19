@@ -487,7 +487,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-44-ES256
 
 * Name: ML-DSA-44-ES256
-* Value: TBD (request assignment -51)
+* Value: TBD (request assignment -54)
 * Description: Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA-256
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -497,7 +497,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-65-ES256
 
 * Name: ML-DSA-65-ES256
-* Value: TBD (request assignment -52)
+* Value: TBD (request assignment -55)
 * Description: Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA-256
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -507,7 +507,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-87-ES384
 
 * Name: ML-DSA-87-ES384
-* Value: TBD (request assignment -53)
+* Value: TBD (request assignment -56)
 * Description: Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA-384
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -517,7 +517,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-44-Ed25519
 
 * Name: ML-DSA-44-Ed25519
-* Value: TBD (request assignment -54)
+* Value: TBD (request assignment -57)
 * Description: Composite Signature with ML-DSA-44 and Ed25519 using SHA-512
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -527,7 +527,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-65-Ed25519
 
 * Name: ML-DSA-65-Ed25519
-* Value: TBD (request assignment -55)
+* Value: TBD (request assignment -58)
 * Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -537,7 +537,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-87-Ed448
 
 * Name: ML-DSA-87-Ed448
-* Value: TBD (request assignment -56)
+* Value: TBD (request assignment -59)
 * Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256
 * Capabilities: `[kty]`
 * Change Controller: IETF
