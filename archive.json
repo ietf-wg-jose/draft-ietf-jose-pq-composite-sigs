@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-19T01:22:09.586576+00:00",
+  "timestamp": "2026-07-21T01:22:07.170684+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -49,7 +49,24 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDORJ8q988AAAABJU4FcQ",
+      "title": "JOSE and COSE number for MLDSA65-ECDSA-P384-SHA512",
+      "url": "https://github.com/ietf-wg-jose/draft-ietf-jose-pq-composite-sigs/issues/2",
+      "state": "OPEN",
+      "author": "akshayku",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This proposal does not mention proposals for MLDSA65-ECDSA-P384-SHA512. \n\nAny reason why this combination is omitted? \n\nI would request to update the proposal with COSE number proposal for MLDSA65-ECDSA-P384-SHA512. ",
+      "createdAt": "2026-07-19T01:42:13Z",
+      "updatedAt": "2026-07-19T01:42:13Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
