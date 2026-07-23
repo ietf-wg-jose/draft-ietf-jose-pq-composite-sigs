@@ -27,20 +27,20 @@ venue:
   latest: "https://ietf-wg-jose.github.io/draft-ietf-jose-pq-composite-sigs/draft-ietf-jose-pq-composite-sigs.html"
 
 author:
- -  ins: L. Prabel
+  - ins: L. Prabel
     fullname: Lucas Prabel
     organization: Huawei
     email: "lucas.prabel@huawei.com"
- -  ins: S. Sun
+  - ins: S. Sun
     fullname: Sun Shuzhou
     organization: Huawei
     email: "sunshuzhou@huawei.com"
- -  ins: J. Gray
+  - ins: J. Gray
     fullname: John Gray
     organization: Entrust Limited
     abbrev: Entrust
     email: "john.gray@entrust.com"
- -  ins: T. Reddy
+  - ins: T. Reddy
     fullname: Tirumaleswar Reddy
     organization: Nokia
     city: Bangalore
@@ -49,45 +49,52 @@ author:
     email: "kondtir@gmail.com"
 
 normative:
- RFC6090:
- RFC8032:
- RFC7515:
- RFC7517:
- RFC7518:
- RFC7638:
- RFC9679:
- IANA.JOSE:
-   title: "JSON Object Signing and Encryption (JOSE)"
-   date: ~
-   author:
+  RFC6090:
+  RFC8032:
+  RFC7515:
+  RFC7517:
+  RFC7518:
+  RFC7638:
+  RFC9679:
+  IANA.JOSE:
+    title: "JSON Object Signing and Encryption (JOSE)"
+    date: ~
+    author:
       org: IANA
-   target: https://www.iana.org/assignments/jose/jose.xhtml
- IANA.COSE:
-   title: "CBOR Object Signing and Encryption (COSE)"
-   date: ~
-   author:
+    target: https://www.iana.org/assignments/jose/jose.xhtml
+  IANA.COSE:
+    title: "CBOR Object Signing and Encryption (COSE)"
+    date: ~
+    author:
       org: IANA
-   target: https://www.iana.org/assignments/cose/cose.xhtml
-
- FIPS.204:
+    target: https://www.iana.org/assignments/cose/cose.xhtml
+  FIPS.204:
     title: "Module-Lattice-Based Digital Signature Standard"
     date: August 2024
     author:
       org: "National Institute of Standards and Technology (NIST)"
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf
+  X9.62-2005:
+    title: "Public Key Cryptography for the Financial Services Industry: the Elliptic Curve Digital Signature Algorithm (ECDSA)"
+    date: 2005-11
+    author:
+      org: "American National Standards Institute"
+    seriesinfo:
+      ANSI: X9.62-2005
 
 informative:
- RFC9053:
- RFC9054:
- RFC7519:
- RFC8392:
- RFC9360:
- RFC3279:
- RFC5915:
- I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
- I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYB-TERMINO
- I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYB-SIG-SPECTRUMS
- I-D.draft-ietf-cose-dilithium: COSE-MLDSA
+  RFC9053:
+  RFC9054:
+  RFC7519:
+  RFC8392:
+  RFC9360:
+  RFC3279:
+  RFC5915:
+  I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
+  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYB-TERMINO
+  I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYB-SIG-SPECTRUMS
+  I-D.draft-ietf-cose-dilithium: COSE-MLDSA
+---
 
 --- abstract
 
@@ -138,7 +145,7 @@ This document makes use of the Algorithm Key Pair (AKP) type which is defined in
 
 As a reminder, the AKP type is used to express public and private keys for use with algorithms. The parameters for public and private keys contain byte strings.
 
-This document makes use of the serialization routines defined in {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys, adapted to use raw fixed-length encodings for ECDSA components.
+This document makes use of the serialization routines defined in {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys.
 
 The process to compute JWK Thumbprint and COSE Key Thumbprint as described in {{RFC7638}} and {{RFC9679}} is detailed in {{-COSE-MLDSA}}.
 
@@ -188,7 +195,8 @@ Composite-ML-DSA.KeyGen() -> (pk, sk)
 
 As in {{-COMPOSITE-LAMPS}}, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of {{FIPS.204}}.
 
-This document makes use of the serialization routines from {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys. However, for the ECDSA component, this document departs from {{-COMPOSITE-LAMPS}}, which requires Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}}. Instead, the ECDSA signature, private key, and public key MUST use the raw fixed-length encodings already defined for ECDSA in JOSE ({{Section 3.4 of RFC7518}} and {{Section 6.2.1.1 of RFC7518}}) and in COSE ({{Section 2.1 of RFC9053}} and {{Section 7.1 of RFC9053}}).
+This document makes use of the serialization routines from {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys. In particular, the ECDSA keys and signature are encoded exactly as required in {{-COMPOSITE-LAMPS}}: the signature as an Ecdsa-Sig-Value {{RFC3279}}, the private key as an ECPrivateKey {{RFC5915}}, and the ECDSA public key uses the uncompressed X9.62 {{X9.62-2005}} point encoding, including the leading 0x04 byte. Section {{sec-ecdsa-encoding}} gives guidance on how to encode the ECDSA keys and signature.
+
 These encodings are then used with the AKP Key Type. For more information, see the `SerializePublicKey`, `DeserializePublicKey`, `SerializePrivateKey` and `DeserializePrivateKey` algorithms from {{-COMPOSITE-LAMPS}}.
 
 For the AKP JSON Web Key Type and AKP COSE Key Type, point compression is performed for the EdDSA component, but not for the ECDSA component.
@@ -241,7 +249,8 @@ Composite-ML-DSA.Sign(sk, M) -> s
     return s
 ~~~
 
-The serialization routines from {{-COMPOSITE-LAMPS}} are again used to obtain the byte string encoding of the composite signature. The `SerializeSignatureValue` routine simply concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. However, for the ECDSA component, this document departs from {{-COMPOSITE-LAMPS}}, which requires Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}}. Instead, the ECDSA signature, private key, and public key MUST use the raw fixed-length encodings already defined for ECDSA in JOSE ({{Section 3.4 of RFC7518}} and {{Section 6.2.1.1 of RFC7518}}) and in COSE ({{Section 2.1 of RFC9053}} and {{Section 7.1 of RFC9053}}). For more information, see the `SerializeSignatureValue` and `DeserializeSignatureValue` algorithms from {{-COMPOSITE-LAMPS}}.
+The serialization routines from {{-COMPOSITE-LAMPS}} are again used to obtain the byte string encoding of the composite signature. The `SerializeSignatureValue` routine concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. For the ECDSA component, this document follows {{-COMPOSITE-LAMPS}}: the ECDSA signature is
+encoded as an Ecdsa-Sig-Value {{RFC3279}} (see {{sec-ecdsa-encoding-sig}}).For more information, see the `SerializeSignatureValue` and `DeserializeSignatureValue` algorithms from {{-COMPOSITE-LAMPS}}.
 
 The prefix "Prefix" string is defined as in {{-COMPOSITE-LAMPS}} as the byte encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 436F6D706F73697465416C676F726974686D5369676E61747572657332303235. It can be used by a traditional verifier to detect if the composite signature has been stripped apart.
 
@@ -288,7 +297,8 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
         output "Valid signature"
 ~~~
 
-The `DeserializePublicKey` and `DeserializeSignatureValue` serialization routines from {{-COMPOSITE-LAMPS}} are used to get the component public keys and the component signatures. For more information, see the `DeserializePublicKey` and `DeserializeSignatureValue` algorithms from {{-COMPOSITE-LAMPS}}.
+The `DeserializePublicKey` and `DeserializeSignatureValue` serialization routines from {{-COMPOSITE-LAMPS}} are used to get the component public keys and the component signatures. For ECDSA, tradSig is encoded as Ecdsa-Sig-Value described in
+{{sec-ecdsa-encoding-sig}}. For more information, see the `DeserializePublicKey` and `DeserializeSignatureValue` algorithms from {{-COMPOSITE-LAMPS}}.
 
 ## Encoding Rules
 
@@ -302,7 +312,7 @@ Since all combinations presented in this document start with the ML-DSA algorith
 
 {{tab-ml-dsa-size}} lists sizes of the three parameter sets of the ML-DSA algorithm.
 
-| | Private Key (seed) | Private Key | Public Key | Signature Size |
+| Algorithm | Private Key (seed) | Private Key | Public Key | Signature Size |
 | ----------- | ----------- | ----------- | ----------- |
 | ML-DSA-44 | 32 | 2560 | 1312 | 2420 |
 | ML-DSA-65 | 32 | 4032 | 1952 | 3309 |
@@ -310,6 +320,114 @@ Since all combinations presented in this document start with the ML-DSA algorith
 {: #tab-ml-dsa-size title=" Sizes (in bytes) of keys and signatures of ML-DSA"}
 
 Note that the seed is always 32 bytes, and that  ML-DSA.KeyGen_internal from {{FIPS.204}} is called to produce the expanded private key from the seed, whose size corresponds to the sizes of the private key in the table above.
+
+## ECDSA Encodings {#sec-ecdsa-encoding}
+
+This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}} structures, and the X9.62 {{X9.62-2005}} uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library MAY simply use it instead for the two DER structures.
+
+| Field | Encoding used in this document | P-256 | P-384 |
+|:---|:---|:---|:---|
+| Private key | ECPrivateKey (Section 4.5.2) | 51 | 64 |
+| Public key | X9.62 uncompressed point (Section 4.5.3) | 65 | 97 |
+| Signature | Ecdsa-Sig-Value (Section 4.5.1) | ≤ 72 | ≤ 104 |
+{: #table-ecdsa-sizes title="Sizes (in bytes) of ECDSA keys and signatures as encoded in this document"}
+
+### Ecdsa-Sig-Value (Signatures) {#sec-ecdsa-encoding-sig}
+
+Ecdsa-Sig-Value is defined in Section 2.2.3 of {{RFC3279}} as:
+
+~~~ asn.1
+Ecdsa-Sig-Value ::= SEQUENCE {
+    r     INTEGER,
+    s     INTEGER
+}
+~~~
+
+r and s are the raw, fixed-length, big-endian values already used today by {{RFC7518}} and {{RFC9053}} (32 bytes each for P-256, 48
+bytes each for P-384). Building an Ecdsa-Sig-Value from r and s takes two steps:
+
+- first, r and s are each turned independently into a DER INTEGER (Step 1);
+- then the two results are wrapped in a DER SEQUENCE (Step 2).
+
+Decoding simply reverses these two steps. No prior ASN.1 knowledge is assumed below.
+
+**Step 1: encode r and s as DER INTEGERs.**
+
+A DER INTEGER is written as a 0x02 tag byte, a length byte, and the value's bytes. Because a DER INTEGER is signed, an extra 0x00 byte is
+prepended whenever the value would otherwise be misread as negative, i.e. whenever its first byte is 0x80 or greater.
+
+{{#table-ecdsa-sig-encode}} explains how to turn a raw value (r or s) into its DER encoding.
+
+| After removing any leading 0x00 bytes from the raw value (keeping at least 1 byte), the first remaining byte is... | ...then its DER encoding is |
+|:---|:---|
+| less than 0x80 | 0x02, then the length in bytes of the trimmed value, then the trimmed value |
+| 0x80 or greater | 0x02, then the length in bytes of the trimmed value plus 1, then 0x00, then the trimmed value |
+{: #table-ecdsa-sig-encode title="Turning a raw value (r or s) into its DER encoding"}
+
+For example, for P-256 (32-byte r and s):
+
+- if r starts with `4F ...` (no leading zero byte, and 0x4F is less than 0x80), its DER encoding is `02 20 <r, 32 bytes>` (0x20 = 32);
+- if r starts with `F3 ...` (no leading zero byte, and 0xF3 is greater than 0x80), its DER encoding is `02 21 00 <r, 32 bytes>` (0x21 = 33);
+- if r starts with `00 07 ...` (one leading zero byte to remove, and 0x07 is less than 0x80), its DER encoding is `02 1F <r without its leading 0x00, 31 bytes>` (0x1F = 31).
+
+**Step 2: wrap r's and s's DER encodings in a SEQUENCE.**
+
+Using the two encodings produced in Step 1, the full Ecdsa-Sig-Value is simply the concatenation
+
+`Ecdsa-Sig-Value <- 0x30 || length || r's DER encoding || s's DER encoding`
+
+where length is a single byte equal to the combined length, in bytes, of r's and s's DER encodings from Step 1, and r's encoding always
+comes before s's.
+
+Continuing the example above: taking r's DER encoding from the third case (`02 1F <31 bytes>`, 33 bytes total) and an s whose DER encoding
+corresponds to the first case (`02 20 <32 bytes>`, 34 bytes total), the combined length is 33 + 34 = 67 = 0x43, and the full
+Ecdsa-Sig-Value is `30 43 <r's DER encoding> <s's DER encoding>` (69 bytes total).
+
+**Decoding** reverses Steps 2 and 1, in that order.
+
+### ECPrivateKey (Private Keys)
+
+ECPrivateKey is defined in {{RFC5915}} as:
+
+~~~ asn.1
+ECPrivateKey ::= SEQUENCE {
+    version        INTEGER { ecPrivkeyVer1(1) } (ecPrivkeyVer1),
+    privateKey     OCTET STRING,
+    parameters [0] ECParameters {{ NamedCurve }} OPTIONAL,
+    publicKey  [1] BIT STRING OPTIONAL
+}
+~~~
+
+Given the raw, fixed-length ECDSA private value d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
+inserted between two fixed byte sequences that depend only on the curve (the publicKey field is never included), as given in
+{{#table-ecprivatekey-build}}:
+
+| Curve | Bytes before d | Bytes after d |
+|:---|:---|:---|
+| P-256 | `30 31 02 01 01 04 20` | `A0 0A 06 08 2A 86 48 CE 3D 03 01 07` |
+| P-384 | `30 3E 02 01 01 04 30` | `A0 07 06 05 2B 81 04 00 22` |
+{: #table-ecprivatekey-build title="Fixed bytes surrounding d in an ECPrivateKey, by curve"}
+
+For example, for P-256 (n = 32), with d = `D1 D2 ...D32`:
+
+~~~
+30 31                                 structure (SEQUENCE, length 0x31 = 49)
+   02 01 01                           version (INTEGER, value 1)
+   04 20 D1 D2 ... D32                private key field (OCTET STRING, length 0x20 = 32, then d)
+   A0 0A                              parameters field (length 0x0A = 10)
+      06 08 2A 86 48 CE 3D 03 01 07   OID field (OBJECT IDENTIFIER, P-256 curve identifier)
+~~~
+
+**Decoding** reverses the same construction.
+
+### X9.62 Uncompressed Point (Public Keys)
+
+The ECDSA public key in this document is encoded as the X9.62 {{X9.62-2005}} uncompressed point:
+
+`ECDSA public key <- 0x04 || x || y`
+
+where x and y are the same raw, fixed-length, big-endian coordinate values already used by {{RFC7518}} and {{RFC9053}} (32 bytes
+each for P-256, 48 bytes each for P-384).
 
 # Composite Signature Instantiations
 
