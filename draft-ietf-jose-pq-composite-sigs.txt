@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 20 January 2027                                         J. Gray
+Expires: 24 January 2027                                         J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                            19 July 2026
+                                                            23 July 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 January 2027.
+   This Internet-Draft will expire on 24 January 2027.
 
 Copyright Notice
 
@@ -83,6 +83,10 @@ Table of Contents
      4.2.  Composite Sign
      4.3.  Composite Verify
      4.4.  Encoding Rules
+     4.5.  ECDSA Encodings
+       4.5.1.  Ecdsa-Sig-Value (Signatures)
+       4.5.2.  ECPrivateKey (Private Keys)
+       4.5.3.  X9.62 Uncompressed Point (Public Keys)
    5.  Composite Signature Instantiations
      5.1.  JOSE algorithms
      5.2.  COSE algorithms
@@ -202,8 +206,7 @@ Table of Contents
 
    This document makes use of the serialization routines defined in
    [I-D.draft-ietf-lamps-pq-composite-sigs] to obtain the byte string
-   encodings of the composite public and private keys, adapted to use
-   raw fixed-length encodings for ECDSA components.
+   encodings of the composite public and private keys.
 
    The process to compute JWK Thumbprint and COSE Key Thumbprint as
    described in [RFC7638] and [RFC9679] is detailed in
@@ -262,17 +265,17 @@ Table of Contents
 
    This document makes use of the serialization routines from
    [I-D.draft-ietf-lamps-pq-composite-sigs] to obtain the byte string
-   encodings of the composite public and private keys.  However, for the
-   ECDSA component, this document departs from
-   [I-D.draft-ietf-lamps-pq-composite-sigs], which requires Ecdsa-Sig-
-   Value [RFC3279] and ECPrivateKey [RFC5915].  Instead, the ECDSA
-   signature, private key, and public key MUST use the raw fixed-length
-   encodings already defined for ECDSA in JOSE (Section 3.4 of [RFC7518]
-   and Section 6.2.1.1 of [RFC7518]) and in COSE (Section 2.1 of
-   [RFC9053] and Section 7.1 of [RFC9053]).  These encodings are then
-   used with the AKP Key Type.  For more information, see the
-   SerializePublicKey, DeserializePublicKey, SerializePrivateKey and
-   DeserializePrivateKey algorithms from
+   encodings of the composite public and private keys.  In particular,
+   the ECDSA keys and signature are encoded exactly as required in
+   [I-D.draft-ietf-lamps-pq-composite-sigs]: the signature as an Ecdsa-
+   Sig-Value [RFC3279], the private key as an ECPrivateKey [RFC5915],
+   and the ECDSA public key uses the uncompressed X9.62 [X9.62-2005]
+   point encoding, including the leading 0x04 byte.  Section Section 4.5
+   gives guidance on how to encode the ECDSA keys and signature.
+
+   These encodings are then used with the AKP Key Type.  For more
+   information, see the SerializePublicKey, DeserializePublicKey,
+   SerializePrivateKey and DeserializePrivateKey algorithms from
    [I-D.draft-ietf-lamps-pq-composite-sigs].
 
    For the AKP JSON Web Key Type and AKP COSE Key Type, point
@@ -340,17 +343,14 @@ Composite-ML-DSA.Sign(sk, M) -> s
    The serialization routines from
    [I-D.draft-ietf-lamps-pq-composite-sigs] are again used to obtain the
    byte string encoding of the composite signature.  The
-   SerializeSignatureValue routine simply concatenates the fixed-length
-   ML-DSA signature value and the signature value from the traditional
-   algorithm.  However, for the ECDSA component, this document departs
-   from [I-D.draft-ietf-lamps-pq-composite-sigs], which requires Ecdsa-
-   Sig-Value [RFC3279] and ECPrivateKey [RFC5915].  Instead, the ECDSA
-   signature, private key, and public key MUST use the raw fixed-length
-   encodings already defined for ECDSA in JOSE (Section 3.4 of [RFC7518]
-   and Section 6.2.1.1 of [RFC7518]) and in COSE (Section 2.1 of
-   [RFC9053] and Section 7.1 of [RFC9053]).  For more information, see
-   the SerializeSignatureValue and DeserializeSignatureValue algorithms
-   from [I-D.draft-ietf-lamps-pq-composite-sigs].
+   SerializeSignatureValue routine concatenates the fixed-length ML-DSA
+   signature value and the signature value from the traditional
+   algorithm.  For the ECDSA component, this document follows
+   [I-D.draft-ietf-lamps-pq-composite-sigs]: the ECDSA signature is
+   encoded as an Ecdsa-Sig-Value [RFC3279] (see Section 4.5.1).For more
+   information, see the SerializeSignatureValue and
+   DeserializeSignatureValue algorithms from
+   [I-D.draft-ietf-lamps-pq-composite-sigs].
 
    The prefix "Prefix" string is defined as in
    [I-D.draft-ietf-lamps-pq-composite-sigs] as the byte encoding of the
@@ -363,7 +363,7 @@ Composite-ML-DSA.Sign(sk, M) -> s
    [I-D.draft-ietf-lamps-pq-composite-sigs].  It is specific to each
    composite algorithm.  Additionally, the composite label is passed
    into the underlying ML-DSA primitive as the ctx.  Signature Label
-   values can be found in Table 4.
+   values can be found in Table 7.
 
    Similarly to [I-D.draft-ietf-cose-dilithium] which indicates that the
    ctx parameter MUST be the empty string, the application context
@@ -375,7 +375,7 @@ Composite-ML-DSA.Sign(sk, M) -> s
    label, is passed down into the underlying pure ML-DSA component
    algorithm, to bind the Composite-ML-DSA algorithm used.
 
-   Table 2 (resp. Table 3) indicates the pre-hash algorithms to use for
+   Table 5 (resp. Table 6) indicates the pre-hash algorithms to use for
    JOSE (resp. COSE).
 
    M' is signed as a raw octet string in both JOSE and COSE.
@@ -420,9 +420,10 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
 
    The DeserializePublicKey and DeserializeSignatureValue serialization
    routines from [I-D.draft-ietf-lamps-pq-composite-sigs] are used to
-   get the component public keys and the component signatures.  For more
-   information, see the DeserializePublicKey and
-   DeserializeSignatureValue algorithms from
+   get the component public keys and the component signatures.  For
+   ECDSA, tradSig is encoded as Ecdsa-Sig-Value described in
+   Section 4.5.1.  For more information, see the DeserializePublicKey
+   and DeserializeSignatureValue algorithms from
    [I-D.draft-ietf-lamps-pq-composite-sigs].
 
 4.4.  Encoding Rules
@@ -441,7 +442,7 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    algorithm.
 
    +===========+====================+=============+========+===========+
-   |           | Private Key (seed) | Private     | Public | Signature |
+   | Algorithm | Private Key (seed) | Private     | Public | Signature |
    |           |                    | Key         | Key    | Size      |
    +===========+====================+=============+========+===========+
    | ML-DSA-44 | 32                 | 2560        | 1312   | 2420      |
@@ -458,14 +459,174 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    private key from the seed, whose size corresponds to the sizes of the
    private key in the table above.
 
+4.5.  ECDSA Encodings
+
+   This section describes how to construct and parse the three ECDSA
+   encodings required by this document: the DER-encoded Ecdsa-Sig-Value
+   [RFC3279] and ECPrivateKey [RFC5915] structures, and the X9.62
+   [X9.62-2005] uncompressed point encoding used for public keys.  None
+   of it requires implementers to write a general-purpose ASN.1 encoder
+   or decoder, but implementers who already have access to a standard
+   ASN.1/DER library MAY simply use it instead for the two DER
+   structures.
+
+     +=============+================================+=======+=======+
+     | Field       | Encoding used in this document | P-256 | P-384 |
+     +=============+================================+=======+=======+
+     | Private key | ECPrivateKey (Section 4.5.2)   | 51    | 64    |
+     +-------------+--------------------------------+-------+-------+
+     | Public key  | X9.62 uncompressed point       | 65    | 97    |
+     |             | (Section 4.5.3)                |       |       |
+     +-------------+--------------------------------+-------+-------+
+     | Signature   | Ecdsa-Sig-Value                | ≤ 72  | ≤ 104 |
+     |             | (Section 4.5.1)                |       |       |
+     +-------------+--------------------------------+-------+-------+
+
+        Table 2: Sizes (in bytes) of ECDSA keys and signatures as
+                         encoded in this document
+
+4.5.1.  Ecdsa-Sig-Value (Signatures)
+
+   Ecdsa-Sig-Value is defined in Section 2.2.3 of [RFC3279] as:
+
+   Ecdsa-Sig-Value ::= SEQUENCE {
+       r     INTEGER,
+       s     INTEGER
+   }
+
+   r and s are the raw, fixed-length, big-endian values already used
+   today by [RFC7518] and [RFC9053] (32 bytes each for P-256, 48 bytes
+   each for P-384).  Building an Ecdsa-Sig-Value from r and s takes two
+   steps:
+
+   *  first, r and s are each turned independently into a DER INTEGER
+      (Step 1);
+
+   *  then the two results are wrapped in a DER SEQUENCE (Step 2).
+
+   Decoding simply reverses these two steps.  No prior ASN.1 knowledge
+   is assumed below.
+
+   *Step 1: encode r and s as DER INTEGERs.*
+
+   A DER INTEGER is written as a 0x02 tag byte, a length byte, and the
+   value's bytes.  Because a DER INTEGER is signed, an extra 0x00 byte
+   is prepended whenever the value would otherwise be misread as
+   negative, i.e. whenever its first byte is 0x80 or greater.
+
+   Table 3 explains how to turn a raw value (r or s) into its DER
+   encoding.
+
+   +========================================+==========================+
+   | After removing any leading             | ...then its DER encoding |
+   | 0x00 bytes from the raw value          | is                       |
+   | (keeping at least 1 byte), the         |                          |
+   | first remaining byte is...             |                          |
+   +========================================+==========================+
+   | less than 0x80                         | 0x02, then the length in |
+   |                                        | bytes of the trimmed     |
+   |                                        | value, then the trimmed  |
+   |                                        | value                    |
+   +----------------------------------------+--------------------------+
+   | 0x80 or greater                        | 0x02, then the length in |
+   |                                        | bytes of the trimmed     |
+   |                                        | value plus 1, then 0x00, |
+   |                                        | then the trimmed value   |
+   +----------------------------------------+--------------------------+
+
+        Table 3: Turning a raw value (r or s) into its DER encoding
+
+   For example, for P-256 (32-byte r and s):
+
+   *  if r starts with 4F ... (no leading zero byte, and 0x4F is less
+      than 0x80), its DER encoding is 02 20 <r, 32 bytes> (0x20 = 32);
+
+   *  if r starts with F3 ... (no leading zero byte, and 0xF3 is greater
+      than 0x80), its DER encoding is 02 21 00 <r, 32 bytes> (0x21 =
+      33);
+
+   *  if r starts with 00 07 ... (one leading zero byte to remove, and
+      0x07 is less than 0x80), its DER encoding is 02 1F <r without its
+      leading 0x00, 31 bytes> (0x1F = 31).
+
+   *Step 2: wrap r's and s's DER encodings in a SEQUENCE.*
+
+   Using the two encodings produced in Step 1, the full Ecdsa-Sig-Value
+   is simply the concatenation
+
+   Ecdsa-Sig-Value <- 0x30 || length || r's DER encoding || s's DER
+   encoding
+
+   where length is a single byte equal to the combined length, in bytes,
+   of r's and s's DER encodings from Step 1, and r's encoding always
+   comes before s's.
+
+   Continuing the example above: taking r's DER encoding from the third
+   case (02 1F <31 bytes>, 33 bytes total) and an s whose DER encoding
+   corresponds to the first case (02 20 <32 bytes>, 34 bytes total), the
+   combined length is 33 + 34 = 67 = 0x43, and the full Ecdsa-Sig-Value
+   is 30 43 <r's DER encoding> <s's DER encoding> (69 bytes total).
+
+   *Decoding* reverses Steps 2 and 1, in that order.
+
+4.5.2.  ECPrivateKey (Private Keys)
+
+   ECPrivateKey is defined in [RFC5915] as:
+
+   ECPrivateKey ::= SEQUENCE {
+       version        INTEGER { ecPrivkeyVer1(1) } (ecPrivkeyVer1),
+       privateKey     OCTET STRING,
+       parameters [0] ECParameters {{ NamedCurve }} OPTIONAL,
+       publicKey  [1] BIT STRING OPTIONAL
+   }
+
+   Given the raw, fixed-length ECDSA private value d (curve size n: 32
+   bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
+   inserted between two fixed byte sequences that depend only on the
+   curve (the publicKey field is never included), as given in Table 4:
+
+           +=======+======================+===================+
+           | Curve | Bytes before d       | Bytes after d     |
+           +=======+======================+===================+
+           | P-256 | 30 31 02 01 01 04 20 | A0 0A 06 08 2A 86 |
+           |       |                      | 48 CE 3D 03 01 07 |
+           +-------+----------------------+-------------------+
+           | P-384 | 30 3E 02 01 01 04 30 | A0 07 06 05 2B 81 |
+           |       |                      | 04 00 22          |
+           +-------+----------------------+-------------------+
+
+                 Table 4: Fixed bytes surrounding d in an
+                          ECPrivateKey, by curve
+
+   For example, for P-256 (n = 32), with d = D1 D2 ...D32:
+
+30 31                                 structure (SEQUENCE, length 0x31 = 49)
+   02 01 01                           version (INTEGER, value 1)
+   04 20 D1 D2 ... D32                private key field (OCTET STRING, length 0x20 = 32, then d)
+   A0 0A                              parameters field (length 0x0A = 10)
+      06 08 2A 86 48 CE 3D 03 01 07   OID field (OBJECT IDENTIFIER, P-256 curve identifier)
+
+   *Decoding* reverses the same construction.
+
+4.5.3.  X9.62 Uncompressed Point (Public Keys)
+
+   The ECDSA public key in this document is encoded as the X9.62
+   [X9.62-2005] uncompressed point:
+
+   ECDSA public key <- 0x04 || x || y
+
+   where x and y are the same raw, fixed-length, big-endian coordinate
+   values already used by [RFC7518] and [RFC9053] (32 bytes each for
+   P-256, 48 bytes each for P-384).
+
 5.  Composite Signature Instantiations
 
    The ML-DSA signature scheme supports three possible parameter sets,
    each of which corresponding to a specific security strength.  See
    [FIPS.204] for more considerations on that matter.
 
-   The traditional signature algorithm for each combination in Table 2
-   and Table 3 was chosen to match the security level of the ML-DSA
+   The traditional signature algorithm for each combination in Table 5
+   and Table 6 was chosen to match the security level of the ML-DSA
    post-quantum component.
 
    The [FIPS.204] specification defines both pure and pre-hash modes for
@@ -527,7 +688,7 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    |                 |         |                 |        |Ed448      |
    +-----------------+---------+-----------------+--------+-----------+
 
-         Table 2: JOSE Composite Signature Algorithms for ML-DSA
+         Table 5: JOSE Composite Signature Algorithms for ML-DSA
 
    Examples can be found in Appendix A.1.
 
@@ -583,13 +744,13 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    |          |            |         |         |        | Ed448       |
    +----------+------------+---------+---------+--------+-------------+
 
-         Table 3: COSE Composite Signature Algorithms for ML-DSA
+         Table 6: COSE Composite Signature Algorithms for ML-DSA
 
    Examples can be found in Appendix A.2.
 
 5.3.  Composite Labels for JOSE and COSE
 
-   The JOSE and COSE composite label values are listed in Table 4.
+   The JOSE and COSE composite label values are listed in Table 7.
 
    They are represented here as ASCII strings, but implementers MUST
    convert them to byte strings using the obvious ASCII conversions
@@ -620,7 +781,7 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
    |87-Ed448  |MLDSA87-Ed448-SHAKE256|                                                                  |
    +----------+----------------------+------------------------------------------------------------------+
 
-                 Table 4: JOSE/COSE Composite Label Values
+                 Table 7: JOSE/COSE Composite Label Values
 
 6.  Security Considerations
 
@@ -1001,6 +1162,12 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
               Signing and Encryption (COSE) Key Thumbprint", RFC 9679,
               DOI 10.17487/RFC9679, December 2024,
               <https://www.rfc-editor.org/rfc/rfc9679>.
+
+   [X9.62-2005]
+              American National Standards Institute, "Public Key
+              Cryptography for the Financial Services Industry: the
+              Elliptic Curve Digital Signature Algorithm (ECDSA)",
+              ANSI X9.62-2005, November 2005.
 
 8.2.  Informative References
 
