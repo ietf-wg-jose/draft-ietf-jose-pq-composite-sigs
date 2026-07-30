@@ -49,7 +49,7 @@ var algorithms = map[string]AlgorithmConfig{
 	"ML-DSA-44-ES256": {
 		Name:      "ML-DSA-44-ES256",
 		Label:     "COMPSIG-MLDSA44-ECDSA-P256-SHA256",
-		COSEAlg:   -51,
+		COSEAlg:   -54,
 		CurveName: "P256",
 		TradAlg:   "ECDSA",
 		TradHash:  "SHA256",
@@ -58,7 +58,7 @@ var algorithms = map[string]AlgorithmConfig{
 	"ML-DSA-65-ES256": {
 		Name:      "ML-DSA-65-ES256",
 		Label:     "COMPSIG-MLDSA65-ECDSA-P256-SHA512",
-		COSEAlg:   -52,
+		COSEAlg:   -55,
 		CurveName: "P256",
 		TradAlg:   "ECDSA",
 		TradHash:  "SHA256",
@@ -67,7 +67,7 @@ var algorithms = map[string]AlgorithmConfig{
 	"ML-DSA-87-ES384": {
 		Name:      "ML-DSA-87-ES384",
 		Label:     "COMPSIG-MLDSA87-ECDSA-P384-SHA512",
-		COSEAlg:   -53,
+		COSEAlg:   -56,
 		CurveName: "P384",
 		TradAlg:   "ECDSA",
 		TradHash:  "SHA384",
@@ -76,21 +76,21 @@ var algorithms = map[string]AlgorithmConfig{
 	"ML-DSA-44-Ed25519": {
 		Name:    "ML-DSA-44-Ed25519",
 		Label:   "COMPSIG-MLDSA44-Ed25519-SHA512",
-		COSEAlg: -54,
+		COSEAlg: -57,
 		TradAlg: "Ed25519",
 		PreHash: "SHA512",
 	},
 	"ML-DSA-65-Ed25519": {
 		Name:    "ML-DSA-65-Ed25519",
 		Label:   "COMPSIG-MLDSA65-Ed25519-SHA512",
-		COSEAlg: -55,
+		COSEAlg: -58,
 		TradAlg: "Ed25519",
 		PreHash: "SHA512",
 	},
 	"ML-DSA-87-Ed448": {
 		Name:    "ML-DSA-87-Ed448",
 		Label:   "COMPSIG-MLDSA87-Ed448-SHAKE256",
-		COSEAlg: -56,
+		COSEAlg: -59,
 		TradAlg: "Ed448",
 		PreHash: "SHAKE256",
 	},
@@ -106,17 +106,18 @@ const (
 )
 
 type TestVector struct {
-	Priv           string `json:"priv"`
-	MLDSASeed      string `json:"mldsa_seed"`
-	ECDSAD         string `json:"ecdsa_d,omitempty"`
-	EdDSASeed      string `json:"eddsa_seed,omitempty"`
-	Key            string `json:"key"`
-	KeyDiag        string `json:"key_diag"`
-	Sign1          string `json:"sign1"`
-	Sign1Diag      string `json:"sign1_diag"`
-	RawToBeSigned  string `json:"raw_to_be_signed"`
-	RawSignature   string `json:"raw_signature"`
-	RawPublicKey   string `json:"raw_public_key"`
+	Priv                     string `json:"priv"`
+	MLDSASeed                string `json:"mldsa_seed"`
+	ECDSAD                   string `json:"ecdsa_d,omitempty"`
+	EdDSASeed                string `json:"eddsa_seed,omitempty"`
+	Key                      string `json:"key"`
+	KeyDiag                  string `json:"key_diag"`
+	Sign1                    string `json:"sign1"`
+	Sign1Diag                string `json:"sign1_diag"`
+	RawToBeSigned            string `json:"raw_to_be_signed"`
+	RawMessageRepresentative string `json:"raw_message_representative"`
+	RawSignature             string `json:"raw_signature"`
+	RawPublicKey             string `json:"raw_public_key"`
 }
 
 // TradKeyPair holds either ECDSA or EdDSA keys
@@ -236,6 +237,95 @@ func generateTraditionalKey(config AlgorithmConfig, keyMaterial *KeyMaterial) (*
 }
 
 // ============================================================================
+// ECDSA DER
+// ============================================================================
+
+func derEncodeInt(v []byte) []byte {
+	i := 0
+	for i < len(v)-1 && v[i] == 0x00 {
+		i++
+	}
+	trimmed := v[i:]
+	if trimmed[0]&0x80 != 0 {
+		out := make([]byte, 0, len(trimmed)+3)
+		out = append(out, 0x02, byte(len(trimmed)+1), 0x00)
+		out = append(out, trimmed...)
+		return out
+	}
+	out := make([]byte, 0, len(trimmed)+2)
+	out = append(out, 0x02, byte(len(trimmed)))
+	out = append(out, trimmed...)
+	return out
+}
+
+func ecdsaSigToDER(r, s []byte) []byte {
+	rDER := derEncodeInt(r)
+	sDER := derEncodeInt(s)
+	body := make([]byte, 0, len(rDER)+len(sDER))
+	body = append(body, rDER...)
+	body = append(body, sDER...)
+	out := make([]byte, 0, len(body)+2)
+	out = append(out, 0x30, byte(len(body)))
+	out = append(out, body...)
+	return out
+}
+
+func ecCurveOID(curveName string) ([]byte, error) {
+	switch curveName {
+	case "P256":
+		return []byte{0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x03, 0x01, 0x07}, nil
+	case "P384":
+		return []byte{0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x22}, nil
+	default:
+		return nil, fmt.Errorf("unsupported curve for ECPrivateKey: %s", curveName)
+	}
+}
+
+func ecPrivateKeyToDER(d []byte, curveName string) ([]byte, error) {
+	oidField, err := ecCurveOID(curveName)
+	if err != nil {
+		return nil, err
+	}
+	version := []byte{0x02, 0x01, 0x01}
+	privKeyField := append([]byte{0x04, byte(len(d))}, d...)
+	paramsField := append([]byte{0xA0, byte(len(oidField))}, oidField...)
+
+	body := make([]byte, 0, len(version)+len(privKeyField)+len(paramsField))
+	body = append(body, version...)
+	body = append(body, privKeyField...)
+	body = append(body, paramsField...)
+
+	out := make([]byte, 0, len(body)+2)
+	out = append(out, 0x30, byte(len(body)))
+	out = append(out, body...)
+	return out, nil
+}
+
+func x962UncompressedPoint(pub *ecdsa.PublicKey) []byte {
+	keySize := (pub.Curve.Params().BitSize + 7) / 8
+	xBytes := make([]byte, keySize)
+	yBytes := make([]byte, keySize)
+	pub.X.FillBytes(xBytes)
+	pub.Y.FillBytes(yBytes)
+	out := make([]byte, 0, 1+2*keySize)
+	out = append(out, 0x04)
+	out = append(out, xBytes...)
+	out = append(out, yBytes...)
+	return out
+}
+
+func curveNameFor(curve elliptic.Curve) (string, error) {
+	switch curve {
+	case elliptic.P256():
+		return "P256", nil
+	case elliptic.P384():
+		return "P384", nil
+	default:
+		return "", fmt.Errorf("unsupported curve for DER encoding")
+	}
+}
+
+// ============================================================================
 // Composite Key Generation
 // ============================================================================
 
@@ -256,7 +346,10 @@ func GenerateCompositeKey(config AlgorithmConfig, keyMaterial *KeyMaterial) (map
 	}
 
 	pubBytes := buildCompositePublicKey(pubBytesMLDSA, tradKeys, config.TradAlg)
-	privBytes := buildCompositePrivateKey(mldsaKeys.Seed, tradKeys, config.TradAlg)
+	privBytes, err := buildCompositePrivateKey(mldsaKeys.Seed, tradKeys, config.TradAlg)
+	if err != nil {
+		return nil, nil, nil, fmt.Errorf("failed to build composite private key: %w", err)
+	}
 
 	hash := sha256.Sum256(pubBytes)
 	kid := hash[:8]
@@ -278,8 +371,7 @@ func buildCompositePublicKey(mldsaPubKey []byte, tradKeys *TradKeyPair, tradAlg 
 
 	switch tradAlg {
 	case "ECDSA":
-		pubBytes = append(pubBytes, tradKeys.ECDSAPriv.PublicKey.X.Bytes()...)
-		pubBytes = append(pubBytes, tradKeys.ECDSAPriv.PublicKey.Y.Bytes()...)
+		pubBytes = append(pubBytes, x962UncompressedPoint(&tradKeys.ECDSAPriv.PublicKey)...)
 	case "Ed25519":
 		pubBytes = append(pubBytes, tradKeys.Ed25519Priv.Public().(ed25519.PublicKey)...)
 	case "Ed448":
@@ -289,32 +381,40 @@ func buildCompositePublicKey(mldsaPubKey []byte, tradKeys *TradKeyPair, tradAlg 
 	return pubBytes
 }
 
-func buildCompositePrivateKey(mldsaSeed []byte, tradKeys *TradKeyPair, tradAlg string) []byte {
+func buildCompositePrivateKey(mldsaSeed []byte, tradKeys *TradKeyPair, tradAlg string) ([]byte, error) {
 	privBytes := make([]byte, len(mldsaSeed))
 	copy(privBytes, mldsaSeed)
 
 	switch tradAlg {
 	case "ECDSA":
+		curve := tradKeys.ECDSAPriv.Curve
+		keySize := (curve.Params().BitSize + 7) / 8
+		dBytes := make([]byte, keySize)
+		tradKeys.ECDSAPriv.D.FillBytes(dBytes)
 
-		dBytes := tradKeys.ECDSAPriv.D.Bytes()
-		paddedD := make([]byte, 32)
-		copy(paddedD[32-len(dBytes):], dBytes)
-		privBytes = append(privBytes, paddedD...)
+		curveName, err := curveNameFor(curve)
+		if err != nil {
+			return nil, err
+		}
+		ecPrivDER, err := ecPrivateKeyToDER(dBytes, curveName)
+		if err != nil {
+			return nil, fmt.Errorf("failed to build ECPrivateKey: %w", err)
+		}
+		privBytes = append(privBytes, ecPrivDER...)
 	case "Ed25519":
 		privBytes = append(privBytes, tradKeys.Ed25519Priv.Seed()...)
 	case "Ed448":
-
 		privBytes = append(privBytes, []byte(tradKeys.Ed448Priv)[:ed448.SeedSize]...)
 	}
 
-	return privBytes
+	return privBytes, nil
 }
 
 // ============================================================================
 // COSE Sign1 Signature
 // ============================================================================
 
-func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}, mldsaKeys *MLDSAKeyPair, tradKeys *TradKeyPair, payload []byte) ([]byte, []byte, []byte, error) {
+func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}, mldsaKeys *MLDSAKeyPair, tradKeys *TradKeyPair, payload []byte) ([]byte, []byte, []byte, []byte, error) {
 
 	protectedHeader := map[interface{}]interface{}{
 		1: config.COSEAlg,           // alg
@@ -323,7 +423,7 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 
 	protectedHeaderBytes, err := cbor.Marshal(protectedHeader)
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("failed to marshal protected header: %w", err)
+		return nil, nil, nil, nil, fmt.Errorf("failed to marshal protected header: %w", err)
 	}
 
 	sigStructure := []interface{}{
@@ -335,12 +435,12 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 
 	sigStructureBytes, err := cbor.Marshal(sigStructure)
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("failed to marshal Sig_structure: %w", err)
+		return nil, nil, nil, nil, fmt.Errorf("failed to marshal Sig_structure: %w", err)
 	}
 
 	prehash, err := computeHash(sigStructureBytes, config.PreHash)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	toBeSigned := buildMessageToBeSigned(config.Label, prehash)
@@ -348,13 +448,13 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 	// Sign with ML-DSA
 	sigMLDSA, err := signMLDSA(mldsaKeys.PrivateKey, toBeSigned, config.Label)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	// Sign with traditional algorithm
 	sigTrad, err := signTraditional(tradKeys, toBeSigned, config)
 	if err != nil {
-		return nil, nil, nil, err
+		return nil, nil, nil, nil, err
 	}
 
 	// Create composite signature
@@ -369,10 +469,10 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 
 	coseSign1Bytes, err := cbor.Marshal(cbor.Tag{Number: 18, Content: coseSign1})
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("failed to marshal COSE_Sign1: %w", err)
+		return nil, nil, nil, nil, fmt.Errorf("failed to marshal COSE_Sign1: %w", err)
 	}
 
-	return coseSign1Bytes, sigStructureBytes, signature, nil
+	return coseSign1Bytes, sigStructureBytes, toBeSigned, signature, nil
 }
 
 func buildMessageToBeSigned(label string, prehash []byte) []byte {
@@ -418,7 +518,13 @@ func signECDSA(privKey *ecdsa.PrivateKey, message []byte, hashAlg string) ([]byt
 		return nil, fmt.Errorf("ECDSA signing failed: %w", err)
 	}
 
-	return append(r.Bytes(), s.Bytes()...), nil
+	keySize := (privKey.Curve.Params().BitSize + 7) / 8
+	rBytes := make([]byte, keySize)
+	sBytes := make([]byte, keySize)
+	r.FillBytes(rBytes)
+	s.FillBytes(sBytes)
+
+	return ecdsaSigToDER(rBytes, sBytes), nil
 }
 
 // ============================================================================
@@ -453,7 +559,7 @@ func getCurve(name string) (elliptic.Curve, error) {
 		return nil, fmt.Errorf("unsupported curve: %s", name)
 	}
 }
-
+ 
 func computeHash(data []byte, hashName string) ([]byte, error) {
 	switch hashName {
 	case "SHA256":
@@ -623,40 +729,26 @@ func main() {
 	}
 
 	payload := []byte(*payloadStr)
-	coseSign1, sigStructure, signature, err := CreateCOSESign1(config, coseKey, mldsaKeys, tradKeys, payload)
+	coseSign1, message, messageRepresentative, signature, err := CreateCOSESign1(config, coseKey, mldsaKeys, tradKeys, payload)
 	if err != nil {
 		log.Fatalf("Signature failed: %v", err)
 	}
 
 	pubKeyBytes := coseKey[coseKeyPub].([]byte)
 
-	var privComposite []byte
-	privComposite = append(privComposite, mldsaKeys.Seed...)
-	
-	switch config.TradAlg {
-	case "ECDSA":
-		curve := tradKeys.ECDSAPriv.Curve
-		keySize := (curve.Params().BitSize + 7) / 8
-		dBytes := make([]byte, keySize)
-		dBytesActual := tradKeys.ECDSAPriv.D.Bytes()
-		copy(dBytes[keySize-len(dBytesActual):], dBytesActual)
-		privComposite = append(privComposite, dBytes...)
-	case "Ed25519":
-		privComposite = append(privComposite, tradKeys.Ed25519Priv.Seed()...)
-	case "Ed448":
-		privComposite = append(privComposite, []byte(tradKeys.Ed448Priv)[:ed448.SeedSize]...)
-	}
+	privComposite := coseKey[coseKeyPriv].([]byte)
 
 	testVector := TestVector{
-		Priv:          hex.EncodeToString(privComposite),
-		MLDSASeed:     hex.EncodeToString(mldsaKeys.Seed),
-		Key:           hex.EncodeToString(coseKeyBytes),
-		KeyDiag:       cborDiag(coseKeyBytes),
-		Sign1:         hex.EncodeToString(coseSign1),
-		Sign1Diag:     cborDiag(coseSign1),
-		RawToBeSigned: hex.EncodeToString(sigStructure),
-		RawSignature:  hex.EncodeToString(signature),
-		RawPublicKey:  hex.EncodeToString(pubKeyBytes),
+		Priv:                     hex.EncodeToString(privComposite),
+		MLDSASeed:                hex.EncodeToString(mldsaKeys.Seed),
+		Key:                      hex.EncodeToString(coseKeyBytes),
+		KeyDiag:                  cborDiag(coseKeyBytes),
+		Sign1:                    hex.EncodeToString(coseSign1),
+		Sign1Diag:                cborDiag(coseSign1),
+		RawToBeSigned:            hex.EncodeToString(message),
+		RawMessageRepresentative: hex.EncodeToString(messageRepresentative),
+		RawSignature:             hex.EncodeToString(signature),
+		RawPublicKey:             hex.EncodeToString(pubKeyBytes),
 	}
 
 	switch config.TradAlg {
