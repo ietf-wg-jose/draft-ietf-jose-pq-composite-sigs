@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 24 January 2027                                         J. Gray
+Expires: 31 January 2027                                         J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                            23 July 2026
+                                                            30 July 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 January 2027.
+   This Internet-Draft will expire on 31 January 2027.
 
 Copyright Notice
 
@@ -1128,6 +1128,16 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC3279]  Bassham, L., Polk, W., and R. Housley, "Algorithms and
+              Identifiers for the Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 3279, DOI 10.17487/RFC3279, May 2002,
+              <https://www.rfc-editor.org/rfc/rfc3279>.
+
+   [RFC5915]  Turner, S. and D. Brown, "Elliptic Curve Private Key
+              Structure", RFC 5915, DOI 10.17487/RFC5915, June 2010,
+              <https://www.rfc-editor.org/rfc/rfc5915>.
+
    [RFC6090]  McGrew, D., Igoe, K., and M. Salter, "Fundamental Elliptic
               Curve Cryptography Algorithms", RFC 6090,
               DOI 10.17487/RFC6090, February 2011,
@@ -1200,16 +1210,6 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
               Draft, draft-ietf-pquip-pqt-hybrid-terminology-06, 10
               January 2025, <https://datatracker.ietf.org/doc/html/
               draft-ietf-pquip-pqt-hybrid-terminology-06>.
-
-   [RFC3279]  Bassham, L., Polk, W., and R. Housley, "Algorithms and
-              Identifiers for the Internet X.509 Public Key
-              Infrastructure Certificate and Certificate Revocation List
-              (CRL) Profile", RFC 3279, DOI 10.17487/RFC3279, May 2002,
-              <https://www.rfc-editor.org/rfc/rfc3279>.
-
-   [RFC5915]  Turner, S. and D. Brown, "Elliptic Curve Private Key
-              Structure", RFC 5915, DOI 10.17487/RFC5915, June 2010,
-              <https://www.rfc-editor.org/rfc/rfc5915>.
 
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
