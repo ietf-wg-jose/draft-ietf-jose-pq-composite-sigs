@@ -313,7 +313,7 @@ Since all combinations presented in this document start with the ML-DSA algorith
 {{tab-ml-dsa-size}} lists sizes of the three parameter sets of the ML-DSA algorithm.
 
 | Algorithm | Private Key (seed) | Private Key | Public Key | Signature Size |
-| ----------- | ----------- | ----------- | ----------- |
+| ----------- | ----------- | ----------- | ----------- | ----------- |
 | ML-DSA-44 | 32 | 2560 | 1312 | 2420 |
 | ML-DSA-65 | 32 | 4032 | 1952 | 3309 |
 | ML-DSA-87 | 32 | 4896 | 2592 | 4627 |
@@ -343,8 +343,8 @@ Ecdsa-Sig-Value ::= SEQUENCE {
 }
 ~~~
 
-r and s are the raw, fixed-length, big-endian values already used today by {{RFC7518}} and {{RFC9053}} (32 bytes each for P-256, 48
-bytes each for P-384). Building an Ecdsa-Sig-Value from r and s takes two steps:
+r and s are the same big-endian integer values already used today by {{RFC7518}} and {{RFC9053}}, where they are zero-padded to a fixed length for a given curve (32 bytes each for P-256, 48
+bytes each for P-384). As integers, however, r and s can have fewer significant bytes than this fixed length whenever their leading bytes happen to be zero; Step 1 below removes this padding before re-encoding them as DER INTEGERs. Building an Ecdsa-Sig-Value from r and s takes two steps:
 
 - first, r and s are each turned independently into a DER INTEGER (Step 1);
 - then the two results are wrapped in a DER SEQUENCE (Step 2).
@@ -356,13 +356,15 @@ Decoding simply reverses these two steps. No prior ASN.1 knowledge is assumed be
 A DER INTEGER is written as a 0x02 tag byte, a length byte, and the value's bytes. Because a DER INTEGER is signed, an extra 0x00 byte is
 prepended whenever the value would otherwise be misread as negative, i.e. whenever its first byte is 0x80 or greater.
 
-{{#table-ecdsa-sig-encode}} explains how to turn a raw value (r or s) into its DER encoding.
+{{table-ecdsa-sig-encode}} explains how to turn a raw value (r or s) into its DER encoding.
 
 | After removing any leading 0x00 bytes from the raw value (keeping at least 1 byte), the first remaining byte is... | ...then its DER encoding is |
 |:---|:---|
 | less than 0x80 | 0x02, then the length in bytes of the trimmed value, then the trimmed value |
 | 0x80 or greater | 0x02, then the length in bytes of the trimmed value plus 1, then 0x00, then the trimmed value |
 {: #table-ecdsa-sig-encode title="Turning a raw value (r or s) into its DER encoding"}
+
+The length is always written as a single byte in this document: r, s, and their DER encodings are always well under 128 bytes, so DER's multi-byte "long form" length encoding is never needed here.
 
 For example, for P-256 (32-byte r and s):
 
@@ -400,7 +402,7 @@ ECPrivateKey ::= SEQUENCE {
 
 Given the raw, fixed-length ECDSA private value d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
 inserted between two fixed byte sequences that depend only on the curve (the publicKey field is never included), as given in
-{{#table-ecprivatekey-build}}:
+{{table-ecprivatekey-build}}:
 
 | Curve | Bytes before d | Bytes after d |
 |:---|:---|:---|
@@ -411,11 +413,11 @@ inserted between two fixed byte sequences that depend only on the curve (the pub
 For example, for P-256 (n = 32), with d = `D1 D2 ...D32`:
 
 ~~~
-30 31                                 structure (SEQUENCE, length 0x31 = 49)
+30 31                                 SEQUENCE (length 0x31 = 49)
    02 01 01                           version (INTEGER, value 1)
-   04 20 D1 D2 ... D32                private key field (OCTET STRING, length 0x20 = 32, then d)
-   A0 0A                              parameters field (length 0x0A = 10)
-      06 08 2A 86 48 CE 3D 03 01 07   OID field (OBJECT IDENTIFIER, P-256 curve identifier)
+   04 20 D1 D2 ... D32                private key (OCTET STRING)
+   A0 0A                              parameters (A0: explicit tag 0)
+      06 08 2A 86 48 CE 3D 03 01 07   OID (OBJECT IDENTIFIER, P-256)
 ~~~
 
 **Decoding** reverses the same construction.
@@ -443,9 +445,9 @@ The following table defines a list of algorithms associated with specific PQ/T c
 
 | Name | First Algorithm | Second Algorithm | Pre-Hash | Description
 | ----------- | ----------- |  ----------- | ----------- | ----------- |
-| ML-DSA-44-ES256 | ML-DSA-44  | ecdsa-with-SHA256 with secp256r1 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
-| ML-DSA-65-ES256  | ML-DSA-65 | ecdsa-with-SHA256 with secp256r1 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
-| ML-DSA-87-ES384  | ML-DSA-87 | ecdsa-with-SHA384 with secp384r1 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
+| ML-DSA-44-ES256 | ML-DSA-44  | ecdsa-with-SHA256 with P-256 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
+| ML-DSA-65-ES256  | ML-DSA-65 | ecdsa-with-SHA256 with P-256 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
+| ML-DSA-87-ES384  | ML-DSA-87 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-44-Ed25519 | ML-DSA-44  | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
 | ML-DSA-65-Ed25519 | ML-DSA-65  | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
 | ML-DSA-87-Ed448   | ML-DSA-87  | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
@@ -459,10 +461,10 @@ The following table defines a list of algorithms associated with specific PQ/T c
 
 
 | Name | COSE Value | First Algorithm | Second Algorithm | Pre-Hash | Description
-| ----------- | ----------- | ----------- |  ----------- | ----------- |
-| ML-DSA-44-ES256           | TBD (request assignment -54) | ML-DSA-44 | ecdsa-with-SHA256 with secp256r1 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
-| ML-DSA-65-ES256           | TBD (request assignment -55) | ML-DSA-65 | ecdsa-with-SHA256 with secp256r1 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
-| ML-DSA-87-ES384           | TBD (request assignment -56) | ML-DSA-87 | ecdsa-with-SHA384 with secp384r1 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| ML-DSA-44-ES256           | TBD (request assignment -54) | ML-DSA-44 | ecdsa-with-SHA256 with P-256 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
+| ML-DSA-65-ES256           | TBD (request assignment -55) | ML-DSA-65 | ecdsa-with-SHA256 with P-256 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
+| ML-DSA-87-ES384           | TBD (request assignment -56) | ML-DSA-87 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-44-Ed25519         | TBD (request assignment -57) | ML-DSA-44 | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
 | ML-DSA-65-Ed25519         | TBD (request assignment -58) | ML-DSA-65 | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
 | ML-DSA-87-Ed448           | TBD (request assignment -59) | ML-DSA-87 | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
@@ -477,13 +479,13 @@ The JOSE and COSE composite label values are listed in {{tab-sig-alg-label}}.
 They are represented here as ASCII strings, but implementers MUST convert them to byte strings using the obvious ASCII conversions prior to concatenating them with other byte values, as in {{-COMPOSITE-LAMPS}}.
 
 | "alg" Header Parameter | Label (in ASCII) | Label (in Hex encoding) |
-| ----------- | ----------- |  ----------- | ----------- | ----------- | ----------- |
-| ML-DSA-44-ES256   | COMPSIG-MLDSA44-ECDSA-P256-SHA256 | 434F4D505349472D4D4C44534134342D45434453412D503235362D534841323536 |
-| ML-DSA-65-ES256   | COMPSIG-MLDSA65-ECDSA-P256-SHA512 | 434F4D505349472D4D4C44534136352D45434453412D503235362D534841353132 |
-| ML-DSA-87-ES384   | COMPSIG-MLDSA87-ECDSA-P384-SHA512 | 434F4D505349472D4D4C44534138372D45434453412D503338342D534841353132 |
-| ML-DSA-44-Ed25519 | COMPSIG-MLDSA44-Ed25519-SHA512    | 434F4D505349472D4D4C44534134342D456432353531392D534841353132       |
-| ML-DSA-65-Ed25519 | COMPSIG-MLDSA65-Ed25519-SHA512    | 434F4D505349472D4D4C44534136352D456432353531392D534841353132       |
-| ML-DSA-87-Ed448   | COMPSIG-MLDSA87-Ed448-SHAKE256    | 434F4D505349472D4D4C44534138372D45643434382D5348414B45323536       |
+| ----------- | ----------- | ----------- |
+| ML-DSA-44-ES256   | COMPSIG-MLDSA44-ECDSA-P256-SHA256 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 34 34 2D 45 43 44 53 41 2D 50 32 35 36 2D 53 48 41 32 35 36 |
+| ML-DSA-65-ES256   | COMPSIG-MLDSA65-ECDSA-P256-SHA512 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 43 44 53 41 2D 50 32 35 36 2D 53 48 41 35 31 32 |
+| ML-DSA-87-ES384   | COMPSIG-MLDSA87-ECDSA-P384-SHA512 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 38 37 2D 45 43 44 53 41 2D 50 33 38 34 2D 53 48 41 35 31 32 |
+| ML-DSA-44-Ed25519 | COMPSIG-MLDSA44-Ed25519-SHA512    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 34 34 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32 |
+| ML-DSA-65-Ed25519 | COMPSIG-MLDSA65-Ed25519-SHA512    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32 |
+| ML-DSA-87-Ed448   | COMPSIG-MLDSA87-Ed448-SHAKE256    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 38 37 2D 45 64 34 34 38 2D 53 48 41 4B 45 32 35 36 |
 {: #tab-sig-alg-label title="JOSE/COSE Composite Label Values"}
 
 # Security Considerations
@@ -669,64 +671,64 @@ They are represented following the registration template provided in {{RFC9053}}
 ## JOSE {#appdx-jose}
 
 ~~~~~~~~~~
-{::include ./examples/jose/examples/ML-DSA-44-ES256.jose.json}
+{::include-fold ./examples/jose/examples/ML-DSA-44-ES256.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_44_ES256 title="ML-DSA-44-ES256"}
 
 ~~~~~~~~~~
-{::include ./examples/jose/examples/ML-DSA-44-Ed25519.jose.json}
+{::include-fold ./examples/jose/examples/ML-DSA-44-Ed25519.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_44_Ed25519 title="ML-DSA-44-Ed25519"}
 
 ~~~~~~~~~~
-{::include ./examples/jose/examples/ML-DSA-65-ES256.jose.json}
+{::include-fold ./examples/jose/examples/ML-DSA-65-ES256.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_65_ES256 title="ML-DSA-65-ES256"}
 
 ~~~~~~~~~~
-{::include ./examples/jose/examples/ML-DSA-65-Ed25519.jose.json}
+{::include-fold ./examples/jose/examples/ML-DSA-65-Ed25519.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_65_Ed25519 title="ML-DSA-65-Ed25519"}
 
 ~~~~~~~~~~
-{::include ./examples/jose/examples/ML-DSA-87-ES384.jose.json}
+{::include-fold ./examples/jose/examples/ML-DSA-87-ES384.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_87_ES384 title="ML-DSA-87-ES384"}
 
 ~~~~~~~~~~
-{::include ./examples/jose/examples/ML-DSA-87-Ed448.jose.json}
+{::include-fold ./examples/jose/examples/ML-DSA-87-Ed448.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_87_Ed448 title="ML-DSA-87-Ed448"}
 
 ## COSE {#appdx-cose}
 
 ~~~~~~~~~~
-{::include ./examples/cose/examples/ML-DSA-44-ES256.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-44-ES256.cose.json}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_44_ES256 title="ML-DSA-44-ES256"}
 
 ~~~~~~~~~~
-{::include ./examples/cose/examples/ML-DSA-44-Ed25519.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-44-Ed25519.cose.json}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_44_Ed25519 title="ML-DSA-44-Ed25519"}
 
 ~~~~~~~~~~
-{::include ./examples/cose/examples/ML-DSA-65-ES256.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-65-ES256.cose.json}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_65_ES256 title="ML-DSA-65-ES256"}
 
 ~~~~~~~~~~
-{::include ./examples/cose/examples/ML-DSA-65-Ed25519.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-65-Ed25519.cose.json}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_65_Ed25519 title="ML-DSA-65-Ed25519"}
 
 ~~~~~~~~~~
-{::include ./examples/cose/examples/ML-DSA-87-ES384.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-87-ES384.cose.json}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_87_ES384 title="ML-DSA-87-ES384"}
 
 ~~~~~~~~~~
-{::include ./examples/cose/examples/ML-DSA-87-Ed448.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-87-Ed448.cose.json}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_87_Ed448 title="ML-DSA-87-Ed448"}
 
