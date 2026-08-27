@@ -703,32 +703,32 @@ They are represented following the registration template provided in {{RFC9053}}
 ## COSE {#appdx-cose}
 
 ~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-44-ES256.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-44-ES256.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_44_ES256 title="ML-DSA-44-ES256"}
 
 ~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-44-Ed25519.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-44-Ed25519.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_44_Ed25519 title="ML-DSA-44-Ed25519"}
 
 ~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-65-ES256.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-65-ES256.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_65_ES256 title="ML-DSA-65-ES256"}
 
 ~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-65-Ed25519.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-65-Ed25519.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_65_Ed25519 title="ML-DSA-65-Ed25519"}
 
 ~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-87-ES384.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-87-ES384.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_87_ES384 title="ML-DSA-87-ES384"}
 
 ~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-87-Ed448.cose.json}
+{::include-fold ./examples/cose/examples/ML-DSA-87-Ed448.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_87_Ed448 title="ML-DSA-87-Ed448"}
 
