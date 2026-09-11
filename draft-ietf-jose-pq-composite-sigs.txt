@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 28 February 2027                                        J. Gray
+Expires: 15 March 2027                                           J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                          27 August 2026
+                                                       11 September 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 February 2027.
+   This Internet-Draft will expire on 15 March 2027.
 
 Copyright Notice
 
@@ -478,8 +478,8 @@ Composite-ML-DSA.Verify(pk, M, s) -> true or false
      | Public key  | X9.62 uncompressed point       | 65    | 97    |
      |             | (Section 4.5.3)                |       |       |
      +-------------+--------------------------------+-------+-------+
-     | Signature   | Ecdsa-Sig-Value                | ≤ 72  | ≤ 104 |
-     |             | (Section 4.5.1)                |       |       |
+     | Signature   | Ecdsa-Sig-Value                | <= 72 | <=    |
+     |             | (Section 4.5.1)                |       | 104   |
      +-------------+--------------------------------+-------+-------+
 
         Table 2: Sizes (in bytes) of ECDSA keys and signatures as
