@@ -329,7 +329,7 @@ This section describes how to construct and parse the three ECDSA encodings requ
 |:---|:---|:---|:---|
 | Private key | ECPrivateKey (Section 4.5.2) | 51 | 64 |
 | Public key | X9.62 uncompressed point (Section 4.5.3) | 65 | 97 |
-| Signature | Ecdsa-Sig-Value (Section 4.5.1) | ≤ 72 | ≤ 104 |
+| Signature | Ecdsa-Sig-Value (Section 4.5.1) | <= 72 | <= 104 |
 {: #table-ecdsa-sizes title="Sizes (in bytes) of ECDSA keys and signatures as encoded in this document"}
 
 ### Ecdsa-Sig-Value (Signatures) {#sec-ecdsa-encoding-sig}
