@@ -8,7 +8,6 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/hex"
-	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -98,31 +97,16 @@ var algorithms = map[string]AlgorithmConfig{
 
 // COSE Key labels
 const (
-	coseKeyKty   = 1
-	coseKeyKid   = 2
-	coseKeyAlg   = 3
-	coseKeyPub   = -1
-	coseKeyPriv  = -2
+	coseKeyKty  = 1
+	coseKeyKid  = 2
+	coseKeyAlg  = 3
+	coseKeyPub  = -1
+	coseKeyPriv = -2
 )
-
-type TestVector struct {
-	Priv                     string `json:"priv"`
-	MLDSASeed                string `json:"mldsa_seed"`
-	ECDSAD                   string `json:"ecdsa_d,omitempty"`
-	EdDSASeed                string `json:"eddsa_seed,omitempty"`
-	Key                      string `json:"key"`
-	KeyDiag                  string `json:"key_diag"`
-	Sign1                    string `json:"sign1"`
-	Sign1Diag                string `json:"sign1_diag"`
-	RawToBeSigned            string `json:"raw_to_be_signed"`
-	RawMessageRepresentative string `json:"raw_message_representative"`
-	RawSignature             string `json:"raw_signature"`
-	RawPublicKey             string `json:"raw_public_key"`
-}
 
 // TradKeyPair holds either ECDSA or EdDSA keys
 type TradKeyPair struct {
-	ECDSAPriv   *ecdsa.PrivateKey
+	ECDSAPriv *ecdsa.PrivateKey
 
 	Ed25519Priv ed25519.PrivateKey
 	Ed448Priv   ed448.PrivateKey
@@ -185,7 +169,7 @@ func generateECDSAKey(curveName string, keyMaterial *KeyMaterial) (*ecdsa.Privat
 
 	d := big.NewInt(1)
 	x, y := curve.ScalarBaseMult(d.Bytes())
-	
+
 	privKey := &ecdsa.PrivateKey{
 		PublicKey: ecdsa.PublicKey{
 			Curve: curve,
@@ -194,7 +178,7 @@ func generateECDSAKey(curveName string, keyMaterial *KeyMaterial) (*ecdsa.Privat
 		},
 		D: d,
 	}
-	
+
 	return privKey, nil
 }
 
@@ -417,8 +401,8 @@ func buildCompositePrivateKey(mldsaSeed []byte, tradKeys *TradKeyPair, tradAlg s
 func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}, mldsaKeys *MLDSAKeyPair, tradKeys *TradKeyPair, payload []byte) ([]byte, []byte, []byte, []byte, error) {
 
 	protectedHeader := map[interface{}]interface{}{
-		1: config.COSEAlg,           // alg
-		4: coseKey[coseKeyKid],      // kid
+		1: config.COSEAlg,      // alg
+		4: coseKey[coseKeyKid], // kid
 	}
 
 	protectedHeaderBytes, err := cbor.Marshal(protectedHeader)
@@ -445,19 +429,16 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 
 	toBeSigned := buildMessageToBeSigned(config.Label, prehash)
 
-	// Sign with ML-DSA
 	sigMLDSA, err := signMLDSA(mldsaKeys.PrivateKey, toBeSigned, config.Label)
 	if err != nil {
 		return nil, nil, nil, nil, err
 	}
 
-	// Sign with traditional algorithm
 	sigTrad, err := signTraditional(tradKeys, toBeSigned, config)
 	if err != nil {
 		return nil, nil, nil, nil, err
 	}
 
-	// Create composite signature
 	signature := append(sigMLDSA, sigTrad...)
 
 	coseSign1 := []interface{}{
@@ -559,7 +540,7 @@ func getCurve(name string) (elliptic.Curve, error) {
 		return nil, fmt.Errorf("unsupported curve: %s", name)
 	}
 }
- 
+
 func computeHash(data []byte, hashName string) ([]byte, error) {
 	switch hashName {
 	case "SHA256":
@@ -596,60 +577,92 @@ func parseHexSeed(seedHex string, expectedLen int) ([]byte, error) {
 	return seed, nil
 }
 
-func cborDiag(data []byte) string {
-	var v interface{}
-	if err := cbor.Unmarshal(data, &v); err != nil {
-		return fmt.Sprintf("<error: %v>", err)
+// ============================================================================
+// CBOR Extended Diagnostic Notation rendering
+// ============================================================================
+
+const ednBytesPerLine = 32 // 64 hex chars per line
+
+func wrapHex(data []byte, indent string) string {
+	h := hex.EncodeToString(data)
+	lineLen := ednBytesPerLine * 2
+	if len(h) <= lineLen {
+		return "h'" + h + "'"
 	}
-	return formatCBORDiag(v)
+	var b strings.Builder
+	b.WriteString("h'")
+	for i := 0; i < len(h); i += lineLen {
+		end := i + lineLen
+		if end > len(h) {
+			end = len(h)
+		}
+		if i > 0 {
+			b.WriteString("\n")
+			b.WriteString(indent)
+		}
+		b.WriteString(h[i:end])
+	}
+	b.WriteString("'")
+	return b.String()
 }
 
-func formatCBORDiag(v interface{}) string {
-	switch val := v.(type) {
-	case map[interface{}]interface{}:
-		var parts []string
-		for k, v := range val {
-			parts = append(parts, fmt.Sprintf("%s: %s", formatCBORDiag(k), formatCBORDiag(v)))
-		}
-		return "{" + strings.Join(parts, ", ") + "}"
-	
-	case []interface{}:
-		var parts []string
-		for _, item := range val {
-			parts = append(parts, formatCBORDiag(item))
-		}
-		return "[" + strings.Join(parts, ", ") + "]"
-	
-	case []byte:
-		return "h'" + hex.EncodeToString(val) + "'"
-	
-	case string:
-		return fmt.Sprintf(`"%s"`, val)
-	
-	case uint64:
-		return fmt.Sprintf("%d", val)
-	
-	case int64:
-		return fmt.Sprintf("%d", val)
-	
-	case int:
-		return fmt.Sprintf("%d", val)
-	
-	case cbor.Tag:
-		return fmt.Sprintf("%d(%s)", val.Number, formatCBORDiag(val.Content))
-	
-	case bool:
-		if val {
-			return "true"
-		}
-		return "false"
-	
-	case nil:
-		return "null"
-	
-	default:
-		return fmt.Sprintf("%v", val)
+func algLabel(config AlgorithmConfig) string {
+	return config.Name
+}
+
+const ednCommentWidth = 26
+
+func ednField(comment string) string {
+	c := "/ " + comment + " /"
+	if len(c) < ednCommentWidth {
+		c += strings.Repeat(" ", ednCommentWidth-len(c))
+	} else {
+		c += " "
 	}
+	return c
+}
+
+func renderProtectedHeader(config AlgorithmConfig, kid []byte) string {
+	return fmt.Sprintf("{\n"+
+		"    %s 1: %d,\n"+
+		"    %s 4: %s\n"+
+		"  }",
+		ednField("alg "+algLabel(config)), config.COSEAlg,
+		ednField("kid"), wrapHex(kid, "  "))
+}
+
+func renderCOSEKey(config AlgorithmConfig, kid, pub, priv []byte) string {
+	var b strings.Builder
+	b.WriteString("{\n")
+	fmt.Fprintf(&b, "  %s 1: 7,\n", ednField("kty AKP"))
+	fmt.Fprintf(&b, "  %s 3: %d,\n", ednField("alg "+config.Name), config.COSEAlg)
+	fmt.Fprintf(&b, "  %s 2: %s,\n", ednField("kid"), wrapHex(kid, "  "))
+	fmt.Fprintf(&b, "  %s -1:\n%s,\n", ednField("public key"), wrapHex(pub, "  "))
+	fmt.Fprintf(&b, "  %s -2:\n%s\n", ednField("private key"), wrapHex(priv, "  "))
+	b.WriteString("}")
+	return b.String()
+}
+
+func renderSigStructure(config AlgorithmConfig, kid, payload []byte) string {
+	var b strings.Builder
+	b.WriteString("[\n")
+	b.WriteString("  \"Signature1\",\n")
+	fmt.Fprintf(&b, "  << %s >>,\n", renderProtectedHeader(config, kid))
+	b.WriteString("  / external_aad / h'',\n")
+	fmt.Fprintf(&b, "  / payload /\n  %s\n", wrapHex(payload, "  "))
+	b.WriteString("]")
+	return b.String()
+}
+
+func renderCOSESign1(config AlgorithmConfig, kid, payload, signature []byte) string {
+	var b strings.Builder
+	b.WriteString("18([\n")
+	fmt.Fprintf(&b, "  << %s >>,\n", renderProtectedHeader(config, kid))
+	b.WriteString("  / unprotected / {},\n")
+	fmt.Fprintf(&b, "  / payload /\n  %s,\n", wrapHex(payload, "  "))
+	fmt.Fprintf(&b, "  / signature /\n  %s\n", wrapHex(signature, "  "))
+	b.WriteString("])")
+	return b.String()
 }
 
 // ============================================================================
@@ -657,7 +670,6 @@ func formatCBORDiag(v interface{}) string {
 // ============================================================================
 
 func main() {
-	// Command-line flags
 	algName := flag.String("alg", "ML-DSA-87-ES384", "Composite algorithm name")
 	mldsaSeedHex := flag.String("mldsa-seed", "", "ML-DSA seed (32 bytes in hex, optional)")
 	ecdsaPrivHex := flag.String("ecdsa-priv", "", "ECDSA private key d (hex, optional)")
@@ -723,52 +735,39 @@ func main() {
 		log.Fatalf("Key generation failed: %v", err)
 	}
 
-	coseKeyBytes, err := cbor.Marshal(coseKey)
-	if err != nil {
-		log.Fatalf("Failed to marshal COSE key: %v", err)
-	}
-
 	payload := []byte(*payloadStr)
-	coseSign1, message, messageRepresentative, signature, err := CreateCOSESign1(config, coseKey, mldsaKeys, tradKeys, payload)
+	coseSign1Bytes, sigStructureBytes, toBeSigned, signature, err := CreateCOSESign1(config, coseKey, mldsaKeys, tradKeys, payload)
 	if err != nil {
 		log.Fatalf("Signature failed: %v", err)
 	}
+	_ = coseSign1Bytes
 
-	pubKeyBytes := coseKey[coseKeyPub].([]byte)
+	kid := coseKey[coseKeyKid].([]byte)
+	pub := coseKey[coseKeyPub].([]byte)
+	priv := coseKey[coseKeyPriv].([]byte)
 
-	privComposite := coseKey[coseKeyPriv].([]byte)
-
-	testVector := TestVector{
-		Priv:                     hex.EncodeToString(privComposite),
-		MLDSASeed:                hex.EncodeToString(mldsaKeys.Seed),
-		Key:                      hex.EncodeToString(coseKeyBytes),
-		KeyDiag:                  cborDiag(coseKeyBytes),
-		Sign1:                    hex.EncodeToString(coseSign1),
-		Sign1Diag:                cborDiag(coseSign1),
-		RawToBeSigned:            hex.EncodeToString(message),
-		RawMessageRepresentative: hex.EncodeToString(messageRepresentative),
-		RawSignature:             hex.EncodeToString(signature),
-		RawPublicKey:             hex.EncodeToString(pubKeyBytes),
-	}
+	fmt.Printf("/ ML-DSA seed (32 bytes) /\n%s\n\n", wrapHex(mldsaKeys.Seed, ""))
 
 	switch config.TradAlg {
 	case "ECDSA":
 		curve := tradKeys.ECDSAPriv.Curve
 		keySize := (curve.Params().BitSize + 7) / 8
 		dBytes := make([]byte, keySize)
-		dBytesActual := tradKeys.ECDSAPriv.D.Bytes()
-		copy(dBytes[keySize-len(dBytesActual):], dBytesActual)
-		testVector.ECDSAD = hex.EncodeToString(dBytes)
+		tradKeys.ECDSAPriv.D.FillBytes(dBytes)
+		fmt.Printf("/ ECDSA private key d (%d bytes) /\n%s\n\n", keySize, wrapHex(dBytes, ""))
 	case "Ed25519":
-		testVector.EdDSASeed = hex.EncodeToString(tradKeys.Ed25519Priv.Seed())
+		fmt.Printf("/ Ed25519 seed (32 bytes) /\n%s\n\n", wrapHex(tradKeys.Ed25519Priv.Seed(), ""))
 	case "Ed448":
-		testVector.EdDSASeed = hex.EncodeToString([]byte(tradKeys.Ed448Priv)[:ed448.SeedSize])
+		fmt.Printf("/ Ed448 seed (57 bytes) /\n%s\n\n", wrapHex([]byte(tradKeys.Ed448Priv)[:ed448.SeedSize], ""))
 	}
 
-	output, err := json.MarshalIndent(testVector, "", "  ")
-	if err != nil {
-		log.Fatalf("JSON marshaling failed: %v", err)
-	}
+	fmt.Printf("/ AKP COSE_Key /\n%s\n\n", renderCOSEKey(config, kid, pub, priv))
 
-	fmt.Println(string(output))
+	fmt.Printf("/ Sig_structure (M) /\n%s\n\n", renderSigStructure(config, kid, payload))
+
+	fmt.Printf("/ Message representative M' = Prefix || Label || 0x00 || PH(M) /\n%s\n\n", wrapHex(toBeSigned, ""))
+
+	fmt.Printf("/ COSE_Sign1 /\n%s\n", renderCOSESign1(config, kid, payload, signature))
+
+	_ = sigStructureBytes
 }
