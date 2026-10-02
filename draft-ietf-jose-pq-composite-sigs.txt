@@ -234,7 +234,10 @@ Table of Contents
 
    *  The application context string ctx passed to the Composite ML-DSA
       signature generation and verification algorithms MUST be the empty
-      string, similarly to [I-D.draft-ietf-cose-dilithium].
+      string, similarly to [I-D.draft-ietf-cose-dilithium].  As a
+      consequence, the context length byte in the message representative
+      M' defined in [I-D.draft-ietf-lamps-pq-composite-sigs] is always
+      0x00.
 
    *  -  The prefix, as well as the label and the pre-hash algorithm of
          each composite algorithm, are those defined in
