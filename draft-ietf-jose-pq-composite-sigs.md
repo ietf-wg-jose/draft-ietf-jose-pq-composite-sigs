@@ -178,7 +178,7 @@ This section describes how to construct and parse the three ECDSA encodings requ
 
 ### Ecdsa-Sig-Value (Signatures) {#sec-ecdsa-encoding-sig}
 
-Ecdsa-Sig-Value is defined in Section 2.2.3 of {{RFC3279}} as:
+Ecdsa-Sig-Value is defined in {{Section 2.2.3 of RFC3279}} as:
 
 ~~~ asn.1
 Ecdsa-Sig-Value ::= SEQUENCE {
