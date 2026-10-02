@@ -236,10 +236,15 @@ Table of Contents
       signature generation and verification algorithms MUST be the empty
       string, similarly to [I-D.draft-ietf-cose-dilithium].
 
-   *  The label and the pre-hash algorithm of each composite algorithm
-      are those defined in [I-D.draft-ietf-lamps-pq-composite-sigs].
-      They are recalled in Table 6 for the labels, and in Table 4 (for
-      JOSE) and Table 5 (for COSE) for the pre-hash algorithms.
+   *  -  The prefix, as well as the label and the pre-hash algorithm of
+         each composite algorithm, are those defined in
+         [I-D.draft-ietf-lamps-pq-composite-sigs].  The prefix is the
+         ASCII encoding of the string
+         "CompositeAlgorithmSignatures2025", which in hex is 43 6F 6D 70
+         6F 73 69 74 65 41 6C 67 6F 72 69 74 68 6D 53 69 67 6E 61 74 75
+         72 65 73 32 30 32 35.  The labels are recalled in Table 6, and
+         the pre-hash algorithms in Table 4 (for JOSE) and Table 5 (for
+         COSE).
 
    *  Composite keys are expressed using the AKP key type (see
       Section 3).  The pub parameter contains the output of
