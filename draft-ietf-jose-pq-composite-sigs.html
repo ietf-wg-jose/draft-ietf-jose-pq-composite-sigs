@@ -12,7 +12,7 @@
 <meta content="
        This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for PQ/T hybrid composite signatures. The composite algorithms described combine ML-DSA as the post-quantum component and either ECDSA or EdDSA as the traditional component. 
     " name="description">
-<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="xml2rfc 3.34.1" name="generator">
 <meta content="JOSE" name="keyword">
 <meta content="COSE" name="keyword">
 <meta content="PQC" name="keyword">
@@ -21,19 +21,19 @@
 <meta content="Hybrid" name="keyword">
 <meta content="draft-ietf-jose-pq-composite-sigs-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.0
+  xml2rfc 3.34.1
     Python 3.14.7
-    ConfigArgParse 1.7.5
+    ConfigArgParse 1.7.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.7
+    platformdirs 4.11.10
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.3
+    wcwidth 0.8.4
 -->
 <link href="draft-ietf-jose-pq-composite-sigs.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1049,11 +1049,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">JOSE/COSE Composite Signatures</td>
-<td class="right">September 2026</td>
+<td class="right">October 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Prabel, et al.</td>
-<td class="center">Expires 21 March 2027</td>
+<td class="center">Expires 5 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-jose-pq-composite-sigs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-17" class="published">17 September 2026</time>
+<time datetime="2026-10-02" class="published">2 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-21">21 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-05">5 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1172,31 +1172,22 @@ svg {
             <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-algorithm-key-pair-akp-type" class="internal xref">Algorithm Key Pair (AKP) Type</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-composite-signature-algorit" class="internal xref">Composite Signature Algorithm</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-composite-ml-dsa-in-jose-an" class="internal xref">Composite ML-DSA in JOSE and COSE</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-composite-key-generation" class="internal xref">Composite Key Generation</a></p>
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-use-in-jose-and-cose" class="internal xref">Use in JOSE and COSE</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-composite-sign" class="internal xref">Composite Sign</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-composite-verify" class="internal xref">Composite Verify</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
-                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-encoding-rules" class="internal xref">Encoding Rules</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
-                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="auto internal xref">4.5</a>.  <a href="#name-ecdsa-encodings" class="internal xref">ECDSA Encodings</a></p>
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-ecdsa-encodings" class="internal xref">ECDSA Encodings</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.1">
-                    <p id="section-toc.1-1.4.2.5.2.1.1"><a href="#section-4.5.1" class="auto internal xref">4.5.1</a>.  <a href="#name-ecdsa-sig-value-signatures" class="internal xref">Ecdsa-Sig-Value (Signatures)</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="auto internal xref">4.2.1</a>.  <a href="#name-ecdsa-sig-value-signatures" class="internal xref">Ecdsa-Sig-Value (Signatures)</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.2">
-                    <p id="section-toc.1-1.4.2.5.2.2.1"><a href="#section-4.5.2" class="auto internal xref">4.5.2</a>.  <a href="#name-ecprivatekey-private-keys" class="internal xref">ECPrivateKey (Private Keys)</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.2">
+                    <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="auto internal xref">4.2.2</a>.  <a href="#name-ecprivatekey-private-keys" class="internal xref">ECPrivateKey (Private Keys)</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.3">
-                    <p id="section-toc.1-1.4.2.5.2.3.1"><a href="#section-4.5.3" class="auto internal xref">4.5.3</a>.  <a href="#name-x962-uncompressed-point-pub" class="internal xref">X9.62 Uncompressed Point (Public Keys)</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.3">
+                    <p id="section-toc.1-1.4.2.2.2.3.1"><a href="#section-4.2.3" class="auto internal xref">4.2.3</a>.  <a href="#name-x962-uncompressed-point-pub" class="internal xref">X9.62 Uncompressed Point (Public Keys)</a></p>
 </li>
                 </ul>
 </li>
@@ -1352,7 +1343,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
          Each cryptographic algorithm that forms part of a cryptographic scheme.<a href="#section-2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="algorithm-key-pair-akp-type">
+<div id="sec-akp">
 <section id="section-3">
       <h2 id="name-algorithm-key-pair-akp-type">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-algorithm-key-pair-akp-type" class="section-name selfRef">Algorithm Key Pair (AKP) Type</a>
@@ -1363,235 +1354,45 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3-4">The process to compute JWK Thumbprint and COSE Key Thumbprint as described in <span>[<a href="#RFC7638" class="cite xref">RFC7638</a>]</span> and <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> is detailed in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="composite-signature-algorithm">
+<div id="composite-ml-dsa-in-jose-and-cose">
 <section id="section-4">
-      <h2 id="name-composite-signature-algorit">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-composite-signature-algorit" class="section-name selfRef">Composite Signature Algorithm</a>
+      <h2 id="name-composite-ml-dsa-in-jose-an">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-composite-ml-dsa-in-jose-an" class="section-name selfRef">Composite ML-DSA in JOSE and COSE</a>
       </h2>
-<p id="section-4-1">The structures of the composite keys and composite signatures follow an approach similar to <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. The composite design is chosen so that composite keys and signatures can be used as a drop-in replacement in JOSE / COSE object formats. This section gives some details about their construction.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<div id="composite-key-generation">
+<p id="section-4-1">The composite algorithms registered in this document are the Composite ML-DSA algorithms defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. Key generation, signature generation, signature verification, and the serialization of composite keys and signatures are performed exactly as specified in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, and are not repeated here. In particular, composite keys and signatures are encoded using the <code>SerializePublicKey</code>, <code>SerializePrivateKey</code> and <code>SerializeSignatureValue</code> routines of <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, and decoded using the corresponding <code>DeserializePublicKey</code>, <code>DeserializePrivateKey</code> and <code>DeserializeSignatureValue</code> routines.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="sec-use-jose-cose">
 <section id="section-4.1">
-        <h3 id="name-composite-key-generation">
-<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-composite-key-generation" class="section-name selfRef">Composite Key Generation</a>
+        <h3 id="name-use-in-jose-and-cose">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-use-in-jose-and-cose" class="section-name selfRef">Use in JOSE and COSE</a>
         </h3>
-<p id="section-4.1-1">Composite public and private keys are generated by calling the key generation functions of the two component algorithms and concatenating the keys in an order given by the registered composite algorithm.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2"><code>
-Composite Public Key &lt;- Public Key of the 1st Algorithm || Public Key of the 2nd Algorithm
-</code>
-and<a href="#section-4.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1-3"><code>
-Composite Private Key &lt;- Private Key of the 1st Algorithm || Private Key of the 2nd Algorithm
-</code><a href="#section-4.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.1-4">For the composite algorithms described in this document (ML-DSA with ECDSA or EdDSA), the Key Generation process is as follows:<a href="#section-4.1-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1-5">
-<pre>
-Composite-ML-DSA.KeyGen() -&gt; (pk, sk)
-
-1. Generate component keys
-
-    mldsaSeed = Random(32)
-    (mldsaPK, mldsaSK) = ML-DSA.KeyGen_internal(mldsaSeed)
-
-    (tradPK, tradSK) = Trad.KeyGen()
-
-2. Check for component key generation failure
-
-    if NOT (mldsaPK, mldsaSK) or NOT (tradPK, tradSK):
-        output "Key generation error"
-
-3. Serialize keys into composite form
-
-    pk &lt;- SerializePublicKey(mldsaPK, tradPK)
-    sk &lt;- SerializePrivateKey(mldsaSeed, tradSK)
-
-4. Output the composite public and private keys
-
-    return (pk, sk)
-</pre><a href="#section-4.1-5" class="pilcrow">¶</a>
-</div>
-<p id="section-4.1-6">As in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, this keygen routine uses the seed-based ML-DSA.KeyGen_internal defined in Algorithm 6 of <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span>.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
-<p id="section-4.1-7">This document makes use of the serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys. In particular, the ECDSA keys and signature are encoded exactly as required in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>: the signature as an Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span>, the private key as an ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span>, and the ECDSA public key uses the uncompressed X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> point encoding, including the leading 0x04 byte. Section <a href="#sec-ecdsa-encoding" class="auto internal xref">Section 4.5</a> gives guidance on how to encode the ECDSA keys and signature.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
-<p id="section-4.1-8">These encodings are then used with the AKP Key Type. For more information, see the <code>SerializePublicKey</code>, <code>DeserializePublicKey</code>, <code>SerializePrivateKey</code> and <code>DeserializePrivateKey</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
-<p id="section-4.1-9">For the AKP JSON Web Key Type and AKP COSE Key Type, point compression is performed for the EdDSA component, but not for the ECDSA component.<a href="#section-4.1-9" class="pilcrow">¶</a></p>
-<p id="section-4.1-10">In this document, as in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>, the ML-DSA private key <span class="bcp14">MUST</span> be a 32-bytes seed.<a href="#section-4.1-10" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="composite-sign">
-<section id="section-4.2">
-        <h3 id="name-composite-sign">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-composite-sign" class="section-name selfRef">Composite Sign</a>
-        </h3>
-<p id="section-4.2-1">When signing a message M with the composite Sign algorithm, the signature combiner prepends a prefix as well as a label value specific to the composite algorithm used to bind the two component signatures to the composite algorithm and achieve weak non-separability, as defined in <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">However, only the pure ML-DSA component algorithm is used internally.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2-3">A composite signature's value <span class="bcp14">MUST</span> include the two signature components and the two components <span class="bcp14">MUST</span> be in the same order as the components from the corresponding signing key.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
-<p id="section-4.2-4">A composite signature for the message M is generated by:<a href="#section-4.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">The Composite ML-DSA algorithms are used in JOSE and COSE as follows:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.2-5.1">
-            <p id="section-4.2-5.1.1">computing the pre-hash of the message M;<a href="#section-4.2-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4.1-2.1">
+            <p id="section-4.1-2.1.1">Signatures are produced as described in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> for JOSE and in <span><a href="https://rfc-editor.org/rfc/rfc9052#section-4" class="relref">Section 4</a> of [<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> for COSE, using the Composite ML-DSA algorithm as the signature algorithm. The signature value is the output of <code>SerializeSignatureValue</code>.<a href="#section-4.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-5.2">
-            <p id="section-4.2-5.2.1">concatenating the prefix, the label, a byte 0x00 and the pre-hash;<a href="#section-4.2-5.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-4.1-2.2">
+            <p id="section-4.1-2.2.1">The application context string <code>ctx</code> passed to the Composite ML-DSA signature generation and verification algorithms <span class="bcp14">MUST</span> be the empty string, similarly to <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>.<a href="#section-4.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-5.3">
-            <p id="section-4.2-5.3.1">calling the two signature component algorithms on this new message;<a href="#section-4.2-5.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-4.1-2.3">
+            <p id="section-4.1-2.3.1">The label and the pre-hash algorithm of each composite algorithm are those defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. They are recalled in <a href="#tab-sig-alg-label" class="auto internal xref">Table 6</a> for the labels, and in <a href="#tab-jose-algs" class="auto internal xref">Table 4</a> (for JOSE) and <a href="#tab-cose-algs" class="auto internal xref">Table 5</a> (for COSE) for the pre-hash algorithms.<a href="#section-4.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-5.4">
-            <p id="section-4.2-5.4.1">concatenating the two output signatures.<a href="#section-4.2-5.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-4.1-2.4">
+            <p id="section-4.1-2.4.1">Composite keys are expressed using the AKP key type (see <a href="#sec-akp" class="auto internal xref">Section 3</a>). The <code>pub</code> parameter contains the output of <code>SerializePublicKey</code>, and the <code>priv</code> parameter contains the output of <code>SerializePrivateKey</code>. As in <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span>, the ML-DSA component of the private key <span class="bcp14">MUST</span> be the 32-byte seed.<a href="#section-4.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.2-6">For the composite algorithms described in this document (ML-DSA with ECDSA or EdDSA), the signature process of a message M is as follows:<a href="#section-4.2-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.2-7">
-<pre>
-Composite-ML-DSA.Sign(sk, M) -&gt; s
-
-1. Compute the Message representative M'
-
-    M' &lt;- Prefix || Label || 0x00 || PH(M)
-
-2. Separate the private key sk into component keys and re-generate the ML-DSA key from seed
-
-    (mldsaSeed, tradSK) = DeserializePrivateKey(sk)
-    (_, mldsaSK) = ML-DSA.KeyGen_internal(mldsaSeed)
-
-3. Generate the two component signatures
-
-    mldsaSig &lt;- ML-DSA.Sign(mldsaSK, M', ctx=Label)
-    tradSig &lt;- Trad.Sign(tradSK, M')
-
-4. If either ML-DSA.Sign() or Trad.Sign() return an error, then this process MUST return an error.
-
-    if NOT mldsaSig or NOT tradSig:
-      output "Signature generation error"
-
-5. Output the encoded composite signature value.
-
-    s &lt;- SerializeSignatureValue(mldsaSig, tradSig)
-    return s
-</pre><a href="#section-4.2-7" class="pilcrow">¶</a>
-</div>
-<p id="section-4.2-8">The serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> are again used to obtain the byte string encoding of the composite signature. The <code>SerializeSignatureValue</code> routine concatenates the fixed-length ML-DSA signature value and the signature value from the traditional algorithm. For the ECDSA component, this document follows <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>: the ECDSA signature is
-encoded as an Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> (see <a href="#sec-ecdsa-encoding-sig" class="auto internal xref">Section 4.5.1</a>).For more information, see the <code>SerializeSignatureValue</code> and <code>DeserializeSignatureValue</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
-<p id="section-4.2-9">The prefix "Prefix" string is defined as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> as the byte encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 436F6D706F73697465416C676F726974686D5369676E61747572657332303235. It can be used by a traditional verifier to detect if the composite signature has been stripped apart.<a href="#section-4.2-9" class="pilcrow">¶</a></p>
-<p id="section-4.2-10">A signature label "Label" is defined in the same way as <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. It is specific to each composite algorithm. Additionally, the composite label is passed into the underlying ML-DSA primitive as the ctx. Signature Label values can be found in <a href="#tab-sig-alg-label" class="auto internal xref">Table 7</a>.<a href="#section-4.2-10" class="pilcrow">¶</a></p>
-<p id="section-4.2-11">Similarly to <span>[<a href="#I-D.draft-ietf-cose-dilithium" class="cite xref">I-D.draft-ietf-cose-dilithium</a>]</span> which indicates that the ctx parameter <span class="bcp14">MUST</span> be the empty string, the application context passed in to the composite signature algorithm <span class="bcp14">MUST</span> be the empty string. To align with the structure of the <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> combiner, the byte 0x00 is appended in the message M' after the label to indicate the context has length 0. However, a second non-empty context, defined as the label, is passed down into the underlying pure ML-DSA component algorithm, to bind the Composite-ML-DSA algorithm used.<a href="#section-4.2-11" class="pilcrow">¶</a></p>
-<p id="section-4.2-12"><a href="#tab-jose-algs" class="auto internal xref">Table 5</a> (resp. <a href="#tab-cose-algs" class="auto internal xref">Table 6</a>) indicates the pre-hash algorithms to use for JOSE (resp. COSE).<a href="#section-4.2-12" class="pilcrow">¶</a></p>
-<p id="section-4.2-13"><code>M'</code> is signed as a raw octet string in both JOSE and COSE.<a href="#section-4.2-13" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="composite-verify">
-<section id="section-4.3">
-        <h3 id="name-composite-verify">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-composite-verify" class="section-name selfRef">Composite Verify</a>
-        </h3>
-<p id="section-4.3-1">The Verify algorithm <span class="bcp14">MUST</span> validate a signature only if all component signatures were successfully validated.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.3-2">The verification process of a signature sig is as follows:<a href="#section-4.3-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-4.3-3.1">
-            <p id="section-4.3-3.1.1">separate the composite public key into the component public keys;<a href="#section-4.3-3.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-4.3-3.2">
-            <p id="section-4.3-3.2.1">separate the composite signature into its 2 component signatures;<a href="#section-4.3-3.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-4.3-3.3">
-            <p id="section-4.3-3.3.1">compute the message M' from the message M whose signature is to be verified;<a href="#section-4.3-3.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-4.3-3.4">
-            <p id="section-4.3-3.4.1">verify each component signature.<a href="#section-4.3-3.4.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<div class="alignLeft art-text artwork" id="section-4.3-4">
-<pre>
-Composite-ML-DSA.Verify(pk, M, s) -&gt; true or false
-
-1. Separate the keys and signatures
-
-    (mldsaPK, tradPK) &lt;- DeserializePublicKey(pk)
-    (mldsaSig, tradSig) &lt;- DeserializeSignatureValue(s)
-
-    If Error during deserialization, or if any of the component keys or signature values are not of the correct type or length for the given component algorithm then output "Invalid signature" and stop.
-
-2. Compute the message representative M'
-
-    M' &lt;- Prefix || Label || 0x00 || PH(M)
-
-3. Check each component signature individually, according to its algorithm specification.
-
-    if NOT ML-DSA.Verify(mldsaPK, M', ctx=Label)
-        output "Invalid signature"
-    if NOT Trad.Verify(tradPK, M')
-        output "Invalid signature"
-    if all succeeded, then
-        output "Valid signature"
-</pre><a href="#section-4.3-4" class="pilcrow">¶</a>
-</div>
-<p id="section-4.3-5">The <code>DeserializePublicKey</code> and <code>DeserializeSignatureValue</code> serialization routines from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> are used to get the component public keys and the component signatures. For ECDSA, tradSig is encoded as Ecdsa-Sig-Value described in
-<a href="#sec-ecdsa-encoding-sig" class="auto internal xref">Section 4.5.1</a>. For more information, see the <code>DeserializePublicKey</code> and <code>DeserializeSignatureValue</code> algorithms from <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-4.3-5" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="encoding-rules">
-<section id="section-4.4">
-        <h3 id="name-encoding-rules">
-<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-encoding-rules" class="section-name selfRef">Encoding Rules</a>
-        </h3>
-<p id="section-4.4-1">In each combination, the byte streams of the keys and of the signatures are directly concatenated.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
-<p id="section-4.4-2"><code>
-Signature of the 1st Algorithm || Signature of the 2nd Algorithm
-</code><a href="#section-4.4-2" class="pilcrow">¶</a></p>
-<p id="section-4.4-3">Since all combinations presented in this document start with the ML-DSA algorithm and the key or signature sizes are fixed as defined in <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span>, it is unambiguous to encode or decode a composite key or signature.<a href="#section-4.4-3" class="pilcrow">¶</a></p>
-<p id="section-4.4-4"><a href="#tab-ml-dsa-size" class="auto internal xref">Table 1</a> lists sizes of the three parameter sets of the ML-DSA algorithm.<a href="#section-4.4-4" class="pilcrow">¶</a></p>
-<span id="name-sizes-in-bytes-of-keys-and-"></span><div id="tab-ml-dsa-size">
-<table class="center" id="table-1">
-          <caption>
-<a href="#table-1" class="selfRef">Table 1</a>:
-<a href="#name-sizes-in-bytes-of-keys-and-" class="selfRef">Sizes (in bytes) of keys and signatures of ML-DSA</a>
-          </caption>
-<thead>
-            <tr>
-              <th class="text-left" rowspan="1" colspan="1">Algorithm</th>
-              <th class="text-left" rowspan="1" colspan="1">Private Key (seed)</th>
-              <th class="text-left" rowspan="1" colspan="1">Private Key</th>
-              <th class="text-left" rowspan="1" colspan="1">Public Key</th>
-              <th class="text-left" rowspan="1" colspan="1">Signature Size</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-44</td>
-              <td class="text-left" rowspan="1" colspan="1">32</td>
-              <td class="text-left" rowspan="1" colspan="1">2560</td>
-              <td class="text-left" rowspan="1" colspan="1">1312</td>
-              <td class="text-left" rowspan="1" colspan="1">2420</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
-              <td class="text-left" rowspan="1" colspan="1">32</td>
-              <td class="text-left" rowspan="1" colspan="1">4032</td>
-              <td class="text-left" rowspan="1" colspan="1">1952</td>
-              <td class="text-left" rowspan="1" colspan="1">3309</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
-              <td class="text-left" rowspan="1" colspan="1">32</td>
-              <td class="text-left" rowspan="1" colspan="1">4896</td>
-              <td class="text-left" rowspan="1" colspan="1">2592</td>
-              <td class="text-left" rowspan="1" colspan="1">4627</td>
-            </tr>
-          </tbody>
-        </table>
-</div>
-<p id="section-4.4-6">Note that the seed is always 32 bytes, and that  ML-DSA.KeyGen_internal from <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> is called to produce the expanded private key from the seed, whose size corresponds to the sizes of the private key in the table above.<a href="#section-4.4-6" class="pilcrow">¶</a></p>
+<p id="section-4.1-3">For the ECDSA component, the signature, private key and public key are encoded as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>: the signature as an Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span>, the private key as an ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span>, and the public key as an uncompressed X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> point. <a href="#sec-ecdsa-encoding" class="auto internal xref">Section 4.2</a> gives guidance on how to produce and parse these encodings. For the EdDSA component, keys and signatures are encoded as defined in <span>[<a href="#RFC8032" class="cite xref">RFC8032</a>]</span>.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-ecdsa-encoding">
-<section id="section-4.5">
+<section id="section-4.2">
         <h3 id="name-ecdsa-encodings">
-<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-ecdsa-encodings" class="section-name selfRef">ECDSA Encodings</a>
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-ecdsa-encodings" class="section-name selfRef">ECDSA Encodings</a>
         </h3>
-<p id="section-4.5-1">This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> and ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span> structures, and the X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library <span class="bcp14">MAY</span> simply use it instead for the two DER structures.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> and ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span> structures, and the X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library <span class="bcp14">MAY</span> simply use it instead for the two DER structures.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <span id="name-sizes-in-bytes-of-ecdsa-key"></span><div id="_table-ecdsa-sizes">
-<table class="center" id="table-2">
+<table class="center" id="table-1">
           <caption>
-<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#table-1" class="selfRef">Table 1</a>:
 <a href="#name-sizes-in-bytes-of-ecdsa-key" class="selfRef">Sizes (in bytes) of ECDSA keys and signatures as encoded in this document</a>
           </caption>
 <thead>
@@ -1605,19 +1406,19 @@ Signature of the 1st Algorithm || Signature of the 2nd Algorithm
           <tbody>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Private key</td>
-              <td class="text-left" rowspan="1" colspan="1">ECPrivateKey (Section 4.5.2)</td>
+              <td class="text-left" rowspan="1" colspan="1">ECPrivateKey (<a href="#sec-ecdsa-encoding-priv" class="auto internal xref">Section 4.2.2</a>)</td>
               <td class="text-left" rowspan="1" colspan="1">51</td>
               <td class="text-left" rowspan="1" colspan="1">64</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Public key</td>
-              <td class="text-left" rowspan="1" colspan="1">X9.62 uncompressed point (Section 4.5.3)</td>
+              <td class="text-left" rowspan="1" colspan="1">X9.62 uncompressed point (<a href="#sec-ecdsa-encoding-pub" class="auto internal xref">Section 4.2.3</a>)</td>
               <td class="text-left" rowspan="1" colspan="1">65</td>
               <td class="text-left" rowspan="1" colspan="1">97</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">Signature</td>
-              <td class="text-left" rowspan="1" colspan="1">Ecdsa-Sig-Value (Section 4.5.1)</td>
+              <td class="text-left" rowspan="1" colspan="1">Ecdsa-Sig-Value (<a href="#sec-ecdsa-encoding-sig" class="auto internal xref">Section 4.2.1</a>)</td>
               <td class="text-left" rowspan="1" colspan="1">&lt;= 72</td>
               <td class="text-left" rowspan="1" colspan="1">&lt;= 104</td>
             </tr>
@@ -1625,38 +1426,38 @@ Signature of the 1st Algorithm || Signature of the 2nd Algorithm
         </table>
 </div>
 <div id="sec-ecdsa-encoding-sig">
-<section id="section-4.5.1">
+<section id="section-4.2.1">
           <h4 id="name-ecdsa-sig-value-signatures">
-<a href="#section-4.5.1" class="section-number selfRef">4.5.1. </a><a href="#name-ecdsa-sig-value-signatures" class="section-name selfRef">Ecdsa-Sig-Value (Signatures)</a>
+<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-ecdsa-sig-value-signatures" class="section-name selfRef">Ecdsa-Sig-Value (Signatures)</a>
           </h4>
-<p id="section-4.5.1-1">Ecdsa-Sig-Value is defined in Section 2.2.3 of <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> as:<a href="#section-4.5.1-1" class="pilcrow">¶</a></p>
-<div class="lang-asn.1 sourcecode" id="section-4.5.1-2">
+<p id="section-4.2.1-1">Ecdsa-Sig-Value is defined in Section 2.2.3 of <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> as:<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<div class="lang-asn.1 sourcecode" id="section-4.2.1-2">
 <pre>
 Ecdsa-Sig-Value ::= SEQUENCE {
     r     INTEGER,
     s     INTEGER
 }
-</pre><a href="#section-4.5.1-2" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.5.1-3">r and s are the same big-endian integer values already used today by <span>[<a href="#RFC7518" class="cite xref">RFC7518</a>]</span> and <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>, where they are zero-padded to a fixed length for a given curve (32 bytes each for P-256, 48
-bytes each for P-384). As integers, however, r and s can have fewer significant bytes than this fixed length whenever their leading bytes happen to be zero; Step 1 below removes this padding before re-encoding them as DER INTEGERs. Building an Ecdsa-Sig-Value from r and s takes two steps:<a href="#section-4.5.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-3">r and s are the same big-endian integer values already used today by <span>[<a href="#RFC7518" class="cite xref">RFC7518</a>]</span> and <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>, where they are zero-padded to a fixed length for a given curve (32 bytes each for P-256, 48
+bytes each for P-384). As integers, however, r and s can have fewer significant bytes than this fixed length whenever their leading bytes happen to be zero; Step 1 below removes this padding before re-encoding them as DER INTEGERs. Building an Ecdsa-Sig-Value from r and s takes two steps:<a href="#section-4.2.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.5.1-4.1">
-              <p id="section-4.5.1-4.1.1">first, r and s are each turned independently into a DER INTEGER (Step 1);<a href="#section-4.5.1-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4.2.1-4.1">
+              <p id="section-4.2.1-4.1.1">first, r and s are each turned independently into a DER INTEGER (Step 1);<a href="#section-4.2.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.5.1-4.2">
-              <p id="section-4.5.1-4.2.1">then the two results are wrapped in a DER SEQUENCE (Step 2).<a href="#section-4.5.1-4.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-4.2.1-4.2">
+              <p id="section-4.2.1-4.2.1">then the two results are wrapped in a DER SEQUENCE (Step 2).<a href="#section-4.2.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-4.5.1-5">Decoding simply reverses these two steps. No prior ASN.1 knowledge is assumed below.<a href="#section-4.5.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-6"><strong>Step 1: encode r and s as DER INTEGERs.</strong><a href="#section-4.5.1-6" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-7">A DER INTEGER is written as a 0x02 tag byte, a length byte, and the value's bytes. Because a DER INTEGER is signed, an extra 0x00 byte is
-prepended whenever the value would otherwise be misread as negative, i.e. whenever its first byte is 0x80 or greater.<a href="#section-4.5.1-7" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-8"><a href="#_table-ecdsa-sig-encode" class="auto internal xref">Table 3</a> explains how to turn a raw value (r or s) into its DER encoding.<a href="#section-4.5.1-8" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-5">Decoding simply reverses these two steps. No prior ASN.1 knowledge is assumed below.<a href="#section-4.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-6"><strong>Step 1: encode r and s as DER INTEGERs.</strong><a href="#section-4.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-7">A DER INTEGER is written as a 0x02 tag byte, a length byte, and the value's bytes. Because a DER INTEGER is signed, an extra 0x00 byte is
+prepended whenever the value would otherwise be misread as negative, i.e. whenever its first byte is 0x80 or greater.<a href="#section-4.2.1-7" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-8"><a href="#_table-ecdsa-sig-encode" class="auto internal xref">Table 2</a> explains how to turn a raw value (r or s) into its DER encoding.<a href="#section-4.2.1-8" class="pilcrow">¶</a></p>
 <span id="name-turning-a-raw-value-r-or-s-"></span><div id="_table-ecdsa-sig-encode">
-<table class="center" id="table-3">
+<table class="center" id="table-2">
             <caption>
-<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#table-2" class="selfRef">Table 2</a>:
 <a href="#name-turning-a-raw-value-r-or-s-" class="selfRef">Turning a raw value (r or s) into its DER encoding</a>
             </caption>
 <thead>
@@ -1677,37 +1478,37 @@ prepended whenever the value would otherwise be misread as negative, i.e. whenev
             </tbody>
           </table>
 </div>
-<p id="section-4.5.1-10">The length is always written as a single byte in this document: r, s, and their DER encodings are always well under 128 bytes, so DER's multi-byte "long form" length encoding is never needed here.<a href="#section-4.5.1-10" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-11">For example, for P-256 (32-byte r and s):<a href="#section-4.5.1-11" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-10">The length is always written as a single byte in this document: r, s, and their DER encodings are always well under 128 bytes, so DER's multi-byte "long form" length encoding is never needed here.<a href="#section-4.2.1-10" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-11">For example, for P-256 (32-byte r and s):<a href="#section-4.2.1-11" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.5.1-12.1">
-              <p id="section-4.5.1-12.1.1">if r starts with <code>4F ...</code> (no leading zero byte, and 0x4F is less than 0x80), its DER encoding is <code>02 20 &lt;r, 32 bytes&gt;</code> (0x20 = 32);<a href="#section-4.5.1-12.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4.2.1-12.1">
+              <p id="section-4.2.1-12.1.1">if r starts with <code>4F ...</code> (no leading zero byte, and 0x4F is less than 0x80), its DER encoding is <code>02 20 &lt;r, 32 bytes&gt;</code> (0x20 = 32);<a href="#section-4.2.1-12.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.5.1-12.2">
-              <p id="section-4.5.1-12.2.1">if r starts with <code>F3 ...</code> (no leading zero byte, and 0xF3 is greater than 0x80), its DER encoding is <code>02 21 00 &lt;r, 32 bytes&gt;</code> (0x21 = 33);<a href="#section-4.5.1-12.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-4.2.1-12.2">
+              <p id="section-4.2.1-12.2.1">if r starts with <code>F3 ...</code> (no leading zero byte, and 0xF3 is greater than 0x80), its DER encoding is <code>02 21 00 &lt;r, 32 bytes&gt;</code> (0x21 = 33);<a href="#section-4.2.1-12.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.5.1-12.3">
-              <p id="section-4.5.1-12.3.1">if r starts with <code>00 07 ...</code> (one leading zero byte to remove, and 0x07 is less than 0x80), its DER encoding is <code>02 1F &lt;r without its leading 0x00, 31 bytes&gt;</code> (0x1F = 31).<a href="#section-4.5.1-12.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-4.2.1-12.3">
+              <p id="section-4.2.1-12.3.1">if r starts with <code>00 07 ...</code> (one leading zero byte to remove, and 0x07 is less than 0x80), its DER encoding is <code>02 1F &lt;r without its leading 0x00, 31 bytes&gt;</code> (0x1F = 31).<a href="#section-4.2.1-12.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-4.5.1-13"><strong>Step 2: wrap r's and s's DER encodings in a SEQUENCE.</strong><a href="#section-4.5.1-13" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-14">Using the two encodings produced in Step 1, the full Ecdsa-Sig-Value is simply the concatenation<a href="#section-4.5.1-14" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-15"><code>Ecdsa-Sig-Value &lt;- 0x30 || length || r's DER encoding || s's DER encoding</code><a href="#section-4.5.1-15" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-16">where length is a single byte equal to the combined length, in bytes, of r's and s's DER encodings from Step 1, and r's encoding always
-comes before s's.<a href="#section-4.5.1-16" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-17">Continuing the example above: taking r's DER encoding from the third case (<code>02 1F &lt;31 bytes&gt;</code>, 33 bytes total) and an s whose DER encoding
+<p id="section-4.2.1-13"><strong>Step 2: wrap r's and s's DER encodings in a SEQUENCE.</strong><a href="#section-4.2.1-13" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-14">Using the two encodings produced in Step 1, the full Ecdsa-Sig-Value is simply the concatenation<a href="#section-4.2.1-14" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-15"><code>Ecdsa-Sig-Value &lt;- 0x30 || length || r's DER encoding || s's DER encoding</code><a href="#section-4.2.1-15" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-16">where length is a single byte equal to the combined length, in bytes, of r's and s's DER encodings from Step 1, and r's encoding always
+comes before s's.<a href="#section-4.2.1-16" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-17">Continuing the example above: taking r's DER encoding from the third case (<code>02 1F &lt;31 bytes&gt;</code>, 33 bytes total) and an s whose DER encoding
 corresponds to the first case (<code>02 20 &lt;32 bytes&gt;</code>, 34 bytes total), the combined length is 33 + 34 = 67 = 0x43, and the full
-Ecdsa-Sig-Value is <code>30 43 &lt;r's DER encoding&gt; &lt;s's DER encoding&gt;</code> (69 bytes total).<a href="#section-4.5.1-17" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-18"><strong>Decoding</strong> reverses Steps 2 and 1, in that order.<a href="#section-4.5.1-18" class="pilcrow">¶</a></p>
+Ecdsa-Sig-Value is <code>30 43 &lt;r's DER encoding&gt; &lt;s's DER encoding&gt;</code> (69 bytes total).<a href="#section-4.2.1-17" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-18"><strong>Decoding</strong> reverses Steps 2 and 1, in that order.<a href="#section-4.2.1-18" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="ecprivatekey-private-keys">
-<section id="section-4.5.2">
+<div id="sec-ecdsa-encoding-priv">
+<section id="section-4.2.2">
           <h4 id="name-ecprivatekey-private-keys">
-<a href="#section-4.5.2" class="section-number selfRef">4.5.2. </a><a href="#name-ecprivatekey-private-keys" class="section-name selfRef">ECPrivateKey (Private Keys)</a>
+<a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-ecprivatekey-private-keys" class="section-name selfRef">ECPrivateKey (Private Keys)</a>
           </h4>
-<p id="section-4.5.2-1">ECPrivateKey is defined in <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span> as:<a href="#section-4.5.2-1" class="pilcrow">¶</a></p>
-<div class="lang-asn.1 sourcecode" id="section-4.5.2-2">
+<p id="section-4.2.2-1">ECPrivateKey is defined in <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span> as:<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
+<div class="lang-asn.1 sourcecode" id="section-4.2.2-2">
 <pre>
 ECPrivateKey ::= SEQUENCE {
     version        INTEGER { ecPrivkeyVer1(1) } (ecPrivkeyVer1),
@@ -1715,15 +1516,15 @@ ECPrivateKey ::= SEQUENCE {
     parameters [0] ECParameters {{ NamedCurve }} OPTIONAL,
     publicKey  [1] BIT STRING OPTIONAL
 }
-</pre><a href="#section-4.5.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.5.2-3">Given the raw, fixed-length ECDSA private value d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
+<p id="section-4.2.2-3">Given the raw, fixed-length ECDSA private key d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
 inserted between two fixed byte sequences that depend only on the curve (the publicKey field is never included), as given in
-<a href="#_table-ecprivatekey-build" class="auto internal xref">Table 4</a>:<a href="#section-4.5.2-3" class="pilcrow">¶</a></p>
+<a href="#_table-ecprivatekey-build" class="auto internal xref">Table 3</a>:<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <span id="name-fixed-bytes-surrounding-d-i"></span><div id="_table-ecprivatekey-build">
-<table class="center" id="table-4">
+<table class="center" id="table-3">
             <caption>
-<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#table-3" class="selfRef">Table 3</a>:
 <a href="#name-fixed-bytes-surrounding-d-i" class="selfRef">Fixed bytes surrounding d in an ECPrivateKey, by curve</a>
             </caption>
 <thead>
@@ -1755,28 +1556,28 @@ inserted between two fixed byte sequences that depend only on the curve (the pub
             </tbody>
           </table>
 </div>
-<p id="section-4.5.2-5">For example, for P-256 (n = 32), with d = <code>D1 D2 ...D32</code>:<a href="#section-4.5.2-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.5.2-6">
+<p id="section-4.2.2-5">For example, for P-256 (n = 32), with d = <code>D1 D2 ...D32</code>:<a href="#section-4.2.2-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.2.2-6">
 <pre>
 30 31                                 SEQUENCE (length 0x31 = 49)
    02 01 01                           version (INTEGER, value 1)
    04 20 D1 D2 ... D32                private key (OCTET STRING)
    A0 0A                              parameters (A0: explicit tag 0)
       06 08 2A 86 48 CE 3D 03 01 07   OID (OBJECT IDENTIFIER, P-256)
-</pre><a href="#section-4.5.2-6" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.2-6" class="pilcrow">¶</a>
 </div>
-<p id="section-4.5.2-7"><strong>Decoding</strong> reverses the same construction.<a href="#section-4.5.2-7" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-7"><strong>Decoding</strong> reverses the same construction.<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="x962-uncompressed-point-public-keys">
-<section id="section-4.5.3">
+<div id="sec-ecdsa-encoding-pub">
+<section id="section-4.2.3">
           <h4 id="name-x962-uncompressed-point-pub">
-<a href="#section-4.5.3" class="section-number selfRef">4.5.3. </a><a href="#name-x962-uncompressed-point-pub" class="section-name selfRef">X9.62 Uncompressed Point (Public Keys)</a>
+<a href="#section-4.2.3" class="section-number selfRef">4.2.3. </a><a href="#name-x962-uncompressed-point-pub" class="section-name selfRef">X9.62 Uncompressed Point (Public Keys)</a>
           </h4>
-<p id="section-4.5.3-1">The ECDSA public key in this document is encoded as the X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> uncompressed point:<a href="#section-4.5.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.5.3-2"><code>ECDSA public key &lt;- 0x04 || x || y</code><a href="#section-4.5.3-2" class="pilcrow">¶</a></p>
-<p id="section-4.5.3-3">where x and y are the same raw, fixed-length, big-endian coordinate values already used by <span>[<a href="#RFC7518" class="cite xref">RFC7518</a>]</span> and <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span> (32 bytes
-each for P-256, 48 bytes each for P-384).<a href="#section-4.5.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-1">The ECDSA public key in this document is encoded as the X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> uncompressed point:<a href="#section-4.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-2"><code>ECDSA public key &lt;- 0x04 || x || y</code><a href="#section-4.2.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.2.3-3">where x and y are the same raw, fixed-length, big-endian coordinate values already used by <span>[<a href="#RFC7518" class="cite xref">RFC7518</a>]</span> and <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span> (32 bytes
+each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1789,7 +1590,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.5.3-3" class="pilcr
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-composite-signature-instant" class="section-name selfRef">Composite Signature Instantiations</a>
       </h2>
 <p id="section-5-1">The ML-DSA signature scheme supports three possible parameter sets, each of which corresponding to a specific security strength. See <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> for more considerations on that matter.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">The traditional signature algorithm for each combination in <a href="#tab-jose-algs" class="auto internal xref">Table 5</a> and <a href="#tab-cose-algs" class="auto internal xref">Table 6</a> was chosen to match the security level of the ML-DSA post-quantum component.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-2">The traditional signature algorithm for each combination in <a href="#tab-jose-algs" class="auto internal xref">Table 4</a> and <a href="#tab-cose-algs" class="auto internal xref">Table 5</a> was chosen to match the security level of the ML-DSA post-quantum component.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">The <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> specification defines both pure and pre-hash modes for ML-DSA, referred to as "ML-DSA" and "HashML-DSA" respectively. This document only specifies a single mode which is similar in construction to HashML-DSA. However, because the pre-hashing is done at the composite level, only the pure ML-DSA algorithm is used as the underlying ML-DSA primitive.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <div id="jose-algorithms">
 <section id="section-5.1">
@@ -1798,9 +1599,9 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.5.3-3" class="pilcr
         </h3>
 <p id="section-5.1-1">The following table defines a list of algorithms associated with specific PQ/T combinations to be registered in <span>[<a href="#IANA.JOSE" class="cite xref">IANA.JOSE</a>]</span>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <span id="name-jose-composite-signature-al"></span><div id="tab-jose-algs">
-<table class="center" id="table-5">
+<table class="center" id="table-4">
           <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-jose-composite-signature-al" class="selfRef">JOSE Composite Signature Algorithms for ML-DSA</a>
           </caption>
 <thead>
@@ -1868,9 +1669,9 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.5.3-3" class="pilcr
         </h3>
 <p id="section-5.2-1">The following table defines a list of algorithms associated with specific PQ/T combinations to be registered in <span>[<a href="#IANA.COSE" class="cite xref">IANA.COSE</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <span id="name-cose-composite-signature-al"></span><div id="tab-cose-algs">
-<table class="center" id="table-6">
+<table class="center" id="table-5">
           <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-5" class="selfRef">Table 5</a>:
 <a href="#name-cose-composite-signature-al" class="selfRef">COSE Composite Signature Algorithms for ML-DSA</a>
           </caption>
 <thead>
@@ -1943,12 +1744,12 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.5.3-3" class="pilcr
         <h3 id="name-composite-labels-for-jose-a">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-composite-labels-for-jose-a" class="section-name selfRef">Composite Labels for JOSE and COSE</a>
         </h3>
-<p id="section-5.3-1">The JOSE and COSE composite label values are listed in <a href="#tab-sig-alg-label" class="auto internal xref">Table 7</a>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-1">The JOSE and COSE composite label values are listed in <a href="#tab-sig-alg-label" class="auto internal xref">Table 6</a>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 <p id="section-5.3-2">They are represented here as ASCII strings, but implementers <span class="bcp14">MUST</span> convert them to byte strings using the obvious ASCII conversions prior to concatenating them with other byte values, as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <span id="name-jose-cose-composite-label-v"></span><div id="tab-sig-alg-label">
-<table class="center" id="table-7">
+<table class="center" id="table-6">
           <caption>
-<a href="#table-7" class="selfRef">Table 7</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-jose-cose-composite-label-v" class="selfRef">JOSE/COSE Composite Label Values</a>
           </caption>
 <thead>
@@ -2045,7 +1846,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.5.3-3" class="pilcr
         <h3 id="name-domain-separation-and-non-s">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-domain-separation-and-non-s" class="section-name selfRef">Domain Separation and Non-Separability</a>
         </h3>
-<p id="section-6.3-1">This document uses a signature combiner that prepends a fixed <code>Prefix</code> and a specific <code>Label</code> to the message representative <code>M'</code>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">The Composite ML-DSA signature combiner defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> prepends a fixed <code>Prefix</code> and an algorithm-specific <code>Label</code> to the pre-hashed message before signing.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3-2.1">
             <p id="section-6.3-2.1.1"><strong>Non-separability:</strong> By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
@@ -2479,6 +2280,10 @@ They are represented following the registration template provided in <span>[<a h
         <dd>
 <span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Module-Lattice-Based Digital Signature Standard"</span>, <time datetime="2024-08" class="refDate">August 2024</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="I-D.draft-ietf-lamps-pq-composite-sigs">[I-D.draft-ietf-lamps-pq-composite-sigs]</dt>
+        <dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite Module-Lattice-Based Digital Signature Algorithm (ML-DSA) for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-19</span>, <time datetime="2026-04-21" class="refDate">21 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="IANA.COSE">[IANA.COSE]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/cose/cose.xhtml">https://www.iana.org/assignments/cose/cose.xhtml</a>&gt;</span>. </dd>
@@ -2527,6 +2332,10 @@ They are represented following the registration template provided in <span>[<a h
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9052">[RFC9052]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="seriesInfo">STD 96</span>, <span class="seriesInfo">RFC 9052</span>, <span class="seriesInfo">DOI 10.17487/RFC9052</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9052">https://www.rfc-editor.org/rfc/rfc9052</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9679">[RFC9679]</dt>
         <dd>
 <span class="refAuthor">Isobe, K.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE) Key Thumbprint"</span>, <span class="seriesInfo">RFC 9679</span>, <span class="seriesInfo">DOI 10.17487/RFC9679</span>, <time datetime="2024-12" class="refDate">December 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9679">https://www.rfc-editor.org/rfc/rfc9679</a>&gt;</span>. </dd>
@@ -2547,10 +2356,6 @@ They are represented following the registration template provided in <span>[<a h
 <dt id="I-D.draft-ietf-cose-dilithium">[I-D.draft-ietf-cose-dilithium]</dt>
         <dd>
 <span class="refAuthor">Prorock, M.</span> and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"ML-DSA for JOSE and COSE"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-dilithium-11</span>, <time datetime="2025-11-15" class="refDate">15 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-dilithium-11">https://datatracker.ietf.org/doc/html/draft-ietf-cose-dilithium-11</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.draft-ietf-lamps-pq-composite-sigs">[I-D.draft-ietf-lamps-pq-composite-sigs]</dt>
-        <dd>
-<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite Module-Lattice-Based Digital Signature Algorithm (ML-DSA) for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-19</span>, <time datetime="2026-04-21" class="refDate">21 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-pquip-hybrid-signature-spectrums">[I-D.draft-ietf-pquip-hybrid-signature-spectrums]</dt>
         <dd>
