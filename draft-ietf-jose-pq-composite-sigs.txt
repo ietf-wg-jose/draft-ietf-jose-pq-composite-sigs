@@ -647,9 +647,9 @@ Table of Contents
    ECDSA, and EdDSA) as described in [FIPS.204], [RFC6090], and
    [RFC8032] apply to this document.
 
-   Similarly, the security considerations relative to the JWS, JWK, and
-   COSE structures [RFC7515], [RFC7517] and [RFC9053] apply to this
-   document.
+   Similarly, the security considerations relative to the JWS, JWK, AKP
+   and COSE structures [RFC7515], [RFC7517], [RFC9964] and [RFC9052]
+   apply to this document.
 
    In addition, the following considerations specific to the composite
    design and its use in JOSE/COSE must be taken into account.
