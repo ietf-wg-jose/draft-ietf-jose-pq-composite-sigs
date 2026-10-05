@@ -363,7 +363,7 @@ The security analysis of Composite ML-DSA in {{-COMPOSITE-LAMPS}} assumes that t
 The Composite ML-DSA signature combiner defined in {{-COMPOSITE-LAMPS}} prepends a fixed `Prefix` and an algorithm-specific `Label` to the pre-hashed message before signing.
 
 * By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in {{-HYB-SIG-SPECTRUMS}}.
-* The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, tt does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over `M'`, which is why key reuse is forbidden.
+* The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, it does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over `M'`, which is why key reuse is forbidden.
 
 For more information about the security properties relative to the signature combiner, the user can read {{-COMPOSITE-LAMPS}}.
 
