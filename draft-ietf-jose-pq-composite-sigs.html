@@ -1217,10 +1217,7 @@ svg {
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-component-key-integrity-and" class="internal xref">Component Key Integrity and Reuse</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
-                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-domain-separation-and-non-s" class="internal xref">Domain Separation and Non-Separability</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
-                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-security-objectives-and-lim" class="internal xref">Security Objectives and Limitations</a></p>
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-security-objectives-and-lim" class="internal xref">Security Objectives and Limitations</a></p>
 </li>
             </ul>
 </li>
@@ -1830,50 +1827,33 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
         <h3 id="name-component-key-integrity-and">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-component-key-integrity-and" class="section-name selfRef">Component Key Integrity and Reuse</a>
         </h3>
-<p id="section-6.2-1">To maintain the security properties of the composite scheme, strict key management is required:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-1">The security analysis of Composite ML-DSA in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> assumes that the two component keys of a composite key are freshly generated together and are not used anywhere else. The considerations below apply to composite keys used with JOSE and COSE.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-2.1">
-            <p id="section-6.2-2.1.1"><strong>No Key Reuse:</strong> To avoid key reuse, when generating a new composite key, the generation functions for both component algorithms <span class="bcp14">MUST</span> be executed. Moreover, compliant parties <span class="bcp14">MUST NOT</span> use, import, or export component keys that are used in other contexts, combinations, or as standalone keys.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-2.1.1">To avoid key reuse, when generating a new composite key, the key generation functions for both component algorithms <span class="bcp14">MUST</span> be executed. Moreover, compliant parties <span class="bcp14">MUST NOT</span> use, import, or export component keys that are used in other contexts, combinations, or as standalone keys. In particular, existing key material, such as an ECDSA, EdDSA or ML-DSA key already published as a JWK or COSE_Key, <span class="bcp14">MUST NOT</span> be reused as a component of a composite key. If a component key is also used on its own, a component signature taken out of a composite signature verifies under that key as a signature over the message representative <code>M'</code>. The prefix and label leave evidence that the signature comes from a composite, but they do not prevent this. Key reuse <span class="bcp14">MUST</span> therefore be avoided despite the weak non-separability of the combiner.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.2-2.2">
-            <p id="section-6.2-2.2.1"><strong>Certificate-Level Protection:</strong> The integrity of the composite public key is protected through mandatory validation of the certificate header (the <code>x5c</code> header in JOSE per <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> or the <code>x5chain</code> header in COSE per <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>). Because the certificate itself is protected by a composite signature, an attacker cannot forge a fake certificate to swap a public key even if the traditional algorithm is broken. These specifications require the validation of the composite signature on the certificate itself.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-2.2.1">A composite public key can be conveyed in an X.509 certificate, using the <code>x5c</code> header parameter in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7515#section-4.1.6" class="relref">Section 4.1.6</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) or the <code>x5chain</code> header parameter in COSE <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>. Such a certificate carries the composite key as specified in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, with the same serialized public key as the <code>pub</code> parameter. In that case, the binding between the composite key and the signer is only as strong as the signatures on the certificates of the chain. A quantum adversary cannot forge a certificate signed with Composite ML-DSA as long as ML-DSA remains secure. If a certificate of the chain is signed with a traditional algorithm only, such an adversary can obtain a certificate for a composite key of its choice, and the composite signature on the JWS or COSE object no longer provides protection against a CRQC. The same holds for any other mechanism used to distribute composite public keys.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-</section>
-</div>
-<div id="domain-separation-and-non-separability">
-<section id="section-6.3">
-        <h3 id="name-domain-separation-and-non-s">
-<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-domain-separation-and-non-s" class="section-name selfRef">Domain Separation and Non-Separability</a>
-        </h3>
-<p id="section-6.3-1">The Composite ML-DSA signature combiner defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> prepends a fixed <code>Prefix</code> and an algorithm-specific <code>Label</code> to the pre-hashed message before signing.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-6.3-2.1">
-            <p id="section-6.3-2.1.1"><strong>Non-separability:</strong> By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.3-2.2">
-            <p id="section-6.3-2.2.1"><strong>Cross-Algorithm Prevention:</strong> The unique label, specific to each composite algorithm, ensures that signatures cannot be removed from the composite and used in other contexts.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-6.3-3">For more information about the security properties relative to the signature combiner, the user can read <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-objectives-and-limitations">
-<section id="section-6.4">
+<section id="section-6.3">
         <h3 id="name-security-objectives-and-lim">
-<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-security-objectives-and-lim" class="section-name selfRef">Security Objectives and Limitations</a>
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-security-objectives-and-lim" class="section-name selfRef">Security Objectives and Limitations</a>
         </h3>
-<p id="section-6.4-1">In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-2">Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:<a href="#section-6.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.4-3.1">
-            <p id="section-6.4-3.1.1"><strong>SUF-CMA Security:</strong> While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">MUST NOT</span> use Composite ML-DSA.<a href="#section-6.4-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.3-3.1">
+            <p id="section-6.3-3.1.1"><strong>SUF-CMA Security:</strong> While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">MUST NOT</span> use Composite ML-DSA.<a href="#section-6.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.4-3.2">
-            <p id="section-6.4-3.2.1"><strong>Non-repudiation:</strong> Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE/COSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals.<a href="#section-6.4-3.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.3-3.2">
+            <p id="section-6.3-3.2.1"><strong>Non-repudiation:</strong> Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE/COSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals.<a href="#section-6.3-3.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.4-3.3">
-            <p id="section-6.4-3.3.1"><strong>Replay Protection:</strong> This is not handled by the signature itself but must be addressed through claims such as <code>exp</code>, <code>nbf</code>, and <code>jti</code> in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) or the equivalent claims in COSE (<span><a href="https://rfc-editor.org/rfc/rfc8392#section-3" class="relref">Section 3</a> of [<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>).<a href="#section-6.4-3.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.3-3.3">
+            <p id="section-6.3-3.3.1"><strong>Replay Protection:</strong> This is not handled by the signature itself but must be addressed through claims such as <code>exp</code>, <code>nbf</code>, and <code>jti</code> in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) or the equivalent claims in COSE (<span><a href="https://rfc-editor.org/rfc/rfc8392#section-3" class="relref">Section 3</a> of [<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>).<a href="#section-6.3-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
