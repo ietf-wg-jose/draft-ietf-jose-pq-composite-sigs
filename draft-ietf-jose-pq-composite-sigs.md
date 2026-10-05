@@ -338,6 +338,8 @@ The security considerations of the component algorithms (ML-DSA, ECDSA, and EdDS
 
 Similarly, the security considerations relative to the JWS, JWK, AKP and COSE structures {{RFC7515}}, {{RFC7517}}, {{RFC9964}} and {{RFC9052}} apply to this document.
 
+The security considerations of {{-COMPOSITE-LAMPS}} also apply to the composite algorithms used in this document.
+
 In addition, the following considerations specific to the composite design and its use in JOSE/COSE must be taken into account.
 
 ## Hybrid Security and Quantum Resistance
