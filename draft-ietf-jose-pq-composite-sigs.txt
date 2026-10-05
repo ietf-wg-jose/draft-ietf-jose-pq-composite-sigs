@@ -737,7 +737,7 @@ Table of Contents
 
    *  The label, specific to each composite algorithm, helps protect
       against component signatures being removed from the composite and
-      used in another context.  However, tt does not fully prevent it as
+      used in another context.  However, it does not fully prevent it as
       the traditional component still verifies under the traditional
       algorithm as a signature over M', which is why key reuse is
       forbidden.

@@ -1852,7 +1852,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
             <p id="section-6.3-2.1.1">By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-2.2">
-            <p id="section-6.3-2.2.1">The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, tt does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over <code>M'</code>, which is why key reuse is forbidden.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-2.2.1">The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, it does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over <code>M'</code>, which is why key reuse is forbidden.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-6.3-3">For more information about the security properties relative to the signature combiner, the user can read <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
