@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 5 April 2027                                            J. Gray
+Expires: 8 April 2027                                            J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                          2 October 2026
+                                                          5 October 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 April 2027.
+   This Internet-Draft will expire on 8 April 2027.
 
 Copyright Notice
 
@@ -771,9 +771,10 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): n/a
+   *  Specification Document(s): RFC XXXX
 
-   *  Algorithm Analysis Documents(s): TBD
+   *  Algorithm Analysis Documents(s):
+      [I-D.draft-ietf-lamps-pq-composite-sigs]
 
 7.1.2.  ML-DSA-65-ES256
 
@@ -788,9 +789,10 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): n/a
+   *  Specification Document(s): RFC XXXX
 
-   *  Algorithm Analysis Documents(s): TBD
+   *  Algorithm Analysis Documents(s):
+      [I-D.draft-ietf-lamps-pq-composite-sigs]
 
 7.1.3.  ML-DSA-87-ES384
 
@@ -805,9 +807,10 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): n/a
+   *  Specification Document(s): RFC XXXX
 
-   *  Algorithm Analysis Documents(s): TBD
+   *  Algorithm Analysis Documents(s):
+      [I-D.draft-ietf-lamps-pq-composite-sigs]
 
 7.1.4.  ML-DSA-44-Ed25519
 
@@ -822,9 +825,10 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): n/a
+   *  Specification Document(s): RFC XXXX
 
-   *  Algorithm Analysis Document(s): TBD
+   *  Algorithm Analysis Document(s):
+      [I-D.draft-ietf-lamps-pq-composite-sigs]
 
 7.1.5.  ML-DSA-65-Ed25519
 
@@ -839,9 +843,10 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): n/a
+   *  Specification Document(s): RFC XXXX
 
-   *  Algorithm Analysis Document(s): TBD
+   *  Algorithm Analysis Document(s):
+      [I-D.draft-ietf-lamps-pq-composite-sigs]
 
 7.1.6.  ML-DSA-87-Ed448
 
@@ -856,9 +861,10 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Specification Document(s): n/a
+   *  Specification Document(s): RFC XXXX
 
-   *  Algorithm Analysis Document(s): TBD
+   *  Algorithm Analysis Document(s):
+      [I-D.draft-ietf-lamps-pq-composite-sigs]
 
 7.2.  COSE Algorithms
 
