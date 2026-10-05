@@ -187,13 +187,13 @@ Ecdsa-Sig-Value ::= SEQUENCE {
 }
 ~~~
 
-r and s are the same big-endian integer values already used today by {{RFC7518}} and {{RFC9053}}, where they are zero-padded to a fixed length for a given curve (32 bytes each for P-256, 48
-bytes each for P-384). As integers, however, r and s can have fewer significant bytes than this fixed length whenever their leading bytes happen to be zero; Step 1 below removes this padding before re-encoding them as DER INTEGERs. Building an Ecdsa-Sig-Value from r and s takes two steps:
+r and s are the same big-endian integer values used by {{RFC7518}} and {{RFC9053}}, where they are zero-padded to a fixed length for a given curve (32 bytes each for P-256, 48
+bytes each for P-384). As integers, however, r and s can have fewer significant bytes than this fixed length whenever their leading bytes are zero; Step 1 below removes this padding before re-encoding them as DER INTEGERs. Building an Ecdsa-Sig-Value from r and s takes two steps:
 
 - first, r and s are each turned independently into a DER INTEGER (Step 1);
 - then the two results are wrapped in a DER SEQUENCE (Step 2).
 
-Decoding simply reverses these two steps. No prior ASN.1 knowledge is assumed below.
+Decoding reverses these two steps. No prior ASN.1 knowledge is assumed below.
 
 **Step 1: encode r and s as DER INTEGERs.**
 
@@ -202,7 +202,7 @@ prepended whenever the value would otherwise be misread as negative, i.e. whenev
 
 {{table-ecdsa-sig-encode}} explains how to turn a raw value (r or s) into its DER encoding.
 
-| After removing any leading 0x00 bytes from the raw value (keeping at least 1 byte), the first remaining byte is... | ...then its DER encoding is |
+| First byte after removing leading 0x00 bytes (keeping at least one byte) | DER encoding |
 |:---|:---|
 | less than 0x80 | 0x02, then the length in bytes of the trimmed value, then the trimmed value |
 | 0x80 or greater | 0x02, then the length in bytes of the trimmed value plus 1, then 0x00, then the trimmed value |
@@ -344,12 +344,11 @@ In addition, the following considerations specific to the composite design and i
 
 ## Hybrid Security and Quantum Resistance
 
-An important objective of Composite ML-DSA is to provide protection against CRQCs. Under a CRQC, traditional signature algorithms (RSA, ECDSA, and EdDSA) are vulnerable to private-key recovery, enabling attackers to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and fully impersonate the signer.
+An important objective of Composite ML-DSA is to provide protection against CRQCs. Under a CRQC, traditional signature algorithms (ECDSA, EdDSA) are vulnerable to private-key recovery, enabling attackers to forge arbitrary JWS objects or COSE_Sign/COSE_Sign1 structures and fully impersonate the signer.
 
 By requiring the successful verification of both the ML-DSA component and the traditional component, this construction ensures:
 
-* An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure.
-* In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
+* An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure. In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
 * The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function `PH` is collision-resistant. This is the case for all combinations present in this document.
 
 ## Component Key Integrity and Reuse
