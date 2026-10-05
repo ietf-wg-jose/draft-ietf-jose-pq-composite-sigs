@@ -1814,13 +1814,13 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
 <p id="section-6.1-2">By requiring the successful verification of both the ML-DSA component and the traditional component, this construction ensures:<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-3.1">
-            <p id="section-6.1-3.1.1"><strong>Dual-Algorithm Security:</strong> An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure.<a href="#section-6.1-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-3.1.1">An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure.<a href="#section-6.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-3.2">
-            <p id="section-6.1-3.2.1"><strong>Impersonation Prevention:</strong> In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.<a href="#section-6.1-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-3.2.1">In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.<a href="#section-6.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-3.3">
-            <p id="section-6.1-3.3.1"><strong>EUF-CMA Security:</strong> The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function <code>PH</code> is collision-resistant. This is the case for all combinations present in this document.<a href="#section-6.1-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-3.3.1">The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function <code>PH</code> is collision-resistant. This is the case for all combinations present in this document.<a href="#section-6.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
