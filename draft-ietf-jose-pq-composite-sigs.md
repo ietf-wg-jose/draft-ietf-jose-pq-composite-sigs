@@ -358,6 +358,15 @@ The security analysis of Composite ML-DSA in {{-COMPOSITE-LAMPS}} assumes that t
 
 * A composite public key can be conveyed in an X.509 certificate, using the `x5c` header parameter in JOSE ({{Section 4.1.6 of RFC7515}}) or the `x5chain` header parameter in COSE {{RFC9360}}. Such a certificate carries the composite key as specified in {{-COMPOSITE-LAMPS}}, with the same serialized public key as the `pub` parameter. In that case, the binding between the composite key and the signer is only as strong as the signatures on the certificates of the chain. A quantum adversary cannot forge a certificate signed with Composite ML-DSA as long as ML-DSA remains secure. If a certificate of the chain is signed with a traditional algorithm only, such an adversary can obtain a certificate for a composite key of its choice, and the composite signature on the JWS or COSE object no longer provides protection against a CRQC. The same holds for any other mechanism used to distribute composite public keys.
 
+## Domain Separation and Non-Separability
+
+The Composite ML-DSA signature combiner defined in {{-COMPOSITE-LAMPS}} prepends a fixed `Prefix` and an algorithm-specific `Label` to the pre-hashed message before signing.
+
+* By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in {{-HYB-SIG-SPECTRUMS}}.
+* The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, tt does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over `M'`, which is why key reuse is forbidden.
+
+For more information about the security properties relative to the signature combiner, the user can read {{-COMPOSITE-LAMPS}}.
+
 ## Security Objectives and Limitations
 
 In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload.
