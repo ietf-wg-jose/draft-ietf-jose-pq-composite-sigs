@@ -1847,13 +1847,13 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
 <p id="section-6.3-2">Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:<a href="#section-6.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3-3.1">
-            <p id="section-6.3-3.1.1"><strong>SUF-CMA Security:</strong> While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">MUST NOT</span> use Composite ML-DSA.<a href="#section-6.3-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-3.1.1">While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">SHOULD NOT</span> use Composite ML-DSA.<a href="#section-6.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-3.2">
-            <p id="section-6.3-3.2.1"><strong>Non-repudiation:</strong> Composite ML-DSA is not suitable for use cases that require non-repudiation or signature uniqueness guarantees. In the JOSE/COSE threat model described above, existential unforgeability under chosen-message attack (EUF-CMA) is sufficient to meet the intended security goals.<a href="#section-6.3-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-3.2.1">Composite ML-DSA does not guarantee that a message has a single valid signature. Applications therefore cannot use the signature value, or a hash of the complete JWS or COSE object, as a unique identifier.<a href="#section-6.3-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-3.3">
-            <p id="section-6.3-3.3.1"><strong>Replay Protection:</strong> This is not handled by the signature itself but must be addressed through claims such as <code>exp</code>, <code>nbf</code>, and <code>jti</code> in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) or the equivalent claims in COSE (<span><a href="https://rfc-editor.org/rfc/rfc8392#section-3" class="relref">Section 3</a> of [<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>).<a href="#section-6.3-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-3.3.1">Replay protection is not handled by the signature itself but must be addressed through claims such as <code>exp</code>, <code>nbf</code>, and <code>jti</code> in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) or the equivalent claims in COSE (<span><a href="https://rfc-editor.org/rfc/rfc8392#section-3" class="relref">Section 3</a> of [<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>).<a href="#section-6.3-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
