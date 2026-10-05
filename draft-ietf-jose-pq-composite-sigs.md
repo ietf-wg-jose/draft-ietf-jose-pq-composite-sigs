@@ -59,6 +59,7 @@ normative:
   RFC3279:
   RFC5915:
   RFC9052:
+  RFC9964:
   I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
   IANA.JOSE:
     title: "JSON Object Signing and Encryption (JOSE)"
@@ -92,9 +93,8 @@ informative:
   RFC7519:
   RFC8392:
   RFC9360:
-  I-D.draft-ietf-pquip-pqt-hybrid-terminology: HYB-TERMINO
+  RFC9794:
   I-D.draft-ietf-pquip-hybrid-signature-spectrums: HYB-SIG-SPECTRUMS
-  I-D.draft-ietf-cose-dilithium: COSE-MLDSA
 ---
 
 --- abstract
@@ -118,7 +118,7 @@ This document describes JSON Object Signing and Encryption (JOSE) and CBOR Objec
 
 {::boilerplate bcp14-tagged}
 
-This document follows the terminology for post-quantum hybrid schemes defined in {{-HYB-TERMINO}}.
+This document follows the terminology for post-quantum hybrid schemes defined in {{RFC9794}}.
 
 This section recalls some of this terminology, but also adds other definitions used throughout the whole document:
 
@@ -142,13 +142,13 @@ This section recalls some of this terminology, but also adds other definitions u
 
 # Algorithm Key Pair (AKP) Type {#sec-akp}
 
-This document makes use of the Algorithm Key Pair (AKP) type which is defined in {{-COSE-MLDSA}}.
+This document makes use of the Algorithm Key Pair (AKP) type which is defined in {{RFC9964}}.
 
 As a reminder, the AKP type is used to express public and private keys for use with algorithms. The parameters for public and private keys contain byte strings.
 
 This document makes use of the serialization routines defined in {{-COMPOSITE-LAMPS}} to obtain the byte string encodings of the composite public and private keys.
 
-The process to compute JWK Thumbprint and COSE Key Thumbprint as described in {{RFC7638}} and {{RFC9679}} is detailed in {{-COSE-MLDSA}}.
+The process to compute JWK Thumbprint and COSE Key Thumbprint as described in {{RFC7638}} and {{RFC9679}} is detailed in {{RFC9964}}.
 
 # Composite ML-DSA in JOSE and COSE
 
@@ -159,9 +159,9 @@ The composite algorithms registered in this document are the Composite ML-DSA al
 The Composite ML-DSA algorithms are used in JOSE and COSE as follows:
 
 * Signatures are produced as described in {{Section 5.1 of RFC7515}} for JOSE and in {{Section 4 of RFC9052}} for COSE, using the Composite ML-DSA algorithm as the signature algorithm. The signature value is the output of `SerializeSignatureValue`.
-* The application context string `ctx` passed to the Composite ML-DSA signature generation and verification algorithms MUST be the empty string, similarly to {{-COSE-MLDSA}}. As a consequence, the context length byte in the message representative `M'` defined in {{-COMPOSITE-LAMPS}} is always 0x00.
+* The application context string `ctx` passed to the Composite ML-DSA signature generation and verification algorithms MUST be the empty string, similarly to {{RFC9964}}. As a consequence, the context length byte in the message representative `M'` defined in {{-COMPOSITE-LAMPS}} is always 0x00.
 * The prefix, as well as the label and the pre-hash algorithm of each composite algorithm, are those defined in {{-COMPOSITE-LAMPS}}. The prefix is the ASCII encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 43 6F 6D 70 6F 73 69 74 65 41 6C 67 6F 72 69 74 68 6D 53 69 67 6E 61 74 75 72 65 73 32 30 32 35. The labels are recalled in {{tab-sig-alg-label}}, and the pre-hash algorithms in {{tab-jose-algs}} (for JOSE) and {{tab-cose-algs}} (for COSE).
-* Composite keys are expressed using the AKP key type (see {{sec-akp}}). The `pub` parameter contains the output of `SerializePublicKey`, and the `priv` parameter contains the output of `SerializePrivateKey`. As in {{-COSE-MLDSA}}, the ML-DSA component of the private key MUST be the 32-byte seed.
+* Composite keys are expressed using the AKP key type (see {{sec-akp}}). The `pub` parameter contains the output of `SerializePublicKey`, and the `priv` parameter contains the output of `SerializePrivateKey`. As in {{RFC9964}}, the ML-DSA component of the private key MUST be the 32-byte seed.
 
 For the ECDSA component, the signature, private key and public key are encoded as in {{-COMPOSITE-LAMPS}}: the signature as an Ecdsa-Sig-Value {{RFC3279}}, the private key as an ECPrivateKey {{RFC5915}}, and the public key as an uncompressed X9.62 {{X9.62-2005}} point. {{sec-ecdsa-encoding}} gives guidance on how to produce and parse these encodings. For the EdDSA component, keys and signatures are encoded as defined in {{RFC8032}}.
 
