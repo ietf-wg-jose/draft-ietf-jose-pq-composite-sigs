@@ -1217,7 +1217,10 @@ svg {
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-component-key-integrity-and" class="internal xref">Component Key Integrity and Reuse</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
-                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-security-objectives-and-lim" class="internal xref">Security Objectives and Limitations</a></p>
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-domain-separation-and-non-s" class="internal xref">Domain Separation and Non-Separability</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-security-objectives-and-lim" class="internal xref">Security Objectives and Limitations</a></p>
 </li>
             </ul>
 </li>
@@ -1838,22 +1841,39 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
         </ul>
 </section>
 </div>
-<div id="security-objectives-and-limitations">
+<div id="domain-separation-and-non-separability">
 <section id="section-6.3">
-        <h3 id="name-security-objectives-and-lim">
-<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-security-objectives-and-lim" class="section-name selfRef">Security Objectives and Limitations</a>
+        <h3 id="name-domain-separation-and-non-s">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-domain-separation-and-non-s" class="section-name selfRef">Domain Separation and Non-Separability</a>
         </h3>
-<p id="section-6.3-1">In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.3-2">Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">The Composite ML-DSA signature combiner defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> prepends a fixed <code>Prefix</code> and an algorithm-specific <code>Label</code> to the pre-hashed message before signing.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.3-3.1">
-            <p id="section-6.3-3.1.1">While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">SHOULD NOT</span> use Composite ML-DSA.<a href="#section-6.3-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.3-2.1">
+            <p id="section-6.3-2.1.1">By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.3-3.2">
-            <p id="section-6.3-3.2.1">Composite ML-DSA does not guarantee that a message has a single valid signature. Applications therefore cannot use the signature value, or a hash of the complete JWS or COSE object, as a unique identifier.<a href="#section-6.3-3.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.3-2.2">
+            <p id="section-6.3-2.2.1">The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, tt does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over <code>M'</code>, which is why key reuse is forbidden.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.3-3.3">
-            <p id="section-6.3-3.3.1">Replay protection is not handled by the signature itself but must be addressed through claims such as <code>exp</code>, <code>nbf</code>, and <code>jti</code> in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) or the equivalent claims in COSE (<span><a href="https://rfc-editor.org/rfc/rfc8392#section-3" class="relref">Section 3</a> of [<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>).<a href="#section-6.3-3.3.1" class="pilcrow">¶</a></p>
+        </ul>
+<p id="section-6.3-3">For more information about the security properties relative to the signature combiner, the user can read <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-objectives-and-limitations">
+<section id="section-6.4">
+        <h3 id="name-security-objectives-and-lim">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-security-objectives-and-lim" class="section-name selfRef">Security Objectives and Limitations</a>
+        </h3>
+<p id="section-6.4-1">In JOSE/COSE, the security objective of digital signatures is to ensure that only an authorized signer can produce a valid signature over a given protected header and payload.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.4-3.1">
+            <p id="section-6.4-3.1.1">While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">SHOULD NOT</span> use Composite ML-DSA.<a href="#section-6.4-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.4-3.2">
+            <p id="section-6.4-3.2.1">Composite ML-DSA does not guarantee that a message has a single valid signature. Applications therefore cannot use the signature value, or a hash of the complete JWS or COSE object, as a unique identifier.<a href="#section-6.4-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.4-3.3">
+            <p id="section-6.4-3.3.1">Replay protection is not handled by the signature itself but must be addressed through claims such as <code>exp</code>, <code>nbf</code>, and <code>jti</code> in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) or the equivalent claims in COSE (<span><a href="https://rfc-editor.org/rfc/rfc8392#section-3" class="relref">Section 3</a> of [<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>).<a href="#section-6.4-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

@@ -91,7 +91,8 @@ Table of Contents
    6.  Security Considerations
      6.1.  Hybrid Security and Quantum Resistance
      6.2.  Component Key Integrity and Reuse
-     6.3.  Security Objectives and Limitations
+     6.3.  Domain Separation and Non-Separability
+     6.4.  Security Objectives and Limitations
    7.  IANA Considerations
      7.1.  JOSE Algorithms
        7.1.1.  ML-DSA-44-ES256
@@ -719,7 +720,28 @@ Table of Contents
       against a CRQC.  The same holds for any other mechanism used to
       distribute composite public keys.
 
-6.3.  Security Objectives and Limitations
+6.3.  Domain Separation and Non-Separability
+
+   The Composite ML-DSA signature combiner defined in
+   [I-D.draft-ietf-lamps-pq-composite-sigs] prepends a fixed Prefix and
+   an algorithm-specific Label to the pre-hashed message before signing.
+
+   *  By binding the two component signatures to the specific composite
+      algorithm, the composite scheme achieves "weak non-separability"
+      as defined in [I-D.draft-ietf-pquip-hybrid-signature-spectrums].
+
+   *  The label, specific to each composite algorithm, helps protect
+      against component signatures being removed from the composite and
+      used in another context.  However, tt does not fully prevent it as
+      the traditional component still verifies under the traditional
+      algorithm as a signature over M', which is why key reuse is
+      forbidden.
+
+   For more information about the security properties relative to the
+   signature combiner, the user can read
+   [I-D.draft-ietf-lamps-pq-composite-sigs].
+
+6.4.  Security Objectives and Limitations
 
    In JOSE/COSE, the security objective of digital signatures is to
    ensure that only an authorized signer can produce a valid signature
