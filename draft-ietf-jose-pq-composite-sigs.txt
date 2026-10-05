@@ -153,7 +153,7 @@ Table of Contents
    capitals, as shown here.
 
    This document follows the terminology for post-quantum hybrid schemes
-   defined in [I-D.draft-ietf-pquip-pqt-hybrid-terminology].
+   defined in [RFC9794].
 
    This section recalls some of this terminology, but also adds other
    definitions used throughout the whole document:
@@ -195,7 +195,7 @@ Table of Contents
 3.  Algorithm Key Pair (AKP) Type
 
    This document makes use of the Algorithm Key Pair (AKP) type which is
-   defined in [I-D.draft-ietf-cose-dilithium].
+   defined in [RFC9964].
 
    As a reminder, the AKP type is used to express public and private
    keys for use with algorithms.  The parameters for public and private
@@ -206,8 +206,7 @@ Table of Contents
    encodings of the composite public and private keys.
 
    The process to compute JWK Thumbprint and COSE Key Thumbprint as
-   described in [RFC7638] and [RFC9679] is detailed in
-   [I-D.draft-ietf-cose-dilithium].
+   described in [RFC7638] and [RFC9679] is detailed in [RFC9964].
 
 4.  Composite ML-DSA in JOSE and COSE
 
@@ -234,10 +233,9 @@ Table of Contents
 
    *  The application context string ctx passed to the Composite ML-DSA
       signature generation and verification algorithms MUST be the empty
-      string, similarly to [I-D.draft-ietf-cose-dilithium].  As a
-      consequence, the context length byte in the message representative
-      M' defined in [I-D.draft-ietf-lamps-pq-composite-sigs] is always
-      0x00.
+      string, similarly to [RFC9964].  As a consequence, the context
+      length byte in the message representative M' defined in
+      [I-D.draft-ietf-lamps-pq-composite-sigs] is always 0x00.
 
    *  The prefix, as well as the label and the pre-hash algorithm of
       each composite algorithm, are those defined in
@@ -251,8 +249,8 @@ Table of Contents
    *  Composite keys are expressed using the AKP key type (see
       Section 3).  The pub parameter contains the output of
       SerializePublicKey, and the priv parameter contains the output of
-      SerializePrivateKey.  As in [I-D.draft-ietf-cose-dilithium], the
-      ML-DSA component of the private key MUST be the 32-byte seed.
+      SerializePrivateKey.  As in [RFC9964], the ML-DSA component of the
+      private key MUST be the 32-byte seed.
 
    For the ECDSA component, the signature, private key and public key
    are encoded as in [I-D.draft-ietf-lamps-pq-composite-sigs]: the
@@ -1055,6 +1053,11 @@ Table of Contents
               DOI 10.17487/RFC9679, December 2024,
               <https://www.rfc-editor.org/rfc/rfc9679>.
 
+   [RFC9964]  Prorock, M. and O. Steele, "ML-DSA for JSON Object Signing
+              and Encryption (JOSE) and CBOR Object Signing and
+              Encryption (COSE)", RFC 9964, DOI 10.17487/RFC9964, May
+              2026, <https://www.rfc-editor.org/rfc/rfc9964>.
+
    [X9.62-2005]
               American National Standards Institute, "Public Key
               Cryptography for the Financial Services Industry: the
@@ -1063,26 +1066,12 @@ Table of Contents
 
 8.2.  Informative References
 
-   [I-D.draft-ietf-cose-dilithium]
-              Prorock, M. and O. Steele, "ML-DSA for JOSE and COSE",
-              Work in Progress, Internet-Draft, draft-ietf-cose-
-              dilithium-11, 15 November 2025,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              dilithium-11>.
-
    [I-D.draft-ietf-pquip-hybrid-signature-spectrums]
               Bindel, N., Hale, B., Connolly, D., and F. D, "Hybrid
               signature spectrums", Work in Progress, Internet-Draft,
               draft-ietf-pquip-hybrid-signature-spectrums-07, 20 June
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
               pquip-hybrid-signature-spectrums-07>.
-
-   [I-D.draft-ietf-pquip-pqt-hybrid-terminology]
-              D, F., P, M., and B. Hale, "Terminology for Post-Quantum
-              Traditional Hybrid Schemes", Work in Progress, Internet-
-              Draft, draft-ietf-pquip-pqt-hybrid-terminology-06, 10
-              January 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-pquip-pqt-hybrid-terminology-06>.
 
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
@@ -1104,6 +1093,11 @@ Table of Contents
               Header Parameters for Carrying and Referencing X.509
               Certificates", RFC 9360, DOI 10.17487/RFC9360, February
               2023, <https://www.rfc-editor.org/rfc/rfc9360>.
+
+   [RFC9794]  Driscoll, F., Parsons, M., and B. Hale, "Terminology for
+              Post-Quantum Traditional Hybrid Schemes", RFC 9794,
+              DOI 10.17487/RFC9794, June 2025,
+              <https://www.rfc-editor.org/rfc/rfc9794>.
 
 Appendix A.  Examples
 
