@@ -456,7 +456,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Description: Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA-256
 * Capabilities: `[kty]`
 * Change Controller: IETF
-* Reference: n/a
+* Reference: RFC XXXX
 * Recommended: Yes
 
 ### ML-DSA-65-ES256
@@ -466,7 +466,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Description: Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA-256
 * Capabilities: `[kty]`
 * Change Controller: IETF
-* Reference: n/a
+* Reference: RFC XXXX
 * Recommended: Yes
 
 ### ML-DSA-87-ES384
@@ -476,7 +476,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Description: Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA-384
 * Capabilities: `[kty]`
 * Change Controller: IETF
-* Reference: n/a
+* Reference: RFC XXXX
 * Recommended: Yes
 
 ### ML-DSA-44-Ed25519
@@ -486,7 +486,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Description: Composite Signature with ML-DSA-44 and Ed25519 using SHA-512
 * Capabilities: `[kty]`
 * Change Controller: IETF
-* Reference: n/a
+* Reference: RFC XXXX
 * Recommended: Yes
 
 ### ML-DSA-65-Ed25519
@@ -496,7 +496,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512
 * Capabilities: `[kty]`
 * Change Controller: IETF
-* Reference: n/a
+* Reference: RFC XXXX
 * Recommended: Yes
 
 ### ML-DSA-87-Ed448
@@ -506,7 +506,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256
 * Capabilities: `[kty]`
 * Change Controller: IETF
-* Reference: n/a
+* Reference: RFC XXXX
 * Recommended: Yes
 
 --- back
