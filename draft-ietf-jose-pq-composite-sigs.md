@@ -390,8 +390,8 @@ They are represented following the registration template provided in {{RFC7518}}
 * Algorithm Usage Location(s): alg
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
-* Specification Document(s): n/a
-* Algorithm Analysis Documents(s): TBD
+* Specification Document(s): RFC XXXX
+* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-65-ES256
 
@@ -400,8 +400,8 @@ They are represented following the registration template provided in {{RFC7518}}
 * Algorithm Usage Location(s): alg
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
-* Specification Document(s): n/a
-* Algorithm Analysis Documents(s): TBD
+* Specification Document(s): RFC XXXX
+* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-87-ES384
 
@@ -410,8 +410,8 @@ They are represented following the registration template provided in {{RFC7518}}
 * Algorithm Usage Location(s): alg
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
-* Specification Document(s): n/a
-* Algorithm Analysis Documents(s): TBD
+* Specification Document(s): RFC XXXX
+* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-44-Ed25519
 
@@ -420,8 +420,8 @@ They are represented following the registration template provided in {{RFC7518}}
 * Algorithm Usage Location(s): alg
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
-* Specification Document(s): n/a
-* Algorithm Analysis Document(s): TBD
+* Specification Document(s): RFC XXXX
+* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-65-Ed25519
 
@@ -430,8 +430,8 @@ They are represented following the registration template provided in {{RFC7518}}
 * Algorithm Usage Location(s): alg
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
-* Specification Document(s): n/a
-* Algorithm Analysis Document(s): TBD
+* Specification Document(s): RFC XXXX
+* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-87-Ed448
 
@@ -440,8 +440,8 @@ They are represented following the registration template provided in {{RFC7518}}
 * Algorithm Usage Location(s): alg
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
-* Specification Document(s): n/a
-* Algorithm Analysis Document(s): TBD
+* Specification Document(s): RFC XXXX
+* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
 
 ## COSE Algorithms
 
