@@ -352,19 +352,11 @@ By requiring the successful verification of both the ML-DSA component and the tr
 
 ## Component Key Integrity and Reuse
 
-To maintain the security properties of the composite scheme, strict key management is required:
+The security analysis of Composite ML-DSA in {{-COMPOSITE-LAMPS}} assumes that the two component keys of a composite key are freshly generated together and are not used anywhere else. The considerations below apply to composite keys used with JOSE and COSE.
 
-* **No Key Reuse:** To avoid key reuse, when generating a new composite key, the generation functions for both component algorithms MUST be executed. Moreover, compliant parties MUST NOT use, import, or export component keys that are used in other contexts, combinations, or as standalone keys.
-* **Certificate-Level Protection:** The integrity of the composite public key is protected through mandatory validation of the certificate header (the `x5c` header in JOSE per {{RFC7515}} or the `x5chain` header in COSE per {{RFC9360}}). Because the certificate itself is protected by a composite signature, an attacker cannot forge a fake certificate to swap a public key even if the traditional algorithm is broken. These specifications require the validation of the composite signature on the certificate itself.
+* To avoid key reuse, when generating a new composite key, the key generation functions for both component algorithms MUST be executed. Moreover, compliant parties MUST NOT use, import, or export component keys that are used in other contexts, combinations, or as standalone keys. In particular, existing key material, such as an ECDSA, EdDSA or ML-DSA key already published as a JWK or COSE_Key, MUST NOT be reused as a component of a composite key. If a component key is also used on its own, a component signature taken out of a composite signature verifies under that key as a signature over the message representative `M'`. The prefix and label leave evidence that the signature comes from a composite, but they do not prevent this. Key reuse MUST therefore be avoided despite the weak non-separability of the combiner.
 
-## Domain Separation and Non-Separability
-
-The Composite ML-DSA signature combiner defined in {{-COMPOSITE-LAMPS}} prepends a fixed `Prefix` and an algorithm-specific `Label` to the pre-hashed message before signing.
-
-* **Non-separability:** By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in {{-HYB-SIG-SPECTRUMS}}.
-* **Cross-Algorithm Prevention:** The unique label, specific to each composite algorithm, ensures that signatures cannot be removed from the composite and used in other contexts.
-
-For more information about the security properties relative to the signature combiner, the user can read {{-COMPOSITE-LAMPS}}.
+* A composite public key can be conveyed in an X.509 certificate, using the `x5c` header parameter in JOSE ({{Section 4.1.6 of RFC7515}}) or the `x5chain` header parameter in COSE {{RFC9360}}. Such a certificate carries the composite key as specified in {{-COMPOSITE-LAMPS}}, with the same serialized public key as the `pub` parameter. In that case, the binding between the composite key and the signer is only as strong as the signatures on the certificates of the chain. A quantum adversary cannot forge a certificate signed with Composite ML-DSA as long as ML-DSA remains secure. If a certificate of the chain is signed with a traditional algorithm only, such an adversary can obtain a certificate for a composite key of its choice, and the composite signature on the JWS or COSE object no longer provides protection against a CRQC. The same holds for any other mechanism used to distribute composite public keys.
 
 ## Security Objectives and Limitations
 
