@@ -279,7 +279,7 @@ each for P-256, 48 bytes each for P-384).
 
 The ML-DSA signature scheme supports three possible parameter sets, each of which corresponding to a specific security strength. See {{FIPS.204}} for more considerations on that matter.
 
-The traditional signature algorithm for each combination in {{tab-jose-algs}} and {{tab-cose-algs}} was chosen to match the security level of the ML-DSA post-quantum component.
+The combinations in {{tab-jose-algs}} and {{tab-cose-algs}} are a subset of those defined in {{-COMPOSITE-LAMPS}}. As explained there, each ML-DSA parameter set is paired with commonly deployed traditional algorithms, rather than with a traditional algorithm of exactly the same security level, as such an exact match is difficult to define, since there is no consensus on how to compare security against classical adversaries with security against quantum adversaries.
 
 The {{FIPS.204}} specification defines both pure and pre-hash modes for ML-DSA, referred to as "ML-DSA" and "HashML-DSA" respectively. This document only specifies a single mode which is similar in construction to HashML-DSA. However, because the pre-hashing is done at the composite level, only the pure ML-DSA algorithm is used as the underlying ML-DSA primitive.
 
