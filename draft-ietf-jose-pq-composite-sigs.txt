@@ -907,7 +907,7 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Reference: n/a
+   *  Reference: RFC XXXX
 
    *  Recommended: Yes
 
@@ -924,7 +924,7 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Reference: n/a
+   *  Reference: RFC XXXX
 
    *  Recommended: Yes
 
@@ -941,7 +941,7 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Reference: n/a
+   *  Reference: RFC XXXX
 
    *  Recommended: Yes
 
@@ -958,7 +958,7 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Reference: n/a
+   *  Reference: RFC XXXX
 
    *  Recommended: Yes
 
@@ -975,7 +975,7 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Reference: n/a
+   *  Reference: RFC XXXX
 
    *  Recommended: Yes
 
@@ -992,7 +992,7 @@ Table of Contents
 
    *  Change Controller: IETF
 
-   *  Reference: n/a
+   *  Reference: RFC XXXX
 
    *  Recommended: Yes
 
