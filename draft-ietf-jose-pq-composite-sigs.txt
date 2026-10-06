@@ -779,7 +779,13 @@ Table of Contents
       classical adversaries, but are not SUF-CMA secure against quantum
       adversaries, who can break the traditional component.
       Consequently, applications for which SUF-CMA security is a strict
-      requirement SHOULD NOT use Composite ML-DSA.
+      requirement SHOULD NOT use Composite ML-DSA.  An application can
+      still use it, after carefully weighing the security implications,
+      if it only needs strong unforgeability against classical
+      adversaries and uses an Ed25519 or Ed448 combination, or if it
+      obtains the security property it needs by other means, for example
+      by identifying objects through a signed identifier such as jti or
+      cti rather than through the signature value.
 
    *  Composite ML-DSA does not guarantee that a message has a single
       valid signature.  Applications therefore cannot use the signature
