@@ -104,6 +104,14 @@ const (
 	coseKeyPriv = -2
 )
 
+var detEncMode = func() cbor.EncMode {
+	em, err := cbor.CoreDetEncOptions().EncMode()
+	if err != nil {
+		panic(err)
+	}
+	return em
+}()
+
 // TradKeyPair holds either ECDSA or EdDSA keys
 type TradKeyPair struct {
 	ECDSAPriv *ecdsa.PrivateKey
@@ -405,7 +413,7 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 		4: coseKey[coseKeyKid], // kid
 	}
 
-	protectedHeaderBytes, err := cbor.Marshal(protectedHeader)
+	protectedHeaderBytes, err := detEncMode.Marshal(protectedHeader)
 	if err != nil {
 		return nil, nil, nil, nil, fmt.Errorf("failed to marshal protected header: %w", err)
 	}
@@ -417,7 +425,7 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 		payload,
 	}
 
-	sigStructureBytes, err := cbor.Marshal(sigStructure)
+	sigStructureBytes, err := detEncMode.Marshal(sigStructure)
 	if err != nil {
 		return nil, nil, nil, nil, fmt.Errorf("failed to marshal Sig_structure: %w", err)
 	}
@@ -448,7 +456,7 @@ func CreateCOSESign1(config AlgorithmConfig, coseKey map[interface{}]interface{}
 		signature,
 	}
 
-	coseSign1Bytes, err := cbor.Marshal(cbor.Tag{Number: 18, Content: coseSign1})
+	coseSign1Bytes, err := detEncMode.Marshal(cbor.Tag{Number: 18, Content: coseSign1})
 	if err != nil {
 		return nil, nil, nil, nil, fmt.Errorf("failed to marshal COSE_Sign1: %w", err)
 	}
@@ -581,7 +589,7 @@ func parseHexSeed(seedHex string, expectedLen int) ([]byte, error) {
 // CBOR Extended Diagnostic Notation rendering
 // ============================================================================
 
-const ednBytesPerLine = 32 // 64 hex chars per line
+const ednBytesPerLine = 32
 
 func wrapHex(data []byte, indent string) string {
 	h := hex.EncodeToString(data)
@@ -736,11 +744,10 @@ func main() {
 	}
 
 	payload := []byte(*payloadStr)
-	coseSign1Bytes, sigStructureBytes, toBeSigned, signature, err := CreateCOSESign1(config, coseKey, mldsaKeys, tradKeys, payload)
+	_, _, toBeSigned, signature, err := CreateCOSESign1(config, coseKey, mldsaKeys, tradKeys, payload)
 	if err != nil {
 		log.Fatalf("Signature failed: %v", err)
 	}
-	_ = coseSign1Bytes
 
 	kid := coseKey[coseKeyKid].([]byte)
 	pub := coseKey[coseKeyPub].([]byte)
@@ -769,5 +776,4 @@ func main() {
 
 	fmt.Printf("/ COSE_Sign1 /\n%s\n", renderCOSESign1(config, kid, payload, signature))
 
-	_ = sigStructureBytes
 }
