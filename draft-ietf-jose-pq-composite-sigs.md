@@ -462,7 +462,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: RFC XXXX
-* Recommended: Yes
+* Recommended: No
 
 ### ML-DSA-65-ES256
 
@@ -472,7 +472,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: RFC XXXX
-* Recommended: Yes
+* Recommended: No
 
 ### ML-DSA-87-ES384
 
@@ -482,7 +482,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: RFC XXXX
-* Recommended: Yes
+* Recommended: No
 
 ### ML-DSA-44-Ed25519
 
@@ -492,7 +492,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: RFC XXXX
-* Recommended: Yes
+* Recommended: No
 
 ### ML-DSA-65-Ed25519
 
@@ -502,7 +502,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: RFC XXXX
-* Recommended: Yes
+* Recommended: No
 
 ### ML-DSA-87-Ed448
 
@@ -512,7 +512,7 @@ They are represented following the registration template provided in {{RFC9053}}
 * Capabilities: `[kty]`
 * Change Controller: IETF
 * Reference: RFC XXXX
-* Recommended: Yes
+* Recommended: No
 
 --- back
 
