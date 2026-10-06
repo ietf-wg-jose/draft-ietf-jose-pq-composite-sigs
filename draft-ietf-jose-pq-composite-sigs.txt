@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 8 April 2027                                            J. Gray
+Expires: 9 April 2027                                            J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                          5 October 2026
+                                                          6 October 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 April 2027.
+   This Internet-Draft will expire on 9 April 2027.
 
 Copyright Notice
 
@@ -386,22 +386,25 @@ Table of Contents
    }
 
    Given the raw, fixed-length ECDSA private key d (curve size n: 32
-   bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
-   inserted between two fixed byte sequences that depend only on the
-   curve (the publicKey field is never included), as given in Table 3:
+   bytes for P-256, 48 bytes for P-384), the ECPrivateKey is d inserted
+   between two fixed byte sequences that depend only on the curve (the
+   publicKey field is never included):
 
-           +=======+======================+===================+
-           | Curve | Bytes before d       | Bytes after d     |
-           +=======+======================+===================+
-           | P-256 | 30 31 02 01 01 04 20 | A0 0A 06 08 2A 86 |
-           |       |                      | 48 CE 3D 03 01 07 |
-           +-------+----------------------+-------------------+
-           | P-384 | 30 3E 02 01 01 04 30 | A0 07 06 05 2B 81 |
-           |       |                      | 04 00 22          |
-           +-------+----------------------+-------------------+
+   ECPrivateKey <- bytes before d || d || bytes after d
 
-                 Table 3: Fixed bytes surrounding d in an
-                          ECPrivateKey, by curve
+   The fixed byte sequences are given in Table 3:
+
+   +=======+======================+===============+===================+
+   | Curve | Bytes before d       | d             | Bytes after d     |
+   +=======+======================+===============+===================+
+   | P-256 | 30 31 02 01 01 04 20 | <d, 32 bytes> | A0 0A 06 08 2A 86 |
+   |       |                      |               | 48 CE 3D 03 01 07 |
+   +-------+----------------------+---------------+-------------------+
+   | P-384 | 30 3E 02 01 01 04 30 | <d, 48 bytes> | A0 07 06 05 2B 81 |
+   |       |                      |               | 04 00 22          |
+   +-------+----------------------+---------------+-------------------+
+
+            Table 3: Construction of an ECPrivateKey, by curve
 
    For example, for P-256 (n = 32), with d = D1 D2 ...D32:
 

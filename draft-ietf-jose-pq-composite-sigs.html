@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Prabel, et al.</td>
-<td class="center">Expires 8 April 2027</td>
+<td class="center">Expires 9 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-jose-pq-composite-sigs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-05" class="published">5 October 2026</time>
+<time datetime="2026-10-06" class="published">6 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-04-08">8 April 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-09">9 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1518,19 +1518,20 @@ ECPrivateKey ::= SEQUENCE {
 }
 </pre><a href="#section-4.2.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.2-3">Given the raw, fixed-length ECDSA private key d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
-inserted between two fixed byte sequences that depend only on the curve (the publicKey field is never included), as given in
-<a href="#_table-ecprivatekey-build" class="auto internal xref">Table 3</a>:<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
-<span id="name-fixed-bytes-surrounding-d-i"></span><div id="_table-ecprivatekey-build">
+<p id="section-4.2.2-3">Given the raw, fixed-length ECDSA private key d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is d inserted between two fixed byte sequences that depend only on the curve (the publicKey field is never included):<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-4"><code>ECPrivateKey &lt;- bytes before d || d || bytes after d</code><a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-5">The fixed byte sequences are given in <a href="#_table-ecprivatekey-build" class="auto internal xref">Table 3</a>:<a href="#section-4.2.2-5" class="pilcrow">¶</a></p>
+<span id="name-construction-of-an-ecprivat"></span><div id="_table-ecprivatekey-build">
 <table class="center" id="table-3">
             <caption>
 <a href="#table-3" class="selfRef">Table 3</a>:
-<a href="#name-fixed-bytes-surrounding-d-i" class="selfRef">Fixed bytes surrounding d in an ECPrivateKey, by curve</a>
+<a href="#name-construction-of-an-ecprivat" class="selfRef">Construction of an ECPrivateKey, by curve</a>
             </caption>
 <thead>
               <tr>
                 <th class="text-left" rowspan="1" colspan="1">Curve</th>
                 <th class="text-left" rowspan="1" colspan="1">Bytes before d</th>
+                <th class="text-left" rowspan="1" colspan="1">d</th>
                 <th class="text-left" rowspan="1" colspan="1">Bytes after d</th>
               </tr>
             </thead>
@@ -1539,6 +1540,9 @@ inserted between two fixed byte sequences that depend only on the curve (the pub
                 <td class="text-left" rowspan="1" colspan="1">P-256</td>
                 <td class="text-left" rowspan="1" colspan="1">
                   <code>30 31 02 01 01 04 20</code>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <code>&lt;d, 32 bytes&gt;</code>
 </td>
                 <td class="text-left" rowspan="1" colspan="1">
                   <code>A0 0A 06 08 2A 86 48 CE 3D 03 01 07</code>
@@ -1550,23 +1554,26 @@ inserted between two fixed byte sequences that depend only on the curve (the pub
                   <code>30 3E 02 01 01 04 30</code>
 </td>
                 <td class="text-left" rowspan="1" colspan="1">
+                  <code>&lt;d, 48 bytes&gt;</code>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">
                   <code>A0 07 06 05 2B 81 04 00 22</code>
 </td>
               </tr>
             </tbody>
           </table>
 </div>
-<p id="section-4.2.2-5">For example, for P-256 (n = 32), with d = <code>D1 D2 ...D32</code>:<a href="#section-4.2.2-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.2.2-6">
+<p id="section-4.2.2-7">For example, for P-256 (n = 32), with d = <code>D1 D2 ...D32</code>:<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.2.2-8">
 <pre>
 30 31                                 SEQUENCE (length 0x31 = 49)
    02 01 01                           version (INTEGER, value 1)
    04 20 D1 D2 ... D32                private key (OCTET STRING)
    A0 0A                              parameters (A0: explicit tag 0)
       06 08 2A 86 48 CE 3D 03 01 07   OID (OBJECT IDENTIFIER, P-256)
-</pre><a href="#section-4.2.2-6" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.2-7"><strong>Decoding</strong> reverses the same construction.<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-9"><strong>Decoding</strong> reverses the same construction.<a href="#section-4.2.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-ecdsa-encoding-pub">
