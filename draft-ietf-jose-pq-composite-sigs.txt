@@ -927,7 +927,7 @@ Table of Contents
 
    *  Reference: RFC XXXX
 
-   *  Recommended: Yes
+   *  Recommended: No
 
 7.2.2.  ML-DSA-65-ES256
 
@@ -944,7 +944,7 @@ Table of Contents
 
    *  Reference: RFC XXXX
 
-   *  Recommended: Yes
+   *  Recommended: No
 
 7.2.3.  ML-DSA-87-ES384
 
@@ -961,7 +961,7 @@ Table of Contents
 
    *  Reference: RFC XXXX
 
-   *  Recommended: Yes
+   *  Recommended: No
 
 7.2.4.  ML-DSA-44-Ed25519
 
@@ -978,7 +978,7 @@ Table of Contents
 
    *  Reference: RFC XXXX
 
-   *  Recommended: Yes
+   *  Recommended: No
 
 7.2.5.  ML-DSA-65-Ed25519
 
@@ -995,7 +995,7 @@ Table of Contents
 
    *  Reference: RFC XXXX
 
-   *  Recommended: Yes
+   *  Recommended: No
 
 7.2.6.  ML-DSA-87-Ed448
 
@@ -1012,7 +1012,7 @@ Table of Contents
 
    *  Reference: RFC XXXX
 
-   *  Recommended: Yes
+   *  Recommended: No
 
 8.  References
 
