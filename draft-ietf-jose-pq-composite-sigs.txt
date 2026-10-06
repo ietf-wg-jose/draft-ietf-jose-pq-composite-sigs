@@ -697,7 +697,10 @@ Table of Contents
       message attack (EUF-CMA) provided that at least one component
       algorithm is EUF-CMA secure and the pre-hash function PH is
       collision-resistant.  This is the case for all combinations
-      present in this document.
+      present in this document: ML-DSA, ECDSA and EdDSA are designed to
+      be EUF-CMA secure (the latter two against classical adversaries
+      only), and the pre-hash functions used (SHA-256, SHA-512, and
+      SHAKE256 with 64-byte output) are collision-resistant.
 
 6.2.  Component Key Integrity and Reuse
 
