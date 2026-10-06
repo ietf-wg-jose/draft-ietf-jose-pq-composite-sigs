@@ -734,7 +734,7 @@ Table of Contents
 
    *  By binding the two component signatures to the specific composite
       algorithm, the composite scheme achieves "weak non-separability"
-      as defined in [I-D.draft-ietf-pquip-hybrid-signature-spectrums].
+      as defined in [RFC9955].
 
    *  The label, specific to each composite algorithm, helps protect
       against component signatures being removed from the composite and
@@ -1091,13 +1091,6 @@ Table of Contents
 
 8.2.  Informative References
 
-   [I-D.draft-ietf-pquip-hybrid-signature-spectrums]
-              Bindel, N., Hale, B., Connolly, D., and F. D, "Hybrid
-              signature spectrums", Work in Progress, Internet-Draft,
-              draft-ietf-pquip-hybrid-signature-spectrums-07, 20 June
-              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              pquip-hybrid-signature-spectrums-07>.
-
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <https://www.rfc-editor.org/rfc/rfc7519>.
@@ -1123,6 +1116,11 @@ Table of Contents
               Post-Quantum Traditional Hybrid Schemes", RFC 9794,
               DOI 10.17487/RFC9794, June 2025,
               <https://www.rfc-editor.org/rfc/rfc9794>.
+
+   [RFC9955]  Bindel, N., Hale, B., Connolly, D., and F. Driscoll,
+              "Hybrid Signature Spectrums", RFC 9955,
+              DOI 10.17487/RFC9955, July 2026,
+              <https://www.rfc-editor.org/rfc/rfc9955>.
 
 Appendix A.  Examples
 

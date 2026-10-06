@@ -1854,7 +1854,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
 <p id="section-6.3-1">The Composite ML-DSA signature combiner defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> prepends a fixed <code>Prefix</code> and an algorithm-specific <code>Label</code> to the pre-hashed message before signing.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3-2.1">
-            <p id="section-6.3-2.1.1">By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in <span>[<a href="#I-D.draft-ietf-pquip-hybrid-signature-spectrums" class="cite xref">I-D.draft-ietf-pquip-hybrid-signature-spectrums</a>]</span>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-2.1.1">By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in <span>[<a href="#RFC9955" class="cite xref">RFC9955</a>]</span>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-2.2">
             <p id="section-6.3-2.2.1">The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, it does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over <code>M'</code>, which is why key reuse is forbidden.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
@@ -2362,10 +2362,6 @@ They are represented following the registration template provided in <span>[<a h
 <a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.draft-ietf-pquip-hybrid-signature-spectrums">[I-D.draft-ietf-pquip-hybrid-signature-spectrums]</dt>
-        <dd>
-<span class="refAuthor">Bindel, N.</span>, <span class="refAuthor">Hale, B.</span>, <span class="refAuthor">Connolly, D.</span>, and <span class="refAuthor">F. D</span>, <span class="refTitle">"Hybrid signature spectrums"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-pquip-hybrid-signature-spectrums-07</span>, <time datetime="2025-06-20" class="refDate">20 June 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-pquip-hybrid-signature-spectrums-07">https://datatracker.ietf.org/doc/html/draft-ietf-pquip-hybrid-signature-spectrums-07</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC7519">[RFC7519]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
@@ -2387,8 +2383,12 @@ They are represented following the registration template provided in <span>[<a h
 <span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Header Parameters for Carrying and Referencing X.509 Certificates"</span>, <span class="seriesInfo">RFC 9360</span>, <span class="seriesInfo">DOI 10.17487/RFC9360</span>, <time datetime="2023-02" class="refDate">February 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9360">https://www.rfc-editor.org/rfc/rfc9360</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9794">[RFC9794]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Driscoll, F.</span>, <span class="refAuthor">Parsons, M.</span>, and <span class="refAuthor">B. Hale</span>, <span class="refTitle">"Terminology for Post-Quantum Traditional Hybrid Schemes"</span>, <span class="seriesInfo">RFC 9794</span>, <span class="seriesInfo">DOI 10.17487/RFC9794</span>, <time datetime="2025-06" class="refDate">June 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9794">https://www.rfc-editor.org/rfc/rfc9794</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9955">[RFC9955]</dt>
+      <dd>
+<span class="refAuthor">Bindel, N.</span>, <span class="refAuthor">Hale, B.</span>, <span class="refAuthor">Connolly, D.</span>, and <span class="refAuthor">F. Driscoll</span>, <span class="refTitle">"Hybrid Signature Spectrums"</span>, <span class="seriesInfo">RFC 9955</span>, <span class="seriesInfo">DOI 10.17487/RFC9955</span>, <time datetime="2026-07" class="refDate">July 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9955">https://www.rfc-editor.org/rfc/rfc9955</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
