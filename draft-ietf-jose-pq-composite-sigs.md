@@ -378,7 +378,7 @@ In JOSE/COSE, the security objective of digital signatures is to ensure that onl
 
 Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:
 
-* While the construction is SUF-CMA secure against classical adversaries when paired with Ed25519 or Ed448, it is not SUF-CMA secure against quantum adversaries (who can break the traditional component). Consequently, applications for which SUF-CMA security is a strict requirement SHOULD NOT use Composite ML-DSA.
+* The ECDSA combinations are not SUF-CMA secure against classical or quantum adversaries, since ECDSA signatures are malleable. The Ed25519 and Ed448 combinations are SUF-CMA secure against classical adversaries, but are not SUF-CMA secure against quantum adversaries, who can break the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement SHOULD NOT use Composite ML-DSA.
 * Composite ML-DSA does not guarantee that a message has a single valid signature. Applications therefore cannot use the signature value, or a hash of the complete JWS or COSE object, as a unique identifier.
 * Replay protection is not handled by the signature itself but must be addressed through claims such as `exp`, `nbf`, and `jti` in JOSE ({{Section 4.1 of RFC7519}}) or the equivalent claims in COSE ({{Section 3 of RFC8392}}).
 
