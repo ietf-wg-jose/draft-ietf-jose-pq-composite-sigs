@@ -353,7 +353,7 @@ An important objective of Composite ML-DSA is to provide protection against CRQC
 By requiring the successful verification of both the ML-DSA component and the traditional component, this construction ensures:
 
 * An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure. In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
-* The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function `PH` is collision-resistant. This is the case for all combinations present in this document.
+* The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function `PH` is collision-resistant. This is the case for all combinations present in this document: ML-DSA, ECDSA and EdDSA are designed to be EUF-CMA secure (the latter two against classical adversaries only), and the pre-hash functions used (SHA-256, SHA-512, and SHAKE256 with 64-byte output) are collision-resistant.
 
 ## Component Key Integrity and Reuse
 
