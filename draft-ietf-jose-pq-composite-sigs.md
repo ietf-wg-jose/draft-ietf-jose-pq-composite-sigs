@@ -244,15 +244,17 @@ ECPrivateKey ::= SEQUENCE {
 }
 ~~~
 
-Given the raw, fixed-length ECDSA private key d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is simply d
-inserted between two fixed byte sequences that depend only on the curve (the publicKey field is never included), as given in
-{{table-ecprivatekey-build}}:
+Given the raw, fixed-length ECDSA private key d (curve size n: 32 bytes for P-256, 48 bytes for P-384), the ECPrivateKey is d inserted between two fixed byte sequences that depend only on the curve (the publicKey field is never included):
 
-| Curve | Bytes before d | Bytes after d |
-|:---|:---|:---|
-| P-256 | `30 31 02 01 01 04 20` | `A0 0A 06 08 2A 86 48 CE 3D 03 01 07` |
-| P-384 | `30 3E 02 01 01 04 30` | `A0 07 06 05 2B 81 04 00 22` |
-{: #table-ecprivatekey-build title="Fixed bytes surrounding d in an ECPrivateKey, by curve"}
+`ECPrivateKey <- bytes before d || d || bytes after d`
+
+The fixed byte sequences are given in {{table-ecprivatekey-build}}:
+
+| Curve | Bytes before d | d | Bytes after d |
+|:---|:---|:---|:---|
+| P-256 | `30 31 02 01 01 04 20` | `<d, 32 bytes>` | `A0 0A 06 08 2A 86 48 CE 3D 03 01 07` |
+| P-384 | `30 3E 02 01 01 04 30` | `<d, 48 bytes>` | `A0 07 06 05 2B 81 04 00 22` |
+{: #table-ecprivatekey-build title="Construction of an ECPrivateKey, by curve"}
 
 For example, for P-256 (n = 32), with d = `D1 D2 ...D32`:
 
