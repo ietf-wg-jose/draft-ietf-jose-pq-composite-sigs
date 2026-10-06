@@ -1388,7 +1388,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-ecdsa-encodings">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-ecdsa-encodings" class="section-name selfRef">ECDSA Encodings</a>
         </h3>
-<p id="section-4.2-1">This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> and ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span> structures, and the X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library <span class="bcp14">MAY</span> simply use it instead for the two DER structures.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span> and ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span> structures, and the X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library <span class="bcp14">MAY</span> use it instead for the two DER structures, provided that its output is exactly the encoding described in this section. In particular, some libraries include the optional publicKey field of ECPrivateKey by default, which is not permitted here (see <a href="#sec-ecdsa-encoding-priv" class="auto internal xref">Section 4.2.2</a>).<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <span id="name-sizes-in-bytes-of-ecdsa-key"></span><div id="_table-ecdsa-sizes">
 <table class="center" id="table-1">
           <caption>
@@ -1573,7 +1573,8 @@ ECPrivateKey ::= SEQUENCE {
       06 08 2A 86 48 CE 3D 03 01 07   OID (OBJECT IDENTIFIER, P-256)
 </pre><a href="#section-4.2.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.2-9"><strong>Decoding</strong> reverses the same construction.<a href="#section-4.2.2-9" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-9">An ECPrivateKey used in this document <span class="bcp14">MUST</span> have exactly this form: the parameters field <span class="bcp14">MUST</span> be present and contain the OID of the curve, and the publicKey field <span class="bcp14">MUST NOT</span> be present.<a href="#section-4.2.2-9" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-10"><strong>Decoding</strong> reverses the same construction. The decoder checks that the ECPrivateKey has the length given in <a href="#_table-ecdsa-sizes" class="auto internal xref">Table 1</a> and that the bytes before and after d are those of <a href="#_table-ecprivatekey-build" class="auto internal xref">Table 3</a>, and then reads d between them. An ECPrivateKey that fails this check <span class="bcp14">MUST</span> be rejected, even if it is valid according to <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span>. This is the case, for example, when the publicKey field is present.<a href="#section-4.2.2-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-ecdsa-encoding-pub">
