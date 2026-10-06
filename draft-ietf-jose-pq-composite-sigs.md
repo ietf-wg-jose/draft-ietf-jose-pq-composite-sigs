@@ -167,7 +167,7 @@ For the ECDSA component, the signature, private key and public key are encoded a
 
 ## ECDSA Encodings {#sec-ecdsa-encoding}
 
-This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}} structures, and the X9.62 {{X9.62-2005}} uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library MAY use it instead for the two DER structures, provided that its output is exactly the encoding described in this section. In particular, some libraries include the optional publicKey field of ECPrivateKey by default, which is not permitted here (see {{sec-ecdsa-encoding-priv}}).
+This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}} structures, and the X9.62 {{X9.62-2005}} uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library MAY use it instead for the two DER structures. When such a library is used to encode, its output has to be exactly the encoding described in this section. When it is used to decode, any other encoding has to be rejected. In particular, some libraries include the optional publicKey field of ECPrivateKey by default, which is not permitted here (see {{sec-ecdsa-encoding-priv}}).
 
 | Field | Encoding used in this document | P-256 | P-384 |
 |:---|:---|:---|:---|
@@ -229,7 +229,7 @@ Continuing the example above: taking r's DER encoding from the third case (`02 1
 corresponds to the first case (`02 20 <32 bytes>`, 34 bytes total), the combined length is 33 + 34 = 67 = 0x43, and the full
 Ecdsa-Sig-Value is `30 43 <r's DER encoding> <s's DER encoding>` (69 bytes total).
 
-**Decoding** reverses Steps 2 and 1, in that order.
+**Decoding** reverses Steps 2 and 1, in that order. An Ecdsa-Sig-Value that is not encoded as described above MUST be rejected.
 
 ### ECPrivateKey (Private Keys) {#sec-ecdsa-encoding-priv}
 
