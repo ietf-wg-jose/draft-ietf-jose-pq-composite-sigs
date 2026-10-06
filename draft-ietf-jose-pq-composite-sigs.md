@@ -167,7 +167,7 @@ For the ECDSA component, the signature, private key and public key are encoded a
 
 ## ECDSA Encodings {#sec-ecdsa-encoding}
 
-This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}} structures, and the X9.62 {{X9.62-2005}} uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library MAY simply use it instead for the two DER structures.
+This section describes how to construct and parse the three ECDSA encodings required by this document: the DER-encoded Ecdsa-Sig-Value {{RFC3279}} and ECPrivateKey {{RFC5915}} structures, and the X9.62 {{X9.62-2005}} uncompressed point encoding used for public keys. None of it requires implementers to write a general-purpose ASN.1 encoder or decoder, but implementers who already have access to a standard ASN.1/DER library MAY use it instead for the two DER structures, provided that its output is exactly the encoding described in this section. In particular, some libraries include the optional publicKey field of ECPrivateKey by default, which is not permitted here (see {{sec-ecdsa-encoding-priv}}).
 
 | Field | Encoding used in this document | P-256 | P-384 |
 |:---|:---|:---|:---|
@@ -266,7 +266,9 @@ For example, for P-256 (n = 32), with d = `D1 D2 ...D32`:
       06 08 2A 86 48 CE 3D 03 01 07   OID (OBJECT IDENTIFIER, P-256)
 ~~~
 
-**Decoding** reverses the same construction.
+An ECPrivateKey used in this document MUST have exactly this form: the parameters field MUST be present and contain the OID of the curve, and the publicKey field MUST NOT be present.
+
+**Decoding** reverses the same construction. The decoder checks that the ECPrivateKey has the length given in {{table-ecdsa-sizes}} and that the bytes before and after d are those of {{table-ecprivatekey-build}}, and then reads d between them. An ECPrivateKey that fails this check MUST be rejected, even if it is valid according to {{RFC5915}}. This is the case, for example, when the publicKey field is present.
 
 ### X9.62 Uncompressed Point (Public Keys) {#sec-ecdsa-encoding-pub}
 
