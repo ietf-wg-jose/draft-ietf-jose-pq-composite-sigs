@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 9 April 2027                                            J. Gray
+Expires: 10 April 2027                                           J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                          6 October 2026
+                                                          7 October 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 April 2027.
+   This Internet-Draft will expire on 10 April 2027.
 
 Copyright Notice
 
@@ -783,9 +783,9 @@ Table of Contents
       still use it, after carefully weighing the security implications,
       if it only needs strong unforgeability against classical
       adversaries and uses an Ed25519 or Ed448 combination, or if it
-      obtains the security property it needs by other means, for example
-      by identifying objects through a signed identifier such as jti or
-      cti rather than through the signature value.
+      needs strong unforgeability only to obtain a unique identifier for
+      an object and identifies the object by a signed identifier such as
+      jti [RFC7519] or cti [RFC8392] rather than by the signature value.
 
    *  Composite ML-DSA does not guarantee that a message has a single
       valid signature.  Applications therefore cannot use the signature
