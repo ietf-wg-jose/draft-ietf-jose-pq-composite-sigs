@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 10 April 2027                                           J. Gray
+Expires: 11 April 2027                                           J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                          7 October 2026
+                                                          8 October 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -18,10 +18,13 @@ Expires: 10 April 2027                                           J. Gray
 Abstract
 
    This document describes JSON Object Signing and Encryption (JOSE) and
-   CBOR Object Signing and Encryption (COSE) serializations for PQ/T
-   hybrid composite signatures.  The composite algorithms described
-   combine ML-DSA as the post-quantum component and either ECDSA or
-   EdDSA as the traditional component.
+   CBOR Object Signing and Encryption (COSE) serializations for Post-
+   Quantum Traditional (PQ/T) hybrid composite signatures.  The
+   composite algorithms described combine the Module-Lattice-Based
+   Digital Signature Algorithm (ML-DSA) as the post-quantum component
+   and either the Elliptic Curve Digital Signature Algorithm (ECDSA) or
+   the Edwards-Curve Digital Signature Algorithm (EdDSA) as the
+   traditional component.
 
 About This Document
 
@@ -57,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 April 2027.
+   This Internet-Draft will expire on 11 April 2027.
 
 Copyright Notice
 
