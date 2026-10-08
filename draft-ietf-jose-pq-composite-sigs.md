@@ -99,7 +99,7 @@ informative:
 
 --- abstract
 
-This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for PQ/T hybrid composite signatures. The composite algorithms described combine ML-DSA as the post-quantum component and either ECDSA or EdDSA as the traditional component.
+This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for Post-Quantum Traditional (PQ/T) hybrid composite signatures. The composite algorithms described combine the Module-Lattice-Based Digital Signature Algorithm (ML-DSA) as the post-quantum component and either the Elliptic Curve Digital Signature Algorithm (ECDSA) or the Edwards-Curve Digital Signature Algorithm (EdDSA) as the traditional component.
 
 --- middle
 
