@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-21T01:22:07.170684+00:00",
+  "timestamp": "2026-10-13T04:13:03.133382+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -63,6 +63,22 @@
       "body": "This proposal does not mention proposals for MLDSA65-ECDSA-P384-SHA512. \n\nAny reason why this combination is omitted? \n\nI would request to update the proposal with COSE number proposal for MLDSA65-ECDSA-P384-SHA512. ",
       "createdAt": "2026-07-19T01:42:13Z",
       "updatedAt": "2026-07-19T01:42:13Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDORJ8q988AAAABWcly1A",
+      "title": "Implementation report: ML-DSA-44-ES256 / ML-DSA-65-ES256 in Python (pydpop)",
+      "url": "https://github.com/ietf-wg-jose/draft-ietf-jose-pq-composite-sigs/issues/3",
+      "state": "OPEN",
+      "author": "eaakun",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Reporting implementation experience against -03, in case it is useful for the draft.\n\n**What was implemented:** the two ECDSA composite variants (`ML-DSA-44-ES256`, `ML-DSA-65-ES256`) in Python, released as pydpop 0.2.0 (https://pypi.org/project/pydpop/, repo https://github.com/eaakun/PyDPoP). Construction follows \u00a74 exactly: `M' = Prefix || Label || 0x00 || PH(M)`, ML-DSA with `ctx=Label`, raw JOSE ECDSA encodings, AKP JWKs per RFC 9964. Cross-checked the `M'` layout against the Appendix A `raw_to_be_signed` structure (prefix/label/0x00/PH) \u2014 matches.\n\n**Deployment finding worth a note in the draft:** proof sizes measured in a DPoP (RFC 9449) context, where the composite JWK is embedded in every proof header:\n- `ML-DSA-44-ES256`: ~6.0 KB proof \u2014 fits the common 8 KB HTTP header cap (nginx `large_client_header_buffers`, Apache `LimitRequestFieldSize` 8190).\n- `ML-DSA-65-ES256`: ~8.3 KB proof \u2014 exceeds those defaults; servers need raised limits.\n\nThis is not specific to DPoP (any JOSE object carrying the JWK pays it), but a deployment-considerations note would help implementers pick a variant. The 44+ES256 pairing is also the natural security-level match.\n\n**Question:** are test vectors for the ECDSA variants planned for Appendix A? The current appendix covers ML-DSA-87-Ed448 only; vectors for the -44/-65 ECDSA combos would help cross-implementation checks (happy to verify ours against them).\n\nThanks for the clear spec \u2014 the fixed-length concatenation made framing unambiguous to implement.",
+      "createdAt": "2026-10-11T13:08:54Z",
+      "updatedAt": "2026-10-11T13:08:54Z",
       "closedAt": null,
       "comments": []
     }
