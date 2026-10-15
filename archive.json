@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-13T04:13:03.133382+00:00",
+  "timestamp": "2026-10-15T02:06:32.668061+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -62,9 +62,17 @@
       "labels": [],
       "body": "This proposal does not mention proposals for MLDSA65-ECDSA-P384-SHA512. \n\nAny reason why this combination is omitted? \n\nI would request to update the proposal with COSE number proposal for MLDSA65-ECDSA-P384-SHA512. ",
       "createdAt": "2026-07-19T01:42:13Z",
-      "updatedAt": "2026-07-19T01:42:13Z",
+      "updatedAt": "2026-10-13T16:48:16Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "akshayku",
+          "authorAssociation": "NONE",
+          "body": "Microsoft is really interested in this combination. We have implemented this in our cryptography and certificate stack and would like to also support this combination in the WebAuthn stack. ",
+          "createdAt": "2026-10-13T16:48:16Z",
+          "updatedAt": "2026-10-13T16:48:16Z"
+        }
+      ]
     },
     {
       "number": 3,
