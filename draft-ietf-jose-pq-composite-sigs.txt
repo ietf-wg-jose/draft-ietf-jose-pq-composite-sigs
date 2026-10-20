@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                       L. Prabel
 Internet-Draft                                                    S. Sun
 Intended status: Standards Track                                  Huawei
-Expires: 11 April 2027                                           J. Gray
+Expires: 23 April 2027                                           J. Gray
                                                                  Entrust
                                                                 T. Reddy
                                                                    Nokia
-                                                          8 October 2026
+                                                         20 October 2026
 
 
            PQ/T Hybrid Composite Signatures for JOSE and COSE
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 April 2027.
+   This Internet-Draft will expire on 23 April 2027.
 
 Copyright Notice
 
