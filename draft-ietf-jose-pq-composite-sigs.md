@@ -295,6 +295,7 @@ The following table defines a list of algorithms associated with specific PQ/T c
 | ----------- | ----------- |  ----------- | ----------- | ----------- |
 | ML-DSA-44-ES256 | ML-DSA-44  | ecdsa-with-SHA256 with P-256 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
 | ML-DSA-65-ES256  | ML-DSA-65 | ecdsa-with-SHA256 with P-256 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
+| ML-DSA-65-ES384  | ML-DSA-65 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-87-ES384  | ML-DSA-87 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-44-Ed25519 | ML-DSA-44  | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
 | ML-DSA-65-Ed25519 | ML-DSA-65  | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
@@ -312,10 +313,11 @@ The following table defines a list of algorithms associated with specific PQ/T c
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
 | ML-DSA-44-ES256           | TBD (request assignment -54) | ML-DSA-44 | ecdsa-with-SHA256 with P-256 | SHA256 | Composite Signature with ML-DSA-44 and ECDSA using P-256 curve and SHA256 |
 | ML-DSA-65-ES256           | TBD (request assignment -55) | ML-DSA-65 | ecdsa-with-SHA256 with P-256 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-256 curve and SHA256 |
-| ML-DSA-87-ES384           | TBD (request assignment -56) | ML-DSA-87 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
-| ML-DSA-44-Ed25519         | TBD (request assignment -57) | ML-DSA-44 | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
-| ML-DSA-65-Ed25519         | TBD (request assignment -58) | ML-DSA-65 | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
-| ML-DSA-87-Ed448           | TBD (request assignment -59) | ML-DSA-87 | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
+| ML-DSA-65-ES384           | TBD (request assignment -56) | ML-DSA-65 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-384 curve and SHA384 |
+| ML-DSA-87-ES384           | TBD (request assignment -57) | ML-DSA-87 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
+| ML-DSA-44-Ed25519         | TBD (request assignment -58) | ML-DSA-44 | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
+| ML-DSA-65-Ed25519         | TBD (request assignment -59) | ML-DSA-65 | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
+| ML-DSA-87-Ed448           | TBD (request assignment -60) | ML-DSA-87 | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
 {: #tab-cose-algs title="COSE Composite Signature Algorithms for ML-DSA"}
 
 Examples can be found in {{appdx-cose}}.
@@ -330,6 +332,7 @@ They are represented here as ASCII strings, but implementers MUST convert them t
 | ----------- | ----------- | ----------- |
 | ML-DSA-44-ES256   | COMPSIG-MLDSA44-ECDSA-P256-SHA256 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 34 34 2D 45 43 44 53 41 2D 50 32 35 36 2D 53 48 41 32 35 36 |
 | ML-DSA-65-ES256   | COMPSIG-MLDSA65-ECDSA-P256-SHA512 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 43 44 53 41 2D 50 32 35 36 2D 53 48 41 35 31 32 |
+| ML-DSA-65-ES384   | COMPSIG-MLDSA65-ECDSA-P384-SHA512 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 43 44 53 41 2D 50 33 38 34 2D 53 48 41 35 31 32 |
 | ML-DSA-87-ES384   | COMPSIG-MLDSA87-ECDSA-P384-SHA512 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 38 37 2D 45 43 44 53 41 2D 50 33 38 34 2D 53 48 41 35 31 32 |
 | ML-DSA-44-Ed25519 | COMPSIG-MLDSA44-Ed25519-SHA512    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 34 34 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32 |
 | ML-DSA-65-Ed25519 | COMPSIG-MLDSA65-Ed25519-SHA512    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32 |
@@ -409,6 +412,16 @@ They are represented following the registration template provided in {{RFC7518}}
 * Specification Document(s): RFC XXXX
 * Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
 
+### ML-DSA-65-ES384
+
+* Algorithm Name: ML-DSA-65-ES384
+* Algorithm Description: Composite Signature with ML-DSA-65 and ECDSA using P-384 curve and SHA-384
+* Algorithm Usage Location(s): alg
+* JOSE Implementation Requirements: Optional
+* Change Controller: IETF
+* Specification Document(s): RFC XXXX
+* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
+
 ### ML-DSA-87-ES384
 
 * Algorithm Name: ML-DSA-87-ES384
@@ -474,10 +487,20 @@ They are represented following the registration template provided in {{RFC9053}}
 * Reference: RFC XXXX
 * Recommended: No
 
+### ML-DSA-65-ES384
+
+* Name: ML-DSA-65-ES384
+* Value: TBD (request assignment -56)
+* Description: Composite Signature with ML-DSA-65 and ECDSA using P-384 curve and SHA-384
+* Capabilities: `[kty]`
+* Change Controller: IETF
+* Reference: RFC XXXX
+* Recommended: No
+
 ### ML-DSA-87-ES384
 
 * Name: ML-DSA-87-ES384
-* Value: TBD (request assignment -56)
+* Value: TBD (request assignment -57)
 * Description: Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA-384
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -487,7 +510,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-44-Ed25519
 
 * Name: ML-DSA-44-Ed25519
-* Value: TBD (request assignment -57)
+* Value: TBD (request assignment -58)
 * Description: Composite Signature with ML-DSA-44 and Ed25519 using SHA-512
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -497,7 +520,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-65-Ed25519
 
 * Name: ML-DSA-65-Ed25519
-* Value: TBD (request assignment -58)
+* Value: TBD (request assignment -59)
 * Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -507,7 +530,7 @@ They are represented following the registration template provided in {{RFC9053}}
 ### ML-DSA-87-Ed448
 
 * Name: ML-DSA-87-Ed448
-* Value: TBD (request assignment -59)
+* Value: TBD (request assignment -60)
 * Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256
 * Capabilities: `[kty]`
 * Change Controller: IETF
@@ -534,6 +557,11 @@ They are represented following the registration template provided in {{RFC9053}}
 {::include-fold ./examples/jose/examples/ML-DSA-65-ES256.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_65_ES256 title="ML-DSA-65-ES256"}
+
+~~~~~~~~~~
+{::include-fold ./examples/jose/examples/ML-DSA-65-ES384.jose.json}
+~~~~~~~~~~
+{: #jose_example_ML_DSA_65_ES384 title="ML-DSA-65-ES384"}
 
 ~~~~~~~~~~
 {::include-fold ./examples/jose/examples/ML-DSA-65-Ed25519.jose.json}
@@ -566,6 +594,11 @@ They are represented following the registration template provided in {{RFC9053}}
 {::include-fold ./examples/cose/examples/ML-DSA-65-ES256.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_65_ES256 title="ML-DSA-65-ES256"}
+
+~~~~~~~~~~
+{::include-fold ./examples/cose/examples/ML-DSA-65-ES384.cose.diag}
+~~~~~~~~~~
+{: #cose_example_ML_DSA_65_ES384 title="ML-DSA-65-ES384"}
 
 ~~~~~~~~~~
 {::include-fold ./examples/cose/examples/ML-DSA-65-Ed25519.cose.diag}
