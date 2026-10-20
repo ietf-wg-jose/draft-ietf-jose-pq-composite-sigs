@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-15T02:06:32.668061+00:00",
+  "timestamp": "2026-10-20T02:23:27.613886+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -86,9 +86,17 @@
       "labels": [],
       "body": "Reporting implementation experience against -03, in case it is useful for the draft.\n\n**What was implemented:** the two ECDSA composite variants (`ML-DSA-44-ES256`, `ML-DSA-65-ES256`) in Python, released as pydpop 0.2.0 (https://pypi.org/project/pydpop/, repo https://github.com/eaakun/PyDPoP). Construction follows \u00a74 exactly: `M' = Prefix || Label || 0x00 || PH(M)`, ML-DSA with `ctx=Label`, raw JOSE ECDSA encodings, AKP JWKs per RFC 9964. Cross-checked the `M'` layout against the Appendix A `raw_to_be_signed` structure (prefix/label/0x00/PH) \u2014 matches.\n\n**Deployment finding worth a note in the draft:** proof sizes measured in a DPoP (RFC 9449) context, where the composite JWK is embedded in every proof header:\n- `ML-DSA-44-ES256`: ~6.0 KB proof \u2014 fits the common 8 KB HTTP header cap (nginx `large_client_header_buffers`, Apache `LimitRequestFieldSize` 8190).\n- `ML-DSA-65-ES256`: ~8.3 KB proof \u2014 exceeds those defaults; servers need raised limits.\n\nThis is not specific to DPoP (any JOSE object carrying the JWK pays it), but a deployment-considerations note would help implementers pick a variant. The 44+ES256 pairing is also the natural security-level match.\n\n**Question:** are test vectors for the ECDSA variants planned for Appendix A? The current appendix covers ML-DSA-87-Ed448 only; vectors for the -44/-65 ECDSA combos would help cross-implementation checks (happy to verify ours against them).\n\nThanks for the clear spec \u2014 the fixed-length concatenation made framing unambiguous to implement.",
       "createdAt": "2026-10-11T13:08:54Z",
-      "updatedAt": "2026-10-11T13:08:54Z",
+      "updatedAt": "2026-10-18T06:40:09Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "eaakun",
+          "authorAssociation": "NONE",
+          "body": "Follow-up on this implementation report (pydpop, Python).\n\n**The draft moved under us \u2014 and we've caught up.** Between -03 (what we implemented) and -05, the ECDSA component encodings were reversed in -04 (\u00a74.2): signatures are now DER `Ecdsa-Sig-Value`, private keys are RFC 5915 DER `ECPrivateKey`, public keys are X9.62 uncompressed (`0x04\u2016x\u2016y`). The composite construction itself (M\u2032, Label, `ctx`, concatenation order) did not change.\n\nWe've migrated pydpop to the -05 encodings ([commit](https://github.com/eaakun/PyDPoP/commit/809a2f37aae0f38c47dcda561361dfa5486a7da1)):\n\n- `message_repr()` output is byte-identical to the official -05 example vector's `raw_message_representative`;\n- our public key derived from the official deterministic material (`mldsa_seed` = 32\u00d7`0x00`, `ecdsa_d` = 1) is byte-identical to the official `raw_composite_public_key`;\n- the official `ML-DSA-44-ES256.jose.json` example signature verifies with our code;\n- non-canonical DER is rejected on verify (re-encode check on top of the ASN.1 parser, per the -05 decoding rule).\n\nPublic test vector (same deterministic material, hex fields): [`docs/vectors-ml-dsa-44-es256.json`](https://github.com/eaakun/PyDPoP/blob/main/docs/vectors-ml-dsa-44-es256.json).\n\nTwo observations for the draft, from an implementer's seat:\n\n1. The -03\u2192-04 encoding reversal is exactly the kind of wire-format break that silent implementers won't notice \u2014 a \"changes since -03\" note in the draft (even one paragraph) would have saved us a diff-hunt. Happy to contribute the paragraph if useful.\n2. The `examples/` directory now carrying all six algorithms' JOSE+COSE vectors answers the question I asked above \u2014 thank you. It would help to say so normatively in Appendix A (\"these vectors are the conformance baseline for\u2026\"), so implementers know they're meant to be tested against, not just illustrative.\n",
+          "createdAt": "2026-10-18T06:40:09Z",
+          "updatedAt": "2026-10-18T06:40:09Z"
+        }
+      ]
     }
   ],
   "pulls": [
