@@ -64,6 +64,14 @@ var algorithms = map[string]AlgorithmConfig{
 		TradHash:  "SHA256",
 		PreHash:   "SHA512",
 	},
+	"ML-DSA-65-ES384": {
+		Name:      "ML-DSA-65-ES384",
+		Label:     "COMPSIG-MLDSA65-ECDSA-P384-SHA512",
+		CurveName: "P384",
+		TradAlg:   "ECDSA",
+		TradHash:  "SHA384",
+		PreHash:   "SHA512",
+	},
 	"ML-DSA-87-ES384": {
 		Name:      "ML-DSA-87-ES384",
 		Label:     "COMPSIG-MLDSA87-ECDSA-P384-SHA512",
