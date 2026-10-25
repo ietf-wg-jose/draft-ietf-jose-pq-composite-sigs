@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-20T02:23:27.613886+00:00",
+  "timestamp": "2026-10-25T02:01:27.759144+00:00",
   "repo": "ietf-wg-jose/draft-ietf-jose-pq-composite-sigs",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDORJ8q988AAAABJU4FcQ",
       "title": "JOSE and COSE number for MLDSA65-ECDSA-P384-SHA512",
       "url": "https://github.com/ietf-wg-jose/draft-ietf-jose-pq-composite-sigs/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "akshayku",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "This proposal does not mention proposals for MLDSA65-ECDSA-P384-SHA512. \n\nAny reason why this combination is omitted? \n\nI would request to update the proposal with COSE number proposal for MLDSA65-ECDSA-P384-SHA512. ",
       "createdAt": "2026-07-19T01:42:13Z",
-      "updatedAt": "2026-10-13T16:48:16Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-22T07:28:32Z",
+      "closedAt": "2026-10-22T07:28:32Z",
       "comments": [
         {
           "author": "akshayku",
@@ -71,6 +71,13 @@
           "body": "Microsoft is really interested in this combination. We have implemented this in our cryptography and certificate stack and would like to also support this combination in the WebAuthn stack. ",
           "createdAt": "2026-10-13T16:48:16Z",
           "updatedAt": "2026-10-13T16:48:16Z"
+        },
+        {
+          "author": "lucasprabel",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for the request. ML-DSA-65-ES384 is now included in draft-ietf-jose-pq-composite-sigs-06, with JOSE and COSE test vectors (commit 09dd73e).\n\nhttps://datatracker.ietf.org/doc/draft-ietf-jose-pq-composite-sigs/",
+          "createdAt": "2026-10-22T07:28:32Z",
+          "updatedAt": "2026-10-22T07:28:32Z"
         }
       ]
     },
