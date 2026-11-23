@@ -12,7 +12,7 @@
 <meta content="
        This document describes JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE) serializations for Post-Quantum Traditional (PQ/T) hybrid composite signatures. The composite algorithms described combine the Module-Lattice-Based Digital Signature Algorithm (ML-DSA) as the post-quantum component and either the Elliptic Curve Digital Signature Algorithm (ECDSA) or the Edwards-Curve Digital Signature Algorithm (EdDSA) as the traditional component. 
     " name="description">
-<meta content="xml2rfc 3.34.1" name="generator">
+<meta content="xml2rfc 3.35.0" name="generator">
 <meta content="JOSE" name="keyword">
 <meta content="COSE" name="keyword">
 <meta content="PQC" name="keyword">
@@ -21,19 +21,19 @@
 <meta content="Hybrid" name="keyword">
 <meta content="draft-ietf-jose-pq-composite-sigs-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.1
-    Python 3.14.8
-    ConfigArgParse 1.8.0
+  xml2rfc 3.35.0
+    Python 3.14.10
+    ConfigArgParse 1.10.1
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.13.4
+    platformdirs 4.14.7
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.9.2
+    wcwidth 0.9.4
 -->
 <link href="draft-ietf-jose-pq-composite-sigs.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1034,7 +1034,7 @@ svg {
   & :is([stroke="white"], [stroke^="#fff"]) {
     stroke: var(--background-color);
   }
-  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+  & :is([fill="black"], [fill^="#000"], :not([fill], [fill] *)) {
     fill: var(--text-color);
   }
   & :is([fill="white"], [fill^="#fff"]) {
@@ -1049,11 +1049,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">JOSE/COSE Composite Signatures</td>
-<td class="right">October 2026</td>
+<td class="right">November 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Prabel, et al.</td>
-<td class="center">Expires 23 April 2027</td>
+<td class="center">Expires 27 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-jose-pq-composite-sigs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-20" class="published">20 October 2026</time>
+<time datetime="2026-11-23" class="published">23 November 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-04-23">23 April 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-27">27 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1245,12 +1245,6 @@ svg {
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.5">
                     <p id="section-toc.1-1.7.2.1.2.5.1"><a href="#section-7.1.5" class="auto internal xref">7.1.5</a>.  <a href="#name-ml-dsa-44-ed25519" class="internal xref">ML-DSA-44-Ed25519</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.6">
-                    <p id="section-toc.1-1.7.2.1.2.6.1"><a href="#section-7.1.6" class="auto internal xref">7.1.6</a>.  <a href="#name-ml-dsa-65-ed25519" class="internal xref">ML-DSA-65-Ed25519</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.7">
-                    <p id="section-toc.1-1.7.2.1.2.7.1"><a href="#section-7.1.7" class="auto internal xref">7.1.7</a>.  <a href="#name-ml-dsa-87-ed448" class="internal xref">ML-DSA-87-Ed448</a></p>
-</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
@@ -1270,12 +1264,6 @@ svg {
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.5">
                     <p id="section-toc.1-1.7.2.2.2.5.1"><a href="#section-7.2.5" class="auto internal xref">7.2.5</a>.  <a href="#name-ml-dsa-44-ed25519-2" class="internal xref">ML-DSA-44-Ed25519</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.6">
-                    <p id="section-toc.1-1.7.2.2.2.6.1"><a href="#section-7.2.6" class="auto internal xref">7.2.6</a>.  <a href="#name-ml-dsa-65-ed25519-2" class="internal xref">ML-DSA-65-Ed25519</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.7">
-                    <p id="section-toc.1-1.7.2.2.2.7.1"><a href="#section-7.2.7" class="auto internal xref">7.2.7</a>.  <a href="#name-ml-dsa-87-ed448-2" class="internal xref">ML-DSA-87-Ed448</a></p>
 </li>
                 </ul>
 </li>
@@ -1344,7 +1332,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-2-7">"PQ/T Hybrid Digital Signature":
          A multi-algorithm digital signature scheme made up of two or more component digital signature algorithms where at least one is a post-quantum algorithm and at least one is a traditional algorithm.<a href="#section-2-7" class="pilcrow">¶</a></p>
 <p id="section-2-8">"Composite Algorithm":
-          An algorithm which is a sequence of two component algorithms, as defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-2-8" class="pilcrow">¶</a></p>
+          An algorithm which is a sequence of two component algorithms, as defined in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>.<a href="#section-2-8" class="pilcrow">¶</a></p>
 <p id="section-2-9">"Component Algorithm":
          Each cryptographic algorithm that forms part of a cryptographic scheme.<a href="#section-2-9" class="pilcrow">¶</a></p>
 </section>
@@ -1356,7 +1344,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       </h2>
 <p id="section-3-1">This document makes use of the Algorithm Key Pair (AKP) type which is defined in <span>[<a href="#RFC9964" class="cite xref">RFC9964</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">As a reminder, the AKP type is used to express public and private keys for use with algorithms. The parameters for public and private keys contain byte strings.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">This document makes use of the serialization routines defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> to obtain the byte string encodings of the composite public and private keys.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">This document makes use of the serialization routines defined in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span> to obtain the byte string encodings of the composite public and private keys.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The process to compute JWK Thumbprint and COSE Key Thumbprint as described in <span>[<a href="#RFC7638" class="cite xref">RFC7638</a>]</span> and <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> is detailed in <span>[<a href="#RFC9964" class="cite xref">RFC9964</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1365,7 +1353,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-composite-ml-dsa-in-jose-an">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-composite-ml-dsa-in-jose-an" class="section-name selfRef">Composite ML-DSA in JOSE and COSE</a>
       </h2>
-<p id="section-4-1">The composite algorithms registered in this document are the Composite ML-DSA algorithms defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. Key generation, signature generation, signature verification, and the serialization of composite keys and signatures are performed exactly as specified in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, and are not repeated here. In particular, composite keys and signatures are encoded using the <code>SerializePublicKey</code>, <code>SerializePrivateKey</code> and <code>SerializeSignatureValue</code> routines of <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, and decoded using the corresponding <code>DeserializePublicKey</code>, <code>DeserializePrivateKey</code> and <code>DeserializeSignatureValue</code> routines.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">The composite algorithms registered in this document are the Composite ML-DSA algorithms defined in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>. Key generation, signature generation, signature verification, and the serialization of composite keys and signatures are performed exactly as specified in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>, and are not repeated here. In particular, composite keys and signatures are encoded using the <code>SerializePublicKey</code>, <code>SerializePrivateKey</code> and <code>SerializeSignatureValue</code> routines of <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>, and decoded using the corresponding <code>DeserializePublicKey</code>, <code>DeserializePrivateKey</code> and <code>DeserializeSignatureValue</code> routines.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="sec-use-jose-cose">
 <section id="section-4.1">
         <h3 id="name-use-in-jose-and-cose">
@@ -1377,16 +1365,16 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <p id="section-4.1-2.1.1">Signatures are produced as described in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> for JOSE and in <span><a href="https://rfc-editor.org/rfc/rfc9052#section-4" class="relref">Section 4</a> of [<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> for COSE, using the Composite ML-DSA algorithm as the signature algorithm. The signature value is the output of <code>SerializeSignatureValue</code>.<a href="#section-4.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-2.2">
-            <p id="section-4.1-2.2.1">The application context string <code>ctx</code> passed to the Composite ML-DSA signature generation and verification algorithms <span class="bcp14">MUST</span> be the empty string, similarly to <span>[<a href="#RFC9964" class="cite xref">RFC9964</a>]</span>. As a consequence, the context length byte in the message representative <code>M'</code> defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> is always 0x00.<a href="#section-4.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.1-2.2.1">The application context string <code>ctx</code> passed to the Composite ML-DSA signature generation and verification algorithms <span class="bcp14">MUST</span> be the empty string, similarly to <span>[<a href="#RFC9964" class="cite xref">RFC9964</a>]</span>. As a consequence, the context length byte in the message representative <code>M'</code> defined in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span> is always 0x00.<a href="#section-4.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-2.3">
-            <p id="section-4.1-2.3.1">The prefix, as well as the label and the pre-hash algorithm of each composite algorithm, are those defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. The prefix is the ASCII encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 43 6F 6D 70 6F 73 69 74 65 41 6C 67 6F 72 69 74 68 6D 53 69 67 6E 61 74 75 72 65 73 32 30 32 35. The labels are recalled in <a href="#tab-sig-alg-label" class="auto internal xref">Table 6</a>, and the pre-hash algorithms in <a href="#tab-jose-algs" class="auto internal xref">Table 4</a> (for JOSE) and <a href="#tab-cose-algs" class="auto internal xref">Table 5</a> (for COSE).<a href="#section-4.1-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.1-2.3.1">The prefix, as well as the label and the pre-hash algorithm of each composite algorithm, are those defined in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>. The prefix is the ASCII encoding of the string "CompositeAlgorithmSignatures2025", which in hex is 43 6F 6D 70 6F 73 69 74 65 41 6C 67 6F 72 69 74 68 6D 53 69 67 6E 61 74 75 72 65 73 32 30 32 35. The labels are recalled in <a href="#tab-sig-alg-label" class="auto internal xref">Table 6</a>, and the pre-hash algorithms in <a href="#tab-jose-algs" class="auto internal xref">Table 4</a> (for JOSE) and <a href="#tab-cose-algs" class="auto internal xref">Table 5</a> (for COSE).<a href="#section-4.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-2.4">
             <p id="section-4.1-2.4.1">Composite keys are expressed using the AKP key type (see <a href="#sec-akp" class="auto internal xref">Section 3</a>). The <code>pub</code> parameter contains the output of <code>SerializePublicKey</code>, and the <code>priv</code> parameter contains the output of <code>SerializePrivateKey</code>. As in <span>[<a href="#RFC9964" class="cite xref">RFC9964</a>]</span>, the ML-DSA component of the private key <span class="bcp14">MUST</span> be the 32-byte seed.<a href="#section-4.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.1-3">For the ECDSA component, the signature, private key and public key are encoded as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>: the signature as an Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span>, the private key as an ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span>, and the public key as an uncompressed X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> point. <a href="#sec-ecdsa-encoding" class="auto internal xref">Section 4.2</a> gives guidance on how to produce and parse these encodings. For the EdDSA component, keys and signatures are encoded as defined in <span>[<a href="#RFC8032" class="cite xref">RFC8032</a>]</span>.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.1-3">For the ECDSA component, the signature, private key and public key are encoded as in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>: the signature as an Ecdsa-Sig-Value <span>[<a href="#RFC3279" class="cite xref">RFC3279</a>]</span>, the private key as an ECPrivateKey <span>[<a href="#RFC5915" class="cite xref">RFC5915</a>]</span>, and the public key as an uncompressed X9.62 <span>[<a href="#X9.62-2005" class="cite xref">X9.62-2005</a>]</span> point. <a href="#sec-ecdsa-encoding" class="auto internal xref">Section 4.2</a> gives guidance on how to produce and parse these encodings. For the EdDSA component, keys and signatures are encoded as defined in <span>[<a href="#RFC8032" class="cite xref">RFC8032</a>]</span>.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-ecdsa-encoding">
@@ -1603,8 +1591,8 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
       <h2 id="name-composite-signature-instant">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-composite-signature-instant" class="section-name selfRef">Composite Signature Instantiations</a>
       </h2>
-<p id="section-5-1">The ML-DSA signature scheme supports three possible parameter sets, each of which corresponding to a specific security strength. See <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> for more considerations on that matter.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">The combinations in <a href="#tab-jose-algs" class="auto internal xref">Table 4</a> and <a href="#tab-cose-algs" class="auto internal xref">Table 5</a> are a subset of those defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>. As explained there, each ML-DSA parameter set is paired with commonly deployed traditional algorithms, rather than with a traditional algorithm of exactly the same security level, as such an exact match is difficult to define, since there is no consensus on how to compare security against classical adversaries with security against quantum adversaries.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-1">The ML-DSA signature scheme supports three possible parameter sets, each corresponding to a specific security strength. See <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> for more considerations on that matter.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The combinations in <a href="#tab-jose-algs" class="auto internal xref">Table 4</a> and <a href="#tab-cose-algs" class="auto internal xref">Table 5</a> are a subset of those defined in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>. As explained there, each ML-DSA parameter set is paired with commonly deployed traditional algorithms, rather than with a traditional algorithm of exactly the same security level, as such an exact match is difficult to define, since there is no consensus on how to compare security against classical adversaries with security against quantum adversaries.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">The <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span> specification defines both pure and pre-hash modes for ML-DSA, referred to as "ML-DSA" and "HashML-DSA" respectively. This document only specifies a single mode which is similar in construction to HashML-DSA. However, because the pre-hashing is done at the composite level, only the pure ML-DSA algorithm is used as the underlying ML-DSA primitive.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <div id="jose-algorithms">
 <section id="section-5.1">
@@ -1662,20 +1650,6 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
               <td class="text-left" rowspan="1" colspan="1">Ed25519</td>
               <td class="text-left" rowspan="1" colspan="1">SHA512</td>
               <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-44 and Ed25519</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-Ed25519</td>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
-              <td class="text-left" rowspan="1" colspan="1">Ed25519</td>
-              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
-              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-65 and Ed25519</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-Ed448</td>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
-              <td class="text-left" rowspan="1" colspan="1">Ed448</td>
-              <td class="text-left" rowspan="1" colspan="1">SHAKE256</td>
-              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-87 and Ed448</td>
             </tr>
           </tbody>
         </table>
@@ -1746,22 +1720,6 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
               <td class="text-left" rowspan="1" colspan="1">SHA512</td>
               <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-44 and Ed25519</td>
             </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-Ed25519</td>
-              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -59)</td>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65</td>
-              <td class="text-left" rowspan="1" colspan="1">Ed25519</td>
-              <td class="text-left" rowspan="1" colspan="1">SHA512</td>
-              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-65 and Ed25519</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-Ed448</td>
-              <td class="text-left" rowspan="1" colspan="1">TBD (request assignment -60)</td>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87</td>
-              <td class="text-left" rowspan="1" colspan="1">Ed448</td>
-              <td class="text-left" rowspan="1" colspan="1">SHAKE256</td>
-              <td class="text-left" rowspan="1" colspan="1">Composite Signature with ML-DSA-87 and Ed448</td>
-            </tr>
           </tbody>
         </table>
 </div>
@@ -1774,7 +1732,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-composite-labels-for-jose-a" class="section-name selfRef">Composite Labels for JOSE and COSE</a>
         </h3>
 <p id="section-5.3-1">The JOSE and COSE composite label values are listed in <a href="#tab-sig-alg-label" class="auto internal xref">Table 6</a>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">They are represented here as ASCII strings, but implementers <span class="bcp14">MUST</span> convert them to byte strings using the obvious ASCII conversions prior to concatenating them with other byte values, as in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">They are represented here as ASCII strings, but implementers <span class="bcp14">MUST</span> convert them to byte strings using the obvious ASCII conversions prior to concatenating them with other byte values, as in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <span id="name-jose-cose-composite-label-v"></span><div id="tab-sig-alg-label">
 <table class="center" id="table-6">
           <caption>
@@ -1814,16 +1772,6 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
               <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA44-Ed25519-SHA512</td>
               <td class="text-left" rowspan="1" colspan="1">43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 34 34 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32</td>
             </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-65-Ed25519</td>
-              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA65-Ed25519-SHA512</td>
-              <td class="text-left" rowspan="1" colspan="1">43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">ML-DSA-87-Ed448</td>
-              <td class="text-left" rowspan="1" colspan="1">COMPSIG-MLDSA87-Ed448-SHAKE256</td>
-              <td class="text-left" rowspan="1" colspan="1">43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 38 37 2D 45 64 34 34 38 2D 53 48 41 4B 45 32 35 36</td>
-            </tr>
           </tbody>
         </table>
 </div>
@@ -1838,7 +1786,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
       </h2>
 <p id="section-6-1">The security considerations of the component algorithms (ML-DSA, ECDSA, and EdDSA) as described in <span>[<a href="#FIPS.204" class="cite xref">FIPS.204</a>]</span>, <span>[<a href="#RFC6090" class="cite xref">RFC6090</a>]</span>, and <span>[<a href="#RFC8032" class="cite xref">RFC8032</a>]</span> apply to this document.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">Similarly, the security considerations relative to the JWS, JWK, AKP and COSE structures <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span>, <span>[<a href="#RFC9964" class="cite xref">RFC9964</a>]</span> and <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> apply to this document.<a href="#section-6-2" class="pilcrow">¶</a></p>
-<p id="section-6-3">The security considerations of <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> also apply to the composite algorithms used in this document.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-3">The security considerations of <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span> also apply to the composite algorithms used in this document.<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">In addition, the following considerations specific to the composite design and its use in JOSE/COSE must be taken into account.<a href="#section-6-4" class="pilcrow">¶</a></p>
 <div id="hybrid-security-and-quantum-resistance">
 <section id="section-6.1">
@@ -1852,7 +1800,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
             <p id="section-6.1-3.1.1">An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure. In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.<a href="#section-6.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-3.2">
-            <p id="section-6.1-3.2.1">The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function <code>PH</code> is collision-resistant. This is the case for all combinations present in this document: ML-DSA, ECDSA and EdDSA are designed to be EUF-CMA secure (the latter two against classical adversaries only), and the pre-hash functions used (SHA-256, SHA-512, and SHAKE256 with 64-byte output) are collision-resistant.<a href="#section-6.1-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-3.2.1">The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function <code>PH</code> is collision-resistant. This is the case for all combinations present in this document: ML-DSA, ECDSA and EdDSA are designed to be EUF-CMA secure (the latter two against classical adversaries only), and the pre-hash functions used (SHA-256 and SHA-512) are collision-resistant.<a href="#section-6.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1862,13 +1810,13 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
         <h3 id="name-component-key-integrity-and">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-component-key-integrity-and" class="section-name selfRef">Component Key Integrity and Reuse</a>
         </h3>
-<p id="section-6.2-1">The security analysis of Composite ML-DSA in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> assumes that the two component keys of a composite key are freshly generated together and are not used anywhere else. The considerations below apply to composite keys used with JOSE and COSE.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-1">The security analysis of Composite ML-DSA in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span> assumes that the two component keys of a composite key are freshly generated together and are not used anywhere else. The considerations below apply to composite keys used with JOSE and COSE.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-2.1">
             <p id="section-6.2-2.1.1">To avoid key reuse, when generating a new composite key, the key generation functions for both component algorithms <span class="bcp14">MUST</span> be executed. Moreover, compliant parties <span class="bcp14">MUST NOT</span> use, import, or export component keys that are used in other contexts, combinations, or as standalone keys. In particular, existing key material, such as an ECDSA, EdDSA or ML-DSA key already published as a JWK or COSE_Key, <span class="bcp14">MUST NOT</span> be reused as a component of a composite key. If a component key is also used on its own, a component signature taken out of a composite signature verifies under that key as a signature over the message representative <code>M'</code>. The prefix and label leave evidence that the signature comes from a composite, but they do not prevent this. Key reuse <span class="bcp14">MUST</span> therefore be avoided despite the weak non-separability of the combiner.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.2-2.2">
-            <p id="section-6.2-2.2.1">A composite public key can be conveyed in an X.509 certificate, using the <code>x5c</code> header parameter in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7515#section-4.1.6" class="relref">Section 4.1.6</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) or the <code>x5chain</code> header parameter in COSE <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>. Such a certificate carries the composite key as specified in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>, with the same serialized public key as the <code>pub</code> parameter. In that case, the binding between the composite key and the signer is only as strong as the signatures on the certificates of the chain. A quantum adversary cannot forge a certificate signed with Composite ML-DSA as long as ML-DSA remains secure. If a certificate of the chain is signed with a traditional algorithm only, such an adversary can obtain a certificate for a composite key of its choice, and the composite signature on the JWS or COSE object no longer provides protection against a CRQC. The same holds for any other mechanism used to distribute composite public keys.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-2.2.1">A composite public key can be conveyed in an X.509 certificate, using the <code>x5c</code> header parameter in JOSE (<span><a href="https://rfc-editor.org/rfc/rfc7515#section-4.1.6" class="relref">Section 4.1.6</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) or the <code>x5chain</code> header parameter in COSE <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>. Such a certificate carries the composite key as specified in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>, with the same serialized public key as the <code>pub</code> parameter. In that case, the binding between the composite key and the signer is only as strong as the signatures on the certificates of the chain. A quantum adversary cannot forge a certificate signed with Composite ML-DSA as long as ML-DSA remains secure. If a certificate of the chain is signed with a traditional algorithm only, such an adversary can obtain a certificate for a composite key of its choice, and the composite signature on the JWS or COSE object no longer provides protection against a CRQC. The same holds for any other mechanism used to distribute composite public keys.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1878,7 +1826,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
         <h3 id="name-domain-separation-and-non-s">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-domain-separation-and-non-s" class="section-name selfRef">Domain Separation and Non-Separability</a>
         </h3>
-<p id="section-6.3-1">The Composite ML-DSA signature combiner defined in <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span> prepends a fixed <code>Prefix</code> and an algorithm-specific <code>Label</code> to the pre-hashed message before signing.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">The Composite ML-DSA signature combiner defined in <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span> prepends a fixed <code>Prefix</code> and an algorithm-specific <code>Label</code> to the pre-hashed message before signing.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3-2.1">
             <p id="section-6.3-2.1.1">By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in <span>[<a href="#RFC9955" class="cite xref">RFC9955</a>]</span>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
@@ -1887,7 +1835,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
             <p id="section-6.3-2.2.1">The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, it does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over <code>M'</code>, which is why key reuse is forbidden.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.3-3">For more information about the security properties relative to the signature combiner, the user can read <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span>.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.3-3">For more information about the security properties relative to the signature combiner, see <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span>.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-objectives-and-limitations">
@@ -1899,7 +1847,7 @@ each for P-256, 48 bytes each for P-384).<a href="#section-4.2.3-3" class="pilcr
 <p id="section-6.4-2">Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.4-3.1">
-            <p id="section-6.4-3.1.1">The ECDSA combinations are not SUF-CMA secure against classical or quantum adversaries, since ECDSA signatures are malleable. The Ed25519 and Ed448 combinations are SUF-CMA secure against classical adversaries, but are not SUF-CMA secure against quantum adversaries, who can break the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">SHOULD NOT</span> use Composite ML-DSA. An application can still use it, after carefully weighing the security implications, if it only needs strong unforgeability against classical adversaries and uses an Ed25519 or Ed448 combination, or if it needs strong unforgeability only to obtain a unique identifier for an object and identifies the object by a signed identifier such as <code>jti</code> <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> or <code>cti</code> <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> rather than by the signature value.<a href="#section-6.4-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.4-3.1.1">The ECDSA combinations are not SUF-CMA secure against classical or quantum adversaries, since ECDSA signatures are malleable. The Ed25519 combination is SUF-CMA secure against classical adversaries, but is not SUF-CMA secure against quantum adversaries, who can break the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement <span class="bcp14">SHOULD NOT</span> use Composite ML-DSA. An application can still use it, after carefully weighing the security implications, if it only needs strong unforgeability against classical adversaries and uses the Ed25519 combination, or if it needs strong unforgeability only to obtain a unique identifier for an object and identifies the object by a signed identifier such as <code>jti</code> <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> or <code>cti</code> <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> rather than by the signature value.<a href="#section-6.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.4-3.2">
             <p id="section-6.4-3.2.1">Composite ML-DSA does not guarantee that a message has a single valid signature. Applications therefore cannot use the signature value, or a hash of the complete JWS or COSE object, as a unique identifier.<a href="#section-6.4-3.2.1" class="pilcrow">¶</a></p>
@@ -1949,7 +1897,7 @@ They are represented following the registration template provided in <span>[<a h
               <p id="section-7.1.1-1.6.1">Specification Document(s): RFC XXXX<a href="#section-7.1.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.1-1.7">
-              <p id="section-7.1.1-1.7.1">Algorithm Analysis Documents(s): <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span><a href="#section-7.1.1-1.7.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.1-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span><a href="#section-7.1.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -1979,7 +1927,7 @@ They are represented following the registration template provided in <span>[<a h
               <p id="section-7.1.2-1.6.1">Specification Document(s): RFC XXXX<a href="#section-7.1.2-1.6.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.2-1.7">
-              <p id="section-7.1.2-1.7.1">Algorithm Analysis Documents(s): <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span><a href="#section-7.1.2-1.7.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.2-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span><a href="#section-7.1.2-1.7.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2009,7 +1957,7 @@ They are represented following the registration template provided in <span>[<a h
               <p id="section-7.1.3-1.6.1">Specification Document(s): RFC XXXX<a href="#section-7.1.3-1.6.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.3-1.7">
-              <p id="section-7.1.3-1.7.1">Algorithm Analysis Documents(s): <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span><a href="#section-7.1.3-1.7.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.3-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span><a href="#section-7.1.3-1.7.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2039,7 +1987,7 @@ They are represented following the registration template provided in <span>[<a h
               <p id="section-7.1.4-1.6.1">Specification Document(s): RFC XXXX<a href="#section-7.1.4-1.6.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.4-1.7">
-              <p id="section-7.1.4-1.7.1">Algorithm Analysis Documents(s): <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span><a href="#section-7.1.4-1.7.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.4-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span><a href="#section-7.1.4-1.7.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2069,67 +2017,7 @@ They are represented following the registration template provided in <span>[<a h
               <p id="section-7.1.5-1.6.1">Specification Document(s): RFC XXXX<a href="#section-7.1.5-1.6.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.5-1.7">
-              <p id="section-7.1.5-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span><a href="#section-7.1.5-1.7.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</section>
-</div>
-<div id="ml-dsa-65-ed25519">
-<section id="section-7.1.6">
-          <h4 id="name-ml-dsa-65-ed25519">
-<a href="#section-7.1.6" class="section-number selfRef">7.1.6. </a><a href="#name-ml-dsa-65-ed25519" class="section-name selfRef">ML-DSA-65-Ed25519</a>
-          </h4>
-<ul class="normal">
-<li class="normal" id="section-7.1.6-1.1">
-              <p id="section-7.1.6-1.1.1">Algorithm Name: ML-DSA-65-Ed25519<a href="#section-7.1.6-1.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.6-1.2">
-              <p id="section-7.1.6-1.2.1">Algorithm Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512<a href="#section-7.1.6-1.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.6-1.3">
-              <p id="section-7.1.6-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.6-1.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.6-1.4">
-              <p id="section-7.1.6-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.6-1.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.6-1.5">
-              <p id="section-7.1.6-1.5.1">Change Controller: IETF<a href="#section-7.1.6-1.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.6-1.6">
-              <p id="section-7.1.6-1.6.1">Specification Document(s): RFC XXXX<a href="#section-7.1.6-1.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.6-1.7">
-              <p id="section-7.1.6-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span><a href="#section-7.1.6-1.7.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</section>
-</div>
-<div id="ml-dsa-87-ed448">
-<section id="section-7.1.7">
-          <h4 id="name-ml-dsa-87-ed448">
-<a href="#section-7.1.7" class="section-number selfRef">7.1.7. </a><a href="#name-ml-dsa-87-ed448" class="section-name selfRef">ML-DSA-87-Ed448</a>
-          </h4>
-<ul class="normal">
-<li class="normal" id="section-7.1.7-1.1">
-              <p id="section-7.1.7-1.1.1">Algorithm Name: ML-DSA-87-Ed448<a href="#section-7.1.7-1.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.7-1.2">
-              <p id="section-7.1.7-1.2.1">Algorithm Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256<a href="#section-7.1.7-1.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.7-1.3">
-              <p id="section-7.1.7-1.3.1">Algorithm Usage Location(s): alg<a href="#section-7.1.7-1.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.7-1.4">
-              <p id="section-7.1.7-1.4.1">JOSE Implementation Requirements: Optional<a href="#section-7.1.7-1.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.7-1.5">
-              <p id="section-7.1.7-1.5.1">Change Controller: IETF<a href="#section-7.1.7-1.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.7-1.6">
-              <p id="section-7.1.7-1.6.1">Specification Document(s): RFC XXXX<a href="#section-7.1.7-1.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.1.7-1.7">
-              <p id="section-7.1.7-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#I-D.draft-ietf-lamps-pq-composite-sigs" class="cite xref">I-D.draft-ietf-lamps-pq-composite-sigs</a>]</span><a href="#section-7.1.7-1.7.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.5-1.7.1">Algorithm Analysis Document(s): <span>[<a href="#RFC10073" class="cite xref">RFC10073</a>]</span><a href="#section-7.1.5-1.7.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2293,66 +2181,6 @@ They are represented following the registration template provided in <span>[<a h
           </ul>
 </section>
 </div>
-<div id="ml-dsa-65-ed25519-1">
-<section id="section-7.2.6">
-          <h4 id="name-ml-dsa-65-ed25519-2">
-<a href="#section-7.2.6" class="section-number selfRef">7.2.6. </a><a href="#name-ml-dsa-65-ed25519-2" class="section-name selfRef">ML-DSA-65-Ed25519</a>
-          </h4>
-<ul class="normal">
-<li class="normal" id="section-7.2.6-1.1">
-              <p id="section-7.2.6-1.1.1">Name: ML-DSA-65-Ed25519<a href="#section-7.2.6-1.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.6-1.2">
-              <p id="section-7.2.6-1.2.1">Value: TBD (request assignment -59)<a href="#section-7.2.6-1.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.6-1.3">
-              <p id="section-7.2.6-1.3.1">Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512<a href="#section-7.2.6-1.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.6-1.4">
-              <p id="section-7.2.6-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.6-1.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.6-1.5">
-              <p id="section-7.2.6-1.5.1">Change Controller: IETF<a href="#section-7.2.6-1.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.6-1.6">
-              <p id="section-7.2.6-1.6.1">Reference: RFC XXXX<a href="#section-7.2.6-1.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.6-1.7">
-              <p id="section-7.2.6-1.7.1">Recommended: No<a href="#section-7.2.6-1.7.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</section>
-</div>
-<div id="ml-dsa-87-ed448-1">
-<section id="section-7.2.7">
-          <h4 id="name-ml-dsa-87-ed448-2">
-<a href="#section-7.2.7" class="section-number selfRef">7.2.7. </a><a href="#name-ml-dsa-87-ed448-2" class="section-name selfRef">ML-DSA-87-Ed448</a>
-          </h4>
-<ul class="normal">
-<li class="normal" id="section-7.2.7-1.1">
-              <p id="section-7.2.7-1.1.1">Name: ML-DSA-87-Ed448<a href="#section-7.2.7-1.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.7-1.2">
-              <p id="section-7.2.7-1.2.1">Value: TBD (request assignment -60)<a href="#section-7.2.7-1.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.7-1.3">
-              <p id="section-7.2.7-1.3.1">Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256<a href="#section-7.2.7-1.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.7-1.4">
-              <p id="section-7.2.7-1.4.1">Capabilities: <code>[kty]</code><a href="#section-7.2.7-1.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.7-1.5">
-              <p id="section-7.2.7-1.5.1">Change Controller: IETF<a href="#section-7.2.7-1.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.7-1.6">
-              <p id="section-7.2.7-1.6.1">Reference: RFC XXXX<a href="#section-7.2.7-1.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7.2.7-1.7">
-              <p id="section-7.2.7-1.7.1">Recommended: No<a href="#section-7.2.7-1.7.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</section>
-</div>
 </section>
 </div>
 </section>
@@ -2371,10 +2199,6 @@ They are represented following the registration template provided in <span>[<a h
 <dt id="FIPS.204">[FIPS.204]</dt>
         <dd>
 <span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"Module-Lattice-Based Digital Signature Standard"</span>, <time datetime="2024-08" class="refDate">August 2024</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.draft-ietf-lamps-pq-composite-sigs">[I-D.draft-ietf-lamps-pq-composite-sigs]</dt>
-        <dd>
-<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite Module-Lattice-Based Digital Signature Algorithm (ML-DSA) for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-19</span>, <time datetime="2026-04-21" class="refDate">21 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-19</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.COSE">[IANA.COSE]</dt>
         <dd>
@@ -2435,6 +2259,10 @@ They are represented following the registration template provided in <span>[<a h
 <dt id="RFC9964">[RFC9964]</dt>
         <dd>
 <span class="refAuthor">Prorock, M.</span> and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"ML-DSA for JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE)"</span>, <span class="seriesInfo">RFC 9964</span>, <span class="seriesInfo">DOI 10.17487/RFC9964</span>, <time datetime="2026-05" class="refDate">May 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9964">https://www.rfc-editor.org/rfc/rfc9964</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC10073">[RFC10073]</dt>
+        <dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite Module-Lattice-Based Digital Signature Algorithm (ML-DSA) for Use in X.509 Public Key Infrastructure"</span>, <span class="seriesInfo">RFC 10073</span>, <span class="seriesInfo">DOI 10.17487/RFC10073</span>, <time datetime="2026-11" class="refDate">November 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc10073">https://www.rfc-editor.org/rfc/rfc10073</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="X9.62-2005">[X9.62-2005]</dt>
       <dd>
@@ -3689,346 +3517,9 @@ f40471c96ad4c119df230be6173df530ed656cbd8069214741ecdd0271c603fb6c4a\
 <a href="#name-ml-dsa-65-es384-3" class="selfRef">ML-DSA-65-ES384</a>
           </figcaption></figure>
 </div>
-<span id="name-ml-dsa-65-ed25519-3"></span><div id="jose_example_ML_DSA_65_Ed25519">
+<span id="name-ml-dsa-87-es384-3"></span><div id="jose_example_ML_DSA_87_ES384">
 <figure id="figure-5">
           <div class="alignLeft art-text artwork" id="appendix-A.1-5.1">
-<pre>
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
-{
-  "mldsa_seed": "\
-   0000000000000000000000000000000000000000000000000000000000000000",
-  "eddsa_seed": "\
-   0000000000000000000000000000000000000000000000000000000000000000",
-  "jwk": {
-    "kid": "87Vn3JTmvTdxvpetv0rA5GwfoLnCkMxBDCJvYgFVuh4",
-    "kty": "AKP",
-    "alg": "ML-DSA-65-Ed25519",
-    "pub": "\
-QksvJn5Y1bO0TXGs_Gpla7JpUNV8YdsciAvPof6rRD8JQquL2619cIq7w1YHj22ZolIn\
-H-YsdAkeuUr7m5JkxQqIjg3-2AzV-\
-yy9NmfmDVOevkSTAhnNT67RXbs0VaJkgCufSbzkLudVD-_91GQqVa3mk4aKRgy-\
-wD9PyZpOMLzP-\
-opHXlOVOWZ067galJN1h4gPbb0nvxxPWp7kPN2LDlOzt_tJxzrfvC1PjFQwNSDCm_l-\
-Ju5X2zQtlXyJOTZSLQlCtB2C7jdyoAVwrftUXBFDkisElvgmoKlwBks23fU0tfjhwc0L\
-VWXqhGtFQx8GGBQ-\
-zol3e7P2EXmtIClf4KbgYq5u7Lwu848qwaItyTt7EmM2IjxVth64wHlVQruy3GXnIurc\
-aGb_qWg764qZmteoPl5uAWwuTDX292Sa071S7GfsHFxue5lydxIYvpVUu6dyfwuExEub\
-CovYMfz_LJd5zNTKMMatdbBJg-Qd6JPuXznqc1UYC3CccEXCLTOgg_auB6EUdG0b_cy-\
-5bkEOHm7Wi4SDipGNig_ShzUkkot5qSqPZnd2I9IqqToi_0ep2nYLBB3ny3teW21Qpcc\
-oom3aGPt5Zl7fpzhg7Q8zsJ4sQ2SuHRCzgQ1uxYlFx21VUtHAjnFDSoMOkGyo4gH2wcL\
-R7-z59EPPNl51pljyNefgCnMSkjrBPyz1wiET-\
-uqi23f8Bq2TVk1jmUFxOwdfLsU7SIS30WOzvwD_gMDexUFpMlEQyL1-\
-Y36kaTLjEWGCi2tx1FTULttQx5JpryPW6lW5oKw5RMyGpfRliYCiRyQePYqipZGoxOHp\
-vCWhCZIN4meDY7H0RxWWQEpiyCzRQgWkOtMViwao6Jb7wZWbLNMebwLJeQJXWunk-\
-gTEeQaMykVJobwDUiX-E_E7fSybVRTZXherY1jrvZKh8C5Gi5VADg5Vs319uN8-\
-dVILRyOOlvjjxclmsRcn6HEvTvxd9MS7lKm2gI8BXIqhzgnTdqNGwTpmDHPV8hygqJWx\
-WXCltBSSgY6OkGkioMAmXjZjYq_Ya9o6AE7WU_hUdm-\
-wZmQLExwtJWEIBdDxrUxA9L9JL3weNyQtaGItPjXcheZiNBBbJTUxXwIYLnXtT1M0mHz\
-MqGFFWXVKsN_AIdHyv4yDzY9m-tuQRfbQ_2K7r5eDOL1Tj8DZ-\
-s8yXG74MMBqOUvlglJNgNcbuPKLRPbSDoN0E3BYkfeDgiUrXy34a5-vU-\
-PkAWCsgAh539wJUUBxqw90V1Du7eTHFKDJEMSFYwusbPhEX4ZTwoeTHg--\
-8Ysn4HCFWLQ00pfBCteqvMvMflcWwVfTnogcPsJb1bEFVSc3nTzhk6Ln8J-\
-MplyS0Y5mGBEtVko_WlyeFsoDCWj4hqrgU7L-\
-ww8vsCRSQfskH8lodiLzj0xmugiKjWUXbYq98x1zSnB9dmPy5P3UNwwMQdpebtR38N9I\
--jup4Bzok0-JsaOe7EORZ8ld7kAgDWa4K7BAxjc2eD540Apwxs-\
-VLGFVkXbQgYYeDNG2tW1Xt20-XezJqZVUl6-\
-IZXsqc7DijwNInO3fT5o8ZAcLKUUlzSlEXe8sIlHaxjLoJ-\
-oubRtlKKUbzWOHeyxmYZSxYqQhSQj4sheedGXJEYWJ-Y5DRqB-xpy-\
-cftxL10fdXIUhe1hWFBAoQU3b5xRY8KCytYnfLhsFF4O49xhnax3vuumLpJbCqTXpLur\
-eoKg5PvWfnpFPB0P-\
-ZWQN35mBzqbb3ZV6U0rU55DvyXTuiZOK2Z1TxbaAd1OZMmg0cpuzewgueV-\
-Nh_UubIqNto5RXCd7vqgqdXDUKAiWyYegYIkD4wbGMqIjxV8Oo2ggOcSj9UQPS1rD5u0\
-rLckAzsxyty9Q5JsmKa0w8Eh7Jwe4Yob4xPVWWbJfm916avRgzDxXo5gmY7txdGFYHhl\
-olJKdhBU9h6f0gtKEtbiUzhp4IWsqAR8riHQs7lLVEz6P537a4kL1r5FjfDf_yjJDBQm\
-y_kdWMDqaNln-MlKK8eENjUO-qZGy0Ql4bMZtNbHXjfJUuSzapA-\
-RqYfkqSLKgQUOW8NTDKhUk73yqCU3TQqDEKaGAoTsPscyMm7u_8QrvUK8kbc-\
-XnxrWZ0BZJBjdinzh2w-QvjbWQ5mqFp4OMgY94__tIU8vvCUNJiYA1RdyodlfPfH5-\
-avpxOCvBD6C7ZIDyQ-\
-6huGEQEAb6DP8ydWIZQ8xY603DoEKKXkJWcP6CJo3nHFEdj_vcEbDQ-\
-WESDpcQFa1fRIiGuALj-\
-sEWcjGdSHyE8QATOcuWl4TLVzRPKAf4tCXx1zyvhJbXQu0jf0yfzVpOhPun4n-\
-xqK4SxPBCeuJOkQ2VG9jDXWH4pnjbAcrqjveJqVti7huMXTLGuqU2uoihBw6mGqu_WSl\
-OP2-XTEyRyvxbv2t-z9V6GPt1V9ceBukA0oGwtJqgD-\
-q7NXFK8zhw7desI5PZMXf3nuVgbJ3xdvAlzkmm5f9RoqQS6_hqwPQEcclq1MEZ3yML5h\
-c99TDtZWy9gGkhR0Hs3QJxxgP7bEqGFP-\
-HjTPnJsrGaT6TjKP7qCxJlcFKLUr5AU_kxMULeUysWWtSGJ9mpxBvsyW1Juo7aie8zra\
-                                kLWKjqNAqbw1zZTIVdx3iQ6Y6wEihi1naKQ",
-    "priv": "\
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
-                                                  AAAAAAAAAAAAAAAAAA"
-  },
-  "jws": "\
-eyJhbGciOiJNTC1EU0EtNjUtRWQyNTUxOSIsImtpZCI6Ijg3Vm4zSlRtdlRkeHZwZXR2\
-MHJBNUd3Zm9MbkNrTXhCRENKdllnRlZ1aDQifQ.\
-SXQncyBhIGRhbmdlcm91cyBidXNpbmVzcywgRnJvZG8sIGdvaW5nIG91dCB5b3VyIGRv\
-b3Iu.\
-HQzXDOt_0U5JbfGg3fySZbFMUN0oMYioizVn8LMY6gR22JZBDsl2jQDdo05OHipwSzh0\
-MtL_LLfARhpLiy1NpHOKAY2vCkVRQZEnInlxVDPWy2j2qLhLj6R11Hy6DVATfFM8flaj\
-8h4J5dwbATjxcnkmx7lTzkUU8iqucFiM3QTJAOkh9zd4-\
-P8pWMPCqZezcGEPZvGwAf0nYY4bETkluouEt7xZ6HitQUSl_csj1PaI0lT0bu9sjI8Kl\
-4QGMa46ZpYvAaHI2dEGrI-\
-h96rVSYICli2SfvoQixGXucAJBpcJV9Zgw7QWz2XrIV45TyFBzp_DrSF7Q9_ojQN9Mh2\
-TN9gx52-\
-K6ZEsvxckX6Dh_nxieeCE5YJBzjowB2rL5SBa9nCAHOjQTuahHriWMoscQT9mQeqUOM1\
-aOjkGwJYIM_hyeWX2ILIm1ViO951S52iI-v7Po-0sSK_P7GlOYELHwjWrbbHX7rSyPL-\
-ZEOVMwVp1TDIsdcLJhVyjQnyxphtRJGAqEjjaIFkGj5pZPVl0IoWOC0TdSE3rfUuXjmo\
-5seD6HrX7s2sCUUVftMepSD9mow1x3W9gIQEcqn8xIwqMYFlDsbRrGncCJGZ3xR4VktO\
-Alv4fAK2JvSf15ooh58WOi1ACNDWQXZQxGOITCWXjQjwQ-8Rs78KkRuHrunNwS-\
-KpAXaRTzvd14zbdX87zaT2itx7PEfaQZ6zvEalW-GlGJnAqyE4Ncmd9-\
-vmg4ZNaWexCM7WaZ0is0z0nptLkRkzcQVbfzNfhkhcL1EfQp-\
-iSOjuZlDl3zsWW66b8Z2WXTs1ANLuRmWNdEhkefHsT7RbmsZqoXieBQSy4etk7LWxEUo\
-7QwyRUttj0npRH4B0_jAY5RUJxcoUySom4f2KRGeDnk3ACyxEwsqzSoImiDEXL93rbjT\
-iKacerNOe-ET-\
-vekzUytuS5Rwp5PpFEhRaGDtYkUXoF39vrHg6KXEbcZIdMTfVERKrrskoZRDs32kT--\
-e1a-\
-L5lVJAHQDkEr7zr_icNZUp2vagN2wxsn016962jDdYn6VxtxqatsPO7ZAV3ekNYgzxyc\
-u0I4VzctooEFh7l5rcU4zakCPrJhPu2F2nzozPhJH1MQwIQvy479C3MBn9-\
-IsilRjh01ZEkWmwzl_lzIDLR005tMRfQr2hOewbpI6ZbDvuTf3ycXJ2Acy-\
-VsJ1BOVDJt_HP4axvNMWGPqQWuWYN6la4Ok1HQBxAHRr5b-AArfsVepUFUyZyPA1Ej8c\
--ldaXWFChWJYK98aLLIPl2k0ZPaen8aq8NQCrP1OQZ7BC1yI-eJ4F-\
-fCPU0II1f4QycmTQAyq8eHpmz6Zsafrz_H4aueQrs5zaPErqrsQJGvGDdUtphYkedwkA\
-fUE7Uj6UZ4rHDcRm6uzBBtLkQGgA0ELyCRs6E71X7RsOC4_ztcngVGlsPymedNIM0pZy\
-hM8lElHQz-\
-OySh5Q5Ewdjck0TC6pA72yM3gf7xFgH3bzItSy3_REB7L89dbPD1fg1t56wMDTkuZXgx\
-YH2CeDjkrHbUeP1MsJ8srg0E8k1A226op9l3DpSZAS4baPGdEXHKTDD4yylZuq-\
-az9QSPQJUjSn1mYHFzJRLXtUwiGOmTtpZ-\
-6xocxGybFAx71qCJs_swcpthX9H7vaIXjUKLtYQwesZ8ak8Csofg8vCHcNRarh_bP8Ef\
-zILJtHqTkHAwNwYNPUyUzxUdDG_qB2PeGxREzgAKG1dA_GeKLoEY4Z2mGxoBiatmdOKJ\
-VIsoRH7lfiUe9urawNcdZ9NZxCYZKK9gvgxCzQC8tuSLp8H-\
-6hv65Oec4WFibfOhUjval_o4iN4gOvV2mGQT4giswbBAXAI7JyGf-\
-W2Hgaw2mTlcz1MHOZhoPH7ZH9D4FLM1pteD8vyUwwF2Nri8OWQxkFk5o6CkujbmQYveR\
-CEV5GiNFEtH53JSgi6SbXHTVN4UBUn6V6fz6jNICJZ6J3qw3qFQ6bVa0n4ge61gQFRPX\
-4enSdoaTZNtIbfkU1m89CEqUASlcUZeVpXjU8vhn3vbW-kToThYxd_D-\
-yQCY8GWzrisBW4ejt3cnVKTNjDQJp7J5-\
-7u2OoBMcu4536PylI4ZeWSU_au0DuBYQuXzgmowQMwzVpJrmmaOJTOYxg1T2zKxhXbv4\
-0CXzM7DqNv11Rrgxa7Fu0NDMGyWqpVAF7lJx-\
-oS28r04F7WP3XcHVcF9NjtfbeVOnneN7IjnKL0uLhuSgDU-\
-tOTu0OF9TyPZUKrPAKZEa9e-\
-FmNIwxKFIPwa_kzOOgu1ce8IlFyoyxYQDcILKIdDX8rrPTR0TvN8yKSA44TYaQsyr9Ys\
-rY0Kwq3LANKfn1LLSq45nRzLyuKbHX0QR0omUVV3nRrs8IEW8aPqWUzzqFME-\
-MFPWuNG3OqwFrVswNZANvcBJikQWien3Ni8bFrRJr_RVp9RL1n_Q8f5IZeMAxtQ7lwsi\
-v4nhbw2r5i1DXWuDhkkoHTZ4jP8SNYFYDkWRx44NPwaCASSnCmE5zGqTVKKpUIylEUyj\
-6IXV6J0lHAnJcy93z4div-q8RADTS46UF4j_Ob7Ds3AXjfXty-\
-LNeia7ITk5DZl1fA4WOXTp94NAh8Vn-3ZkERATOtN5rtKxqz33-93y5LPpxiuGhy-\
-pCOQU0int-\
-d9fO6F3uIPuFhNATn0RnvkXn5wV25BNqRRg25d44OZ56cZ831yfHL32dYfs6XX2iYSZ7\
-Djgw2sMnGd6IhNrZzuqWw68CfSgLoFGf-\
-uH95HtykcI6ZCikeviHQyB464jzh1cvE0XIj2b-YktNr7LJPn-Gho2faAHWlIqYivB0-\
-Qwi1tz3PvWCazKNK1q88lmfVbrhf8OsmjkmH46gcUB3vfteDysfRphYhn5jNOnuPQW6A\
-2l53VCiEHnD8l1zL8cF1vhNvBHQR_V57VDyxafqs7IdGcZ0C3hVMtxoiy6Shujl7LKR5\
-1IcyaIGcBZdBS8Up4VPTMNps0I4JEP7CJysYf6HEUID6HGcNmX1T61yK6QLFtza73VB7\
-oFgUOB6G4Jd8dNRbgR1FliDxdQmThMNisLL64m2_6BjTtCNDOarlcVi7UmZynleQ0ZaN\
-_epx5JdPWB9EjtHBeN4kv_VrAj75jxLz-\
-Qqrlvt_bWijsAkxWC0vxk8xYw2D52pbMORdXIaO-\
-mGB8Wt0wj9KtTWDTrCZO1bqkWyA2Bx1Fh2boYjagrUOCnVCTW_J27RsJ6HLZ5ixUfeeV\
-BH_j4C-hZCYDq-\
-8kju6hjXACjfUzpDzc_XpMdzIxZcsQCx6ORB7lgWZgH3brq5aCD0s2kLHjCaRLfl0Owi\
-4hyYIx7AjMZMEpf3HWztxawZcR_8aBL-\
-IKwxZcVJ4H7D8OLcYvhxOUxeWVtoKTQIhyh4qfeSyciZQnTjdyZ42FxfiTJzVYvTqC9O\
-MGUqX8Y6uPvI9rojCzp_CMzd6ne0ANdwvJzfHn0RZlixAuHYWkUm2MlAOaSjJzsYMxAc\
-NeLC1GqNFivCH-k1ToLh3A_ELOWL05ny7eB-\
-sTbtUQ4M3jsATs3zJ9jE1OVugrJUA297bHyoDhSV3UUnIcLUuVaVkLSejniMKTK1RFuA\
-3qHdh8vLVkmwhHcEeNYClc6uac8X4-GP3nmoO7aOlhzKleNSAAZ3pX-\
-za5KLJzRfpoK3K77EdVXqSOF3_LMMFdrQOZll8B_BRCAKqPg-\
-yqcR3_3pTmd2eiKSQ58JGDRex9EE3WD6u2ia8H9G-OG0Hi0GR8XEpYa41LOfJcPVw-\
-3mnXjoVCI7SAf_oOLvKTPO8k6qef9vGS6MjNVUF9jOfkONI8RDibJm0aEKqK6EUB6cgQ\
-mZhv5ZuK3Pig4dmQjSS8EovSQt-\
-e0IQepxh9U4b28sBA_1wz5jzHqUPQRteUyrebuHuYV6qffcSnEs23uZYvXL7xWY6RfB3\
-nzm6p4p7G6sVhKUR66sSHoFzjCkYG97HEOZRb-\
-C6CtQ_s9eX5FpQftzmuxaKvfnjnmoxlkzbQja7iv_WLmIWC74aEpnp0Qkz5nUVklGA5p\
-bnShMc1MTQdpyzZfOt1v2gf8TTOx_HBw-\
-p4CRM61kiKWSJ8fo3pRAWmAVVvDb0PQj08VkAKqgCybPRbDM4gapiQR7S9FTjLpH5Atg\
-NR1M_QRRgrN6AKwYob_mHpCTADljG97h1T_hTy6gfp2c_hWxRK2rpSQVmyOhOfJwU744\
-fpwh9wK1RCRL_Gg5rF9jHiH7Kda_HbM3DFGclLlYz5VV7a18i5r-\
-BzsstYrNzQSd9T0oyeQewOU9tJxzPhXFxXoNKaezF-\
-q4qWG8qN2BrTE_FlcuUkSNXh4KS3l-\
-gDIJdVe_4bSaz5IVaio9Y3VGR_g7a3xQVGmJvu8fsGUrXfIFN6qa3CzwAAAAAAAAAAAA\
-AAAAAAAAAAAAAABAkRGBwjNUYAqgGJg3NQcfHhBVBj2oVBjTkJ-\
-          s_G7cw3fKwZThZbntTjBar8kdYMKJ093EIMqQcN9wICjPVuEdzV3hHZDg",
-  "raw_to_be_signed": "\
-65794a68624763694f694a4e54433145553045744e6a5574525751794e5455784f53\
-4973496d74705a434936496a6733566d347a536c5274646c526b65485a775a585232\
-4d484a424e5564335a6d394d626b4e725458684352454e4b646c6c6e526c5a316144\
-516966512e5358516e6379426849475268626d646c636d39316379426964584e7062\
-6d567a63797767526e4a765a473873494764766157356e4947393164434235623356\
-                                                 794947527662334975",
-  "raw_message_representative": "\
-436f6d706f73697465416c676f726974686d5369676e61747572657332303235434f\
-4d505349472d4d4c44534136352d456432353531392d534841353132009baf580467\
-49538103f9d14500c2e6a53857983cee47d2a8b6f6170ecee7ba4f854c69a342305f\
-                 aeb17563aa5269250d7be5c3ec63a4e9429e1f5399f014a7f1",
-  "raw_composite_signature": "\
-1d0cd70ceb7fd14e496df1a0ddfc9265b14c50dd283188a88b3567f0b318ea0476d8\
-96410ec9768d00dda34e4e1e2a704b387432d2ff2cb7c0461a4b8b2d4da4738a018d\
-af0a45514191272279715433d6cb68f6a8b84b8fa475d47cba0d50137c533c7e56a3\
-f21e09e5dc1b0138f1727926c7b953ce4514f22aae70588cdd04c900e921f73778f8\
-ff2958c3c2a997b370610f66f1b001fd27618e1b113925ba8b84b7bc59e878ad4144\
-a5fdcb23d4f688d254f46eef6c8c8f0a97840631ae3a66962f01a1c8d9d106ac8fa1\
-f7aad5498202962d927efa108b1197b9c00906970957d660c3b416cf65eb215e394f\
-2141ce9fc3ad217b43dfe88d037d321d9337d831e76f8ae9912cbf17245fa0e1fe7c\
-6279e084e58241ce3a30076acbe5205af670801ce8d04ee6a11eb896328b1c413f66\
-41ea9438cd5a3a3906c0960833f8727965f620b226d5588ef79d52e76888fafecfa3\
-ed2c48afcfec694e6042c7c235ab6db1d7eeb4b23cbf9910e54cc15a754c322c75c2\
-c9855ca3427cb1a61b5124602a1238da2059068f9a593d597422858e0b44dd484deb\
-7d4b978e6a39b1e0fa1eb5fbb36b0251455fb4c7a9483f66a30d71dd6f6021011caa\
-7f31230a8c605943b1b46b1a7702246677c51e1592d38096fe1f00ad89bd27f5e68a\
-21e7c58e8b50023435905d943118e2130965e3423c10fbc46cefc2a446e1ebba7370\
-4be2a90176914f3bddd78cdb757f3bcda4f68adc7b3c47da419eb3bc46a55be1a518\
-99c0ab213835c99df7ebe683864d6967b108ced6699d22b34cf49e9b4b9119337105\
-5b7f335f86485c2f511f429fa248e8ee6650e5df3b165bae9bf19d965d3b3500d2ee\
-46658d74486479f1ec4fb45b9ac66aa1789e0504b2e1eb64ecb5b1114a3b430c9152\
-db63d27a511f8074fe3018e51509c5ca14c92a26e1fd8a4467839e4dc00b2c44c2ca\
-b34a82268831172fddeb6e34e229a71eacd39ef844febde933532b6e4b9470a793e9\
-1448516860ed624517a05dfdbeb1e0e8a5c46dc64874c4df54444aaebb24a19443b3\
-7da44fef9ed5af8be65549007403904afbcebfe270d654a76bda80ddb0c6c9f4d7af\
-7ada30dd627e95c6dc6a6adb0f3bb6405777a4358833c7272ed08e15cdcb68a04161\
-ee5e6b714e336a408fac984fbb61769f3a333e1247d4c430210bf2e3bf42dcc067f7\
-e22c8a5463874d591245a6c3397f9732032d1d34e6d3117d0af684e7b06e923a65b0\
-efb937f7c9c5c9d80732f95b09d413950c9b7f1cfe1ac6f34c5863ea416b9660dea5\
-6b83a4d47401c401d1af96fe000adfb157a95055326723c0d448fc73e95d6975850a\
-158960af7c68b2c83e5da4d193da7a7f1aabc3500ab3f539067b042d7223e789e05f\
-9f08f534208d5fe10c9c993400caaf1e1e99b3e99b1a7ebcff1f86ae790aece7368f\
-12baabb10246bc60dd52da6162479dc2401f504ed48fa519e2b1c37119babb3041b4\
-b9101a003410bc8246ce84ef55fb46c382e3fced7278151a5b0fca679d348334a59c\
-a133c944947433f8ec92879439130763724d130baa40ef6c8cde07fbc45807ddbcc8\
-b52cb7fd1101ecbf3d75b3c3d5f835b79eb03034e4b995e0c581f609e0e392b1db51\
-e3f532c27cb2b83413c935036dbaa29f65dc3a526404b86da3c67445c72930c3e32c\
-a566eabe6b3f5048f4095234a7d666071732512d7b54c2218e993b6967eeb1a1cc46\
-c9b140c7bd6a089b3fb30729b615fd1fbbda2178d428bb584307ac67c6a4f02b287e\
-0f2f08770d45aae1fdb3fc11fcc82c9b47a9390703037060d3d4c94cf151d0c6fea0\
-763de1b1444ce000a1b5740fc678a2e8118e19da61b1a0189ab6674e289548b28447\
-ee57e251ef6eadac0d71d67d359c4261928af60be0c42cd00bcb6e48ba7c1feea1bf\
-ae4e79ce161626df3a1523bda97fa3888de203af576986413e208acc1b0405c023b2\
-7219ff96d8781ac3699395ccf53073998683c7ed91fd0f814b335a6d783f2fc94c30\
-17636b8bc396431905939a3a0a4ba36e6418bde442115e4688d144b47e77252822e9\
-26d71d354de140549fa57a7f3ea334808967a277ab0dea150e9b55ad27e207bad604\
-0544f5f87a749da1a4d936d21b7e45359bcf4212a5004a571465e5695e353cbe19f7\
-bdb5be913a13858c5dfc3fb240263c196ceb8ac056e1e8edddc9d52933630d0269ec\
-9e7eeeed8ea0131cbb8e77e8fca523865e59253f6aed03b81610b97ce09a8c10330c\
-d5a49ae699a3894ce6318354f6ccac615dbbf8d025f333b0ea36fd7546b8316bb16e\
-d0d0cc1b25aaa55005ee5271fa84b6f2bd3817b58fdd770755c17d363b5f6de54e9e\
-778dec88e728bd2e2e1b9280353eb4e4eed0e17d4f23d950aacf00a6446bd7be1663\
-48c3128520fc1afe4cce3a0bb571ef08945ca8cb16100dc20b2887435fcaeb3d3474\
-4ef37cc8a480e384d8690b32afd62cad8d0ac2adcb00d29f9f52cb4aae399d1ccbca\
-e29b1d7d10474a265155779d1aecf08116f1a3ea594cf3a85304f8c14f5ae346dcea\
-b016b56cc0d64036f7012629105a27a7dcd8bc6c5ad126bfd1569f512f59ff43c7f9\
-21978c031b50ee5c2c8afe2785bc36af98b50d75ae0e1924a074d9e233fc48d60560\
-3916471e3834fc1a0804929c2984e731aa4d528aa542329445328fa21757a2749470\
-2725ccbddf3e1d8affaaf110034d2e3a505e23fce6fb0ecdc05e37d7b72f8b35e89a\
-ec84e4e43665d5f03858e5d3a7de0d021f159fedd99044404ceb4de6bb4ac6acf7df\
-ef77cb92cfa718ae1a1cbea423905348a7b7e77d7cee85dee20fb8584d0139f4467b\
-e45e7e70576e4136a451836e5de38399e7a719f37d727c72f7d9d61fb3a5d7da2612\
-67b0e3830dac32719de8884dad9ceea96c3af027d280ba0519ffae1fde47b7291c23\
-a6428a47af887432078eb88f387572f1345c88f66fe624b4dafb2c93e7f86868d9f6\
-801d6948a988af074f90c22d6dcf73ef5826b328d2b5abcf2599f55bae17fc3ac9a3\
-9261f8ea0714077bdfb5e0f2b1f469858867e6334e9ee3d05ba036979dd50a21079c\
-3f25d732fc705d6f84dbc11d047f579ed50f2c5a7eab3b21d19c6740b785532dc688\
-b2e9286e8e5ecb291e7521cc9a20670165d052f14a7854f4cc369b342382443fb089\
-cac61fe87114203e8719c3665f54fad722ba40b16dcdaef7541ee816050e07a1b825\
-df1d3516e0475165883c5d4264e130d8ac2cbeb89b6ffa0634ed08d0ce6ab95c562e\
-d4999ca795e43465a37f7a9c7925d3d607d123b4705e37892ffd5ac08fbe63c4bcfe\
-42aae5bedfdb5a28ec024c560b4bf193cc58c360f9da96cc39175721a3be98607c5a\
-dd308fd2ad4d60d3ac264ed5baa45b2036071d458766e86236a0ad43829d50935bf2\
-76ed1b09e872d9e62c547de795047fe3e02fa1642603abef248eeea18d70028df533\
-a43cdcfd7a4c77323165cb100b1e8e441ee58166601f76ebab96820f4b3690b1e309\
-a44b7e5d0ec22e21c98231ec08cc64c1297f71d6cedc5ac19711ffc6812fe20ac316\
-5c549e07ec3f0e2dc62f871394c5e595b68293408872878a9f792c9c8994274e3772\
-678d85c5f893273558bd3a82f4e30652a5fc63ab8fbc8f6ba230b3a7f08ccddea77b\
-400d770bc9cdf1e7d116658b102e1d85a4526d8c94039a4a3273b1833101c35e2c2d\
-46a8d162bc21fe9354e82e1dc0fc42ce58bd399f2ede07eb136ed510e0cde3b004ec\
-df327d8c4d4e56e82b254036f7b6c7ca80e1495dd452721c2d4b9569590b49e8e788\
-c2932b5445b80dea1dd87cbcb5649b084770478d60295ceae69cf17e3e18fde79a83\
-bb68e961cca95e352000677a57fb36b928b27345fa682b72bbec47555ea48e177fcb\
-30c15dad0399965f01fc144200aa8f83ecaa711dffde94e67767a2292439f0918345\
-ec7d104dd60fabb689af07f46f8e1b41e2d0647c5c4a586b8d4b39f25c3d5c3ede69\
-d78e854223b4807ffa0e2ef2933cef24eaa79ff6f192e8c8cd55417d8ce7e438d23c\
-44389b266d1a10aa8ae84501e9c81099986fe59b8adcf8a0e1d9908d24bc128bd242\
-df9ed0841ea7187d5386f6f2c040ff5c33e63cc7a943d046d794cab79bb87b9857aa\
-9f7dc4a712cdb7b9962f5cbef1598e917c1de7ce6ea9e29ec6eac56129447aeac487\
-a05ce30a4606f7b1c439945bf82e82b50fecf5e5f916941fb739aec5a2af7e78e79a\
-8c659336d08daee2bff58b988582ef8684a67a74424cf99d4564946039a5b9d284c7\
-3531341da72cd97ceb75bf681ff134cec7f1c1c3ea7809133ad6488a59227c7e8de9\
-4405a601556f0dbd0f423d3c56400aaa00b26cf45b0cce206a989047b4bd1538cba4\
-7e40b60351d4cfd045182b37a00ac18a1bfe61e90930039631bdee1d53fe14f2ea07\
-e9d9cfe15b144adaba524159b23a139f27053be387e9c21f702b544244bfc6839ac5\
-f631e21fb29d6bf1db3370c519c94b958cf9555edad7c8b9afe073b2cb58acdcd049\
-df53d28c9e41ec0e53db49c733e15c5c57a0d29a7b317eab8a961bca8dd81ad313f1\
-6572e52448d5e1e0a4b797e8032097557bfe1b49acf92156a2a3d63754647f83b6b7\
-c50546989beef1fb0652b5df20537aa9adc2cf000000000000000000000000000000\
-0000000000040911181c23354600aa018983735071f1e1055063da85418d3909facf\
-c6edcc377cac194e165b9ed4e305aafc91d60c289d3ddc420ca9070df702028cf56e\
-                                                     11dcd5de11d90e",
-  "raw_composite_public_key": "\
-424b2f267e58d5b3b44d71acfc6a656bb26950d57c61db1c880bcfa1feab443f0942\
-ab8bdbad7d708abbc356078f6d99a252271fe62c74091eb94afb9b9264c50a888e0d\
-fed80cd5fb2cbd3667e60d539ebe44930219cd4faed15dbb3455a264802b9f49bce4\
-2ee7550feffdd4642a55ade693868a460cbec03f4fc99a4e30bccffa8a475e539539\
-6674ebb81a94937587880f6dbd27bf1c4f5a9ee43cdd8b0e53b3b7fb49c73adfbc2d\
-4f8c54303520c29bf97e26ee57db342d957c893936522d0942b41d82ee3772a00570\
-adfb545c1143922b0496f826a0a970064b36ddf534b5f8e1c1cd0b5565ea846b4543\
-1f0618143ece89777bb3f61179ad20295fe0a6e062ae6eecbc2ef38f2ac1a22dc93b\
-7b126336223c55b61eb8c0795542bbb2dc65e722eadc6866ffa9683beb8a999ad7a8\
-3e5e6e016c2e4c35f6f7649ad3bd52ec67ec1c5c6e7b9972771218be9554bba7727f\
-0b84c44b9b0a8bd831fcff2c9779ccd4ca30c6ad75b04983e41de893ee5f39ea7355\
-180b709c7045c22d33a083f6ae07a114746d1bfdccbee5b9043879bb5a2e120e2a46\
-36283f4a1cd4924a2de6a4aa3d99ddd88f48aaa4e88bfd1ea769d82c10779f2ded79\
-6db542971ca289b76863ede5997b7e9ce183b43ccec278b10d92b87442ce0435bb16\
-25171db5554b470239c50d2a0c3a41b2a38807db070b47bfb3e7d10f3cd979d69963\
-c8d79f8029cc4a48eb04fcb3d708844febaa8b6ddff01ab64d59358e6505c4ec1d7c\
-bb14ed2212df458ecefc03fe03037b1505a4c9444322f5f98dfa91a4cb8c45860a2d\
-adc7515350bb6d431e49a6bc8f5ba956e682b0e513321a97d1962602891c9078f62a\
-8a9646a31387a6f09684264837899e0d8ec7d11c565901298b20b345081690eb4c56\
-2c1aa3a25bef06566cb34c79bc0b25e4095d6ba793e81311e41a3329152686f00d48\
-97f84fc4edf4b26d545365785ead8d63aef64a87c0b91a2e5500383956cdf5f6e37c\
-f9d5482d1c8e3a5be38f17259ac45c9fa1c4bd3bf177d312ee52a6da023c05722a87\
-38274dda8d1b04e99831cf57c87282a256c565c296d0524a063a3a41a48a83009978\
-d98d8abf61af68e8013b594fe151d9bec199902c4c70b49584201743c6b53103d2fd\
-24bdf078dc90b5a188b4f8d772179988d0416c94d4c57c0860b9d7b53d4cd261f332\
-a1851565d52ac37f008747cafe320f363d9beb6e4117db43fd8aeebe5e0ce2f54e3f\
-0367eb3cc971bbe0c301a8e52f96094936035c6ee3ca2d13db483a0dd04dc16247de\
-0e0894ad7cb7e1ae7ebd4f8f900582b20021e77f70254501c6ac3dd15d43bbb7931c\
-5283244312158c2eb1b3e1117e194f0a1e4c783efbc62c9f81c21562d0d34a5f042b\
-5eaaf32f31f95c5b055f4e7a2070fb096f56c415549cde74f3864e8b9fc27e329972\
-4b4639986044b55928fd6972785b280c25a3e21aab814ecbfb0c3cbec0914907ec90\
-7f25a1d88bce3d319ae8222a35945db62af7cc75cd29c1f5d98fcb93f750dc303107\
-6979bb51dfc37d23e8eea78073a24d3e26c68e7bb10e459f2577b90080359ae0aec1\
-0318dcd9e0f9e34029c31b3e54b1855645db420618783346dad5b55eddb4f977b326\
-a655525ebe2195eca9cec38a3c0d2273b77d3e68f1901c2ca5149734a51177bcb089\
-476b18cba09fa8b9b46d94a2946f358e1decb1998652c58a90852423e2c85e79d197\
-24461627e6390d1a81fb1a72f9c7edc4bd747dd5c85217b5856141028414ddbe7145\
-8f0a0b2b589df2e1b051783b8f718676b1defbae98ba496c2a935e92eeadea0a8393\
-ef59f9e914f0743fe65640ddf9981cea6dbdd957a534ad4e790efc974ee89938ad99\
-d53c5b680775399326834729bb37b082e795f8d87f52e6c8a8db68e515c277bbea82\
-a7570d4280896c987a0608903e306c632a223c55f0ea3682039c4a3f5440f4b5ac3e\
-6ed2b2dc900cecc72b72f50e49b2629ad30f0487b2707b86286f8c4f55659b25f9bd\
-d7a6af460cc3c57a3982663bb717461581e196894929d84153d87a7f482d284b5b89\
-4ce1a78216b2a011f2b88742cee52d5133e8fe77edae242f5af91637c37ffca32430\
-509b2fe4756303a9a3659fe32528af1e10d8d43bea991b2d109786cc66d35b1d78df\
-254b92cdaa40f91a987e4a922ca81050e5bc3530ca85493bdf2a825374d0a8310a68\
-60284ec3ec732326eeeffc42bbd42bc91b73e5e7c6b599d016490637629f3876c3e4\
-2f8db590e66a85a7838c818f78fffb4853cbef09434989803545dca87657cf7c7e7e\
-6afa71382bc10fa0bb6480f243eea1b861101006fa0cff3275621943cc58eb4dc3a0\
-428a5e425670fe82268de71c511d8ffbdc11b0d0f961120e971015ad5f448886b802\
-e3fac11672319d487c84f1001339cb969784cb57344f2807f8b425f1d73caf8496d7\
-42ed237f4c9fcd5a4e84fba7e27fb1a8ae12c4f0427ae24e910d951bd8c35d61f8a6\
-78db01caea8ef789a95b62ee1b8c5d32c6baa536ba88a1070ea61aabbf59294e3f6f\
-974c4c91cafc5bbf6b7ecfd57a18fb7557d71e06e900d281b0b49aa00feabb35714a\
-f33870edd7ac2393d93177f79ee5606c9df176f025ce49a6e5ff51a2a412ebf86ac0\
-f40471c96ad4c119df230be6173df530ed656cbd8069214741ecdd0271c603fb6c4a\
-8614ff878d33e726cac6693e938ca3fba82c4995c14a2d4af9014fe4c4c50b794cac\
-596b52189f66a7106fb325b526ea3b6a27bcceb6a42d62a3a8d02a6f0d7365321577\
-                                            1de243a63ac048a18b59da29"
-}
-</pre>
-</div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
-<a href="#name-ml-dsa-65-ed25519-3" class="selfRef">ML-DSA-65-Ed25519</a>
-          </figcaption></figure>
-</div>
-<span id="name-ml-dsa-87-es384-3"></span><div id="jose_example_ML_DSA_87_ES384">
-<figure id="figure-6">
-          <div class="alignLeft art-text artwork" id="appendix-A.1-6.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -4472,458 +3963,8 @@ bf9292dc29f8f41dbd289a147ce9da3113b5f0b8c00a60b1ce1d7e819d7a431d7c90\
 }
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-ml-dsa-87-es384-3" class="selfRef">ML-DSA-87-ES384</a>
-          </figcaption></figure>
-</div>
-<span id="name-ml-dsa-87-ed448-3"></span><div id="jose_example_ML_DSA_87_Ed448">
-<figure id="figure-7">
-          <div class="alignLeft art-text artwork" id="appendix-A.1-7.1">
-<pre>
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
-{
-  "mldsa_seed": "\
-   0000000000000000000000000000000000000000000000000000000000000000",
-  "eddsa_seed": "\
-00000000000000000000000000000000000000000000000000000000000000000000\
-                     0000000000000000000000000000000000000000000000",
-  "jwk": {
-    "kid": "qVsShuAUuE5EUbqI481LsrarR_kKdrix0rnVJ226Ko4",
-    "kty": "AKP",
-    "alg": "ML-DSA-87-Ed448",
-    "pub": "\
-5F_8jMc9uIXcZi5ioYzY44AylxF_pWWIFKmFtf8dt7Roz8gruSnx2Gt37RT1rhamU2h3\
-LOUZEkEBBeBFaXWukf22Q7US8STV5gvWi4x-\
-Mf4Bx7DcZa5HBQHMVlpuHfz8_RJWVDPEr-3VEYIeLpYQxFJ14oNt7jXO1p1--\
-mcv0eQxi-\
-9etuiX6LRRqiAt7QQrKq73envj9pkUbaIpqL2z_6SWRFln51IXv7yQSPmVZEPYcx-\
-DPrMN4Q2slv_-fPZeoERcPjHoYB4TO-ahAHZP4xluJncmRB8xdR-\
-_mm9YgGRPTnJ15X3isPEF5NsFXVDdHJyTT931NbjeKLDHTARJ8iLNLtC7j7x3XM7oyUB\
-mW0D3EvT34AdQ6eHkzZz_JdGUXD6bylPM1PEu7nWBhW69aPJoRZVuPnvrdh8P51vdMb_\
-i-gGBEzl7OHvVnWKmi4r3-\
-iRauTLmn3eOLO79ITBPu4CZ6hPY6lfBgTGXovda4lEHW1Ha04-\
-FNmnp1fmKNlUJiUGZOhWUhg-\
-6cf5TDuXCn1jyl4r2iMy3Wlg4o1nBEumOJahYOsjawfhh_Vjir7pd5aUuAgkE9bQrwId\
-ONb788-YRloR2jzbgCPBHEhd86-\
-YnYHOB5W6q7hYcFym43lHb3kdNSMxoJJ6icWK4eZPmDITtbMZCPLNnbZ61CyyrWjoEnv\
-ExOB1iP6b7y8nbHnzAJeoEGLna0sxszU6V-izsJP7spwMYp1Fxa3IT9j7b9lpjM4NX-\
-Dj5TsBxgiwkhRJIiFEHs9HE6SRnjHYU6hrwOBBGGfKuNylAvs-mninLtf9sPiCke-\
-Sk90usNMEzwApqcGrMxv_T2OT71pqZcE4Sg8hQ2MWNHldTzZWHuDxMNGy5pYE3IT7BCD\
-TGat_iu1xQGo7y7K3Rtnej3xpt64br8HIsT1Aw4g-QGN1bb8U-6iT9kre1tAJf6umW0-\
-SP1MZQ2C261-r5NmOWmFEvJiU9LvaEfIUY6FZcyaVJXG__V83nMjiCxUp9tHCrLa-\
-P_Sv3lPp8aS2ef71TLuzB14gOLKCzIWEovii0qfHRUfrJeAiwvZi3tDphKprIZYEr_qx\
-vR0YCd4QLUqOwh_kWynztwPdo6ivRnqIRVfhLSgTEAArSrgWHFU1WC8Ckd6T5MpqJhN0\
-x6x8qBePZGHAdYwz8qa9h7wiNLFWBrLRj5DmQLl1CVxnpVrjW33MFso4P8n060N4ghdK\
-SSZsZozkNQ5b7O6yajYy-\
-rSp6QpD8msb8oEX5imFKRaOcviQ2D4TRT45HJxKs63Tb9FtT1JoORzfkdv_E1bL3zSR6\
-oYbTt2Stnpz-\
-7kVqc8KR2N45EkFKxDkRw3IXOte0cq81xoU87S_ntf4KiVZaszuqb2XN2SgxnXBl4EDn\
-pehPmqkD92SAlLrQcTaxaSe47G28K-\
-8MwoVt4eeVkj4UEsSfJN7rbCH2yKl2XJx5huDaS0xn2ODQyNRmgk-\
-5I9hXMUiZDNLvEzx4zuyrcu2d0oXFo3ZoUtVFNCB__TQCf2x27ej9GjLXLDAEi7qnl9X\
-fb94n0IfeVyGte3-j6NP3DWv8OrLiUjNTaLv6Fay1yzfUaU6LI86-\
-Jd6ckloiGhg7kE0_hd-ZKakZxU1vh0Vzc6DW7MFAPky75iCZlDXoBpZjTNGo5HR-\
-mCW_ozblu60U9zZA8bn-voANuu_hYwxh-\
-uY1sHTFZOqp2xicnnMChz_GTm1Je8XCkICYegeiHUryEHA6T6B_L9gW8S_R4ptMD0Sv6\
-b1KHqqKeubwKltCWPUsr2En9iYypnz06DEL5Wp8KMhrLid2AMPpLI0j1CWGJExXHpBWj\
-fIC8vbYH4YKVl-\
-euRo8eDcuKosb5hxUGM9Jvy1siVXUpIKpkZt2YLP5pEBP_EVOoHPh5LJomrLMpORr1wB\
-KbEkfom7npX1g817bK4IeYmZELI8zXUUtUkx3LgNTckwjx90Vt6oVXpFEICIUDF_LAVM\
-Uftzz6JUvbwOZo8iAZqcnVslAmRXeY_ZPp5eEHFfHlsb8VQ73Rd_p8XlFf5R1WuWiUGp\
-2TzJ-\
-VQvj3BTdQfOwSxR9RUk4xjqNabLqTFcQ7As246bHJXH6XVnd4DbEIDPfNa8FaWb_DNEg\
-QAiXGqa6n7l7aFq5_6Kp0XeBBM0sOzJt4fy8JC6U0DEcMnWxKFDtMM7q06LubQYFCEEd\
-Q5b1Qh2LbQZ898tegmeF--\
-EZ4F4hvYebZPV8sM0ZcsKBXyCr585qs00PRxr0S6rReekGRBIvXzMojmid3dxc6DPpdV\
-3x5zxlxaIBxO3i_6axknSSdxnS04_bemWqQ3CLf6mpSqfTIQJT1407GB4QINAAC9Ch3A\
-XUR_n1jr64TGWzbIr8uDcnoVCJlOgmlXpmOwubigAzJattbWRi7k4QYBnA3_4QMjt73n\
-2Co4-\
-F_Qh4boYLpmwWG2SwcIw2PeXGr2LY2zwkPR4bcSyx1Z6UK5trQpWlpQCxgsvV_RvGzpN\
-22RtHoihPH74K0cBIzCz7tK-\
-jqeuWl1A7af7KmQ66fpRBr5ykTLOsa17WblkcIB_jDvqKfEcdxhPWJUwmOo4TIQS-\
-xH8arLOy_NQFG2m14_yxwUemXC-QxLUYi6_FIcqwPBKjCdpQtadRdyftQSKO0SP-\
-GxUvamMZzWI780rXuOBkq5kyYLy9QF9bf_-\
-bL6QLpe1WMCQlOeXZaCPoncgYoT0WZ17jB52Xb2lPWsyXYK54npszkbKJ4OIqfvF8xqR\
-XcVe22VwJuqT9Uy4-\
-4KKQgQ7TXla7Gdm2H7mKl8YXQlsGCT2Ypc8O4t0Sfw7qYAuaDGf752Hbm3fl1bupcB2h\
-uIPlIaDP6IRR9XvTYIW2flbwYfhKLmoVKnG85uUi2qtqCjPOIuU3-\
-peT0othfmwKQXaoOqO-\
-V4r6wPL1VHxVFtIYmEdVt0RccUOvpOVR_OAHG9uHOzTmueK5557Qxp0ojtZCHyN-\
-hgoMZJLrvdKkTCxPNo2-\
-mZQbHoVh2FnThZ9JbO49dB8lKXP4_MU5xAnjXMgKXtbfI8w6ZWATE_XWgf2VQMUpGp4w\
-py44yWQTxHxh_4T9540BGwG0FU0bkgrwA_erseGZnepqdmz5_ScCs84O5Xr5MbYhJLCG\
-GxY6O5GqS-\
-ooB2w0Mt87KbbE4bpYje9CAHH8FX3pDrJyLsyasA3zxmk4OmGpG7Z70ofONJtHRe56R5\
-287vFmuazEEutXn81kNzB-\
-3aJT1ga3vnWZw4CSvFKoWYSA7auLgrHSHFZdITfOrgtmQmGbFhM9kSBdY1UCnpzf65oo\
-s3PZWRa2twfUxxLAnPNtrxpRGyvtsapw7ljUagZmuyh3hLCjhAxYmnoE1dbyIWvpCqSl\
-EtVjL1yb_nuLEzgvmZuV02fHxGuWgHTOMVGXpf81Rce3eoBK3lapW1wkzezlk3tcA2bZ\
-OtA9qbxdsbVR37kemzQ9K1e3Y0OWhtSjWzr-A4eKSbKCMtTxpEKuveEJ-\
-                Aes7339mn9luWL-UtZUcxLKzs_wQzdQj50lKajxZpFpshwyxIAA",
-    "priv": "\
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
-                 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-  },
-  "jws": "\
-eyJhbGciOiJNTC1EU0EtODctRWQ0NDgiLCJraWQiOiJxVnNTaHVBVXVFNUVVYnFJNDgx\
-THNyYXJSX2tLZHJpeDByblZKMjI2S280In0.\
-SXQncyBhIGRhbmdlcm91cyBidXNpbmVzcywgRnJvZG8sIGdvaW5nIG91dCB5b3VyIGRv\
-b3Iu.6mlv0vprz3_C3jIdjEy5TjdnZJWfwglag-\
-piJ1yINZZh5cNJ9WbU_D7KPjyIrLp9I6atROfKb4_g4kiimLnfhOs3J0ZoOgxGMQ1gaa\
--GpPmKieV3cxq-\
-AaTe11cbkDMfk68jGpZsXb86JM4ZUgC4QyOIphaf9DQZxIdaJRTEFnlDzFxIu8FyK6Bn\
-m0b8eF16xO9OtZMtn1dDVfxZnIgleuMTFl-028pULw-ChPRhBkJ8NeKa4uuMm_u-\
-N5ySqopXXD5rRr9QDnbIONHzQy8C4nZDe3DVaeykmh1D8OXU9AJJ2Dw4ipW3xpE3_oJD\
-4nyHEVnIxLhhnQa-\
-NpSGB_OOBqPrQwiKobx2abjWZP7y11bzgnvQPzkZZt8k9MsNNjwuurN_qvcBGwX6pYd7\
-iU1-A0_qYQQnCI1CB2l74-\
-Z9VosbZlSOZH2vdtB9waEI0QSaQxeYYR2eo3IFEFxtmm2g5Pod2Co8VQbL9nJO2SdLqQ\
-my7aQMbq9VwSAB5iV9NDXIJXzVLoEISVPXmdnvxF09Hcxp0oAMiuEJcPKvwSzfy_xe-\
-eLhVCGlKQ8ad3ByZ4jON0vv1ISldy1_1LGIRR8EWWzkavAknxdA_-\
-1XeyPfADSZPipS2k1iWIj_jiG6QtUnHthlhzmSzVbTjWg7_C1J_jWEFxems6fu4TAa1Y\
-DD8aCVoapfSnAmtIYSZVjn3oDuZ_VSd_3E1ScVtkbQXiUQPuz0Mo6RY-\
-YnDUfUBfTCz8Meyo_G8igMtwvUOZgXqft8h2xp_3Y1Ang6AJL2nduPSyWG-\
-qmAZYvk_Ub6Dsw2TCshCAJmdqYIFXYHrSku-\
-SxrKW2nwLrOvMNUjVmRpFiO8GhyaQ65Ytos0GM_QrHgtXKtYrJpQoj6jo6MgSrWEQ7kA\
-XZsho8Hv-1yf2MZj7ZNBlaSCqlWc6GXChdvXILrKppWM-\
-uZalbgt2duSZY3LGg2dqN_1YwPSwqNuGIpsD8GFwwsOQ2UfYDcAUaoNoT7bwdMwyPrq8\
-yLIhRG37uMkLwMCyuNOPN1lZ2hKKo4uP1tkhlggKKyrKAOaSPXy3t0fk3apLKqpTweMn\
-LzGTAixYGAlpDXW72fdxED8cVK1LzpDTZaIg7bLs3Ox0lfWAfBmQWv9WOpWmCWBvXEuN\
-41SyAim_PxqUPH8o5HWAXuBx9fAb7WpcgtquIJv2x-\
-cPP7NncmIWabdA3HfVRBMAjVAgAHDRjRrwADMtRJodwGMNi3b9tyeuZjy4Vt_ciQeR9A\
-Sd2QTyhc3MQKgIrwqZsJDNzQBWrz7HnWaWhQ61M16gySlh3S6isJD8vzwgB7VANiQDw1\
-pYekUn_JlzQpC_o33wjjgUrIyXwQHDmEGL3XyaOeHDdlCJcTMWbvGcuvDE_Svt87uiHv\
-GdkUtFVhWcI2Nqwr54QWD5sYvnzNQ83UdNXFMUhxQ1SPupBJOmQCZks-\
-n8qOr5b2YoknwU_07YkIZUhrNuupuq23DeEWa9vCV9Ab00K2opUrhexdcAIif-\
-n_6ZwJ8kb0ykFgvR3GfK3lAkqbTaSeSYzdUvBrRNA34L_XRFGryciaP87MYTh4k8OdfK\
-5j8-OXKRuzpbpIneXqh60s_6W2KGQqmXsU3rK10c2J0JD5aSeGoWVUj3LqHJLA-\
-BlgBerdTlwSo3V2JA-\
-H5e9Lf60OdhNieNbEgztjdcq5jlzIXrgcZQcMt4bjI_Hs3l9NNt2SBsxTEA2DQ06NVv9\
-mLwE4lHqMCYQpXSqBA2lPOT3P_d03YVVneBrIh04IjsTnMvLY9iHtDPBFfLBy2ovLNYN\
-XcZT-WeCNM9UcH7p8MHscuxsY8LCh0sihZsZ4QDVEBdFgV8s_IUV6Xk-\
-yT6zd0M_g6DNi46UqZyU7kofd1NuDNzgA_C1jdkPQz4FavXifAMrstfly2--\
-jrcjN5Y_qjFrAIDHm2ohXSH8kzwiGE4a_L3BcfMEp14ixNJaL26apMPtAFCzqcD3R_5a\
-qOdp2mE8mIAX4YwXTLckIwad6Kxi_ZPa3VRwjRo1uYfeoUczgJ4t1tpVps15luUYfWQI\
-Eo4NXPKuUKKbFbbp7dTaIsDKNloBbCJrL1FiSAZIBxBSjyE6GMf59AXjZL0o920In5YE\
-vLk5moeSm__KMHUPQbK44ipMKSMQjxCefN3ph3b44LvgnAOe8il1M_MvJfKuQOufAD8q\
-5pZNIpMsYFiE7iUzV9BkTwapfo-GB_WfPZMN7Qe-\
-T4of1wo5SMNDCoDggFJaDGQvsAqUGJXqgYAASG_YaMwoHGpvnfGoMUvQRbOrioMqrmN9\
-9J88JlqSPt2aEk7L47zf_0aWmcRrL2S4LZyPPaXrgjhuP76jhjasqngVlahIzOfU8cs9\
-AclI9h5HakP0jOCaooAW2tAmd1zqj7rXwln2sQr5CaLhkTXJt6XllqDUaX42rxhXCuuY\
-LXLflsBrtsoXmru7hEw5SF4jlvprg8L-syKm0ebvbJPoQR1MzrEwP-\
-kfr4q2Iv0c8pEnW-\
-8UyYiOIoPv4r1xHRWtcGmPK5utPaUU56SJ6iGjtETDbiXvT5ZySjtgAjOWvIoRoL-X3-\
-ubkUgR3AS_1KBOt8JaLWAHJVgbocCh_qFbsZS36sSVKDaxPu0SHH0J2bFXGpjJxs6VSS\
-jkCsvv2RUtW502YCrNycmj_4Wl5NGqgb-\
-1WNdcspPgv8Sb5LV5rJhj_R0CEmvE0MeI4Nh97lqa4IvqsrPHcMymfBsBoI8nayArDWy\
-2wm5m85aLIdj0ON8srD9ikYD2TO-\
-xBTb9gaSONJPq1UTzbvSdrq0rkoEbbMf69UmSiu34us-\
-_tvQpaS1BjjPHpD3pBmsiaXT5rY_Oq_S11C3OYXe4ZIYmhdqMBR-\
-Qjk0DQLkGy45QJSaULViZx4m2P2ziTdd_M-\
-TH2GCzke5Ks8ONnJ3TI2bC_RKQaK9AqHmjETbC_ydtTvLwhT6E2xy3WKb_E0UCFqYd91\
-40-UNYVxcXBhP9lBsI3QHALWRXEU9nI3TgYYVdWpfgrc9DV996c6Dc-3iSGNMW-\
-bwbPzM_et5TJEDpCgYq2aMDammYUwnknTPp7m8qI05aT5wwnZuBQWWXdy8zGYUW-\
-fPxUgr7UGuYQLjQOY53BAkhbni-Z1s-bsIjTKup3kRgI1oOY-\
-JVQPeNnK1QGuZnxMRcoPJ3Q96S2YfNNMSjo2rYebmt_9jnlsvhLN0O5niL1_1bcK-\
-mPu_PKMxmTBswKj8ZI-DJFf5YwDDj6RsrKv629MeJ7Iad-2LSs006DLxBBN-\
-nOpsRDtra47X7cjle3LDq2l_lN8f3fTjlfh-\
-B1ps6TZ6u4GRReH21COwk7H_vdG5G9Hq4UNczV_r6AzIK32EgBwF5HNA5yVrS915a4IU\
--oKDo1gL_tZUKrZJmL0m0K8Nu-C1M0EP-6WTQMxppc5-\
-CxAAnIvHNTVO3EhNj76ObDPjRdDAm94ayRjMosvCDaUGdBEu31d-\
-qmHl4aqhkn0y7MivNdrvamxPQPlN4E7GV8xQrIJXRz_KaoM0MypOUUHRPrVNMiWlrxOC\
-Nhbf7xHAKdXmX-\
-vxmnDbG4qwSUSyE03xVwQS0Beoutrqy2N0zs2cbUhnW5RhGHyr17GWgf1qtEBzaaIkRx\
-6HlPOFvNncSVDvxsY--\
-FBRiNcxvopEaJvBCuI83T60o9EDQHAVb8SK_VVsFbph4NifyHNUZUZ_ppoTJBOO00Bzo\
-mR0glpomirfGlMoqoiG_2huhHxRX0Q4F-\
-ugWFLRpC0eil2we1okPFUqpPyEpfk6DHVC_jmKEv8-\
-ZtjJLHWPb6V0zo6X5jnHJeKg_etsM4YbgFbqxcjVya7ZE09zlJd9hHlmefg6sB8SGl21\
-4yOM6_sbWFsC4uVb7Zb0gEHwuqsxaCDNicugM41NkAmZltBCi6eKgGlAb1TAnKl8Vlz3\
-xSO803BNvsawTG1ZpJQEDAIEWfYPumlxgBxGmOEaoKX6PXwt7ufxRArrkUpZ-\
-3Q2lOXqKZTd8hf-oXD3sB0M6bVf-\
-uFfe7GyeUbC1_lcuQn6ZlRi87MHCRoVWOFVOaE3znF_HgG3GQFPgNZ1rp7l2ezWc6eRY\
-u5ub77HPAyFt_9qyv0jctN9JPszVxa9gRD8vPtiifYOzsZH9t7CgGbBPgtGZW6KYLhRu\
-AqFQ0cGD6EifApAgEgqFdzDb1O8RweQcYHGM7NJGZi2k5wM-\
-1XBSM7LpoATzgOoXAuvx22shY-\
-jvUNzXo0YnvTzwnMr_YlJur8hmW6A3K1gS2RNAZnSAVhtxCgTeO1p6ritfBsvgtikoGI\
-qQZrGkGdGsbtEXlGowtt1q4lQA6ac-\
-1RSpb3wD8HjdrbGmvtihNrIHT31rVkQE01fSk0m4R9QiOB7HqpE98f3HbWDi-\
-Vc3uL6mbAVzM-4yh0AkacA6kRi5FbttCkyl0l3zcgydyh2tYNGna1AUGC-l2Mpc-\
-mIao5cCXPWrcH1J0rRAz4ro9yf695jjk6KD-hHxn7rPoJFrhD--\
-sUEERcPlkV_ev4we2ZFtB91UNlymMVclpU2R5c4AiMe9Bm4hxpEwxDWGCAPoZJr0qTyK\
-f2f0Un_Lxtcr5Re0XjKi1xOAm6tJPgXl3KUXlxJGcsFOEUKnDqY9JrkmC4aG52dMC72k\
-1z17AMC6XqX__j7lnx4-qkWFzbLo2ET6DN-x10bItq9OcrgisUaatfJikssUlLwxwLc0\
--\
-faty46lWgmSsx5FO4L7RdlXTaMb0wn2B8lTCzOa3KOwVJk83RmZJcqajxeSHdgwpMwfz\
-7v3PQvzeus5CN_H-ZT2iQT9-\
-ni09WSPaRNQeypf1ZRFtdmSdY58zAN0cQwcKflY4Qe0Y4SaMEaBSd1mGh7Zo8XkLeBKV\
-XhpEwBCQR1j5lL7rfq2fZ7skCnBo0vxl-awrtw7wn92z1D0LHpPt7pG-\
-mpaxhuEpQnuXlcFLO75wdGeosDp5gSKkhysP6NF3ALNKmHwPggQKs1RCgRyx2vC8jzi-\
-OStU4Q-ZM-\
-_vKxCkbVPegEXCfmcqHGBZWEAjhk15bnE35rmvfJZhPxuJukKm9KK5E9NF98oqQw2kbW\
-cADq9oXf3XhoFsE7HkJH2-\
-BzM2eyVas9AyMCjTzhf6DAcMJ9SKYFVpE2e2cF8C3SzFag0qTRB2TzL5ANpkvlPgeSV5\
-0ejqBW3jLWWCsNNqN0XaVIj6QlQje4BU5-Rt7u1tGc4mHQu4mlT-\
-8LaxCzvmANSL2_nk9TcHDt2dk4KCjrwTWvl7s8HpSZz6ZWSxfZIWmu3G4lAxNfjgDrPx\
-ZsiHXUy_X5rK9H2dJrJz7b--ZlMj0RVOQxK-\
-Gy89E2FxuINuJEUQ9m0PBKkDYKYcDNPQ5KctARHWs7JEjHGd09A86doqk5J6t-\
-9bWSliiNq-\
-dRESLX25HF_36YrwycT1lVEIXiAfPci8rUDYXbhJR6yqiAvHpqce9gktVgft5zxgdh2D\
-o-MadmAAqg6xG-jBYt0FiYkRhJ_6V-\
-c0zt_sPhUstyOa0IGBS6tp_ITbkwhQfRhVPQLzbOwjYmFvqEc_JQjpFDpH-\
-8g93aFoPh8BQWvBkLjtDVqN8UX-\
-1MSJv8tNgbfdxW1ugUljHDTgtGci0TWzIZQgZVOHiJaIRvH1frkwaCslsXhlcesq04mp\
-TnqTDONc8aqFKlNITedv52VX3UYfl-\
-EfxiTYz05sMdYDMJ_iPtJMXH5LMMT3D5j5YNItz5PtKKwQI9xdLk3et2-\
-dZzAsavRxyb0gg4s1oEQN2ChD7ttQgYNflZEulS45Q8o7xzCDTwe1w1bet-\
-YGpPZacfoqFpVULeqISBaVAxCK3dXdH-g4qIPipupJb0Wl6oan-\
-2M8xO9cfTi6vSbtCF9dFooEQFJyMQLqBSWDO9RdW3tF5-\
-FqjQqIYiOxiXVEqafbfOLuXf2YO_ltvD4e5rGgigpPeYcH8GUanFPhKQ-\
-J9t3OE3NMmZzg3QzoQVG6WEbYO8OlMLYnAW3ImcayLMlW-kCVL-u8U5ojHIbGorPP-\
-d5PGykGKYe0q9OlXofimQ4OsGBCdekc7ZPNNVJhnib6Ab-6aI-\
-ApxdJT5LEb4Oqam0ZAjHrJk87U3Ohttzi6gILEBQmX3F6s-\
-Ht9RssLz1ASVCUuL_HztrbLDVGXmRto7K83_t-\
-wAIIOj53wve20AAAAAAAAAAAAAAAAAAAAAAAAAAACBQiLS82ODQ__MolBYkpUE97bImu\
-HSfUSIYTkZmwTA5iomXOc4Y7j8WJfFGNI7lMtiXzokkpteDeXAyirf9JgEfP8fEbBssP\
- pTy45VBP1FGecxR_8UdCoVSAExR6T7PpNKis4POoP_0-Y3K0Ta5-yZ8J1z7iwTEnAA",
-  "raw_to_be_signed": "\
-65794a68624763694f694a4e54433145553045744f446374525751304e4467694c43\
-4a72615751694f694a78566e4e5461485642565856464e555656596e464a4e446778\
-54484e7959584a535832744c5a484a7065444279626c5a4b4d6a493253323830496e\
-302e5358516e6379426849475268626d646c636d39316379426964584e70626d567a\
-63797767526e4a765a473873494764766157356e4947393164434235623356794947\
-                                                       527662334975",
-  "raw_message_representative": "\
-436f6d706f73697465416c676f726974686d5369676e61747572657332303235434f\
-4d505349472d4d4c44534138372d45643434382d5348414b4532353600c86e106632\
-b46f3f7ada053b838a8cbf21f8773ee7b1f1f2bb80d108008c2378d18bf1a314a40f\
-                 aefed6bbd88bbda4cbae01e4d335b9097c7862e3750b4c7414",
-  "raw_composite_signature": "\
-ea696fd2fa6bcf7fc2de321d8c4cb94e376764959fc2095a83ea62275c88359661e5\
-c349f566d4fc3eca3e3c88acba7d23a6ad44e7ca6f8fe0e248a298b9df84eb372746\
-683a0c46310d6069af86a4f98a89e577731abe01a4ded7571b90331f93af231a966c\
-5dbf3a24ce195200b8432388a6169ff43419c4875a2514c4167943cc5c48bbc1722b\
-a0679b46fc785d7ac4ef4eb5932d9f574355fc599c88257ae313165fb4dbca542f0f\
-8284f46106427c35e29ae2eb8c9bfbbe379c92aa8a575c3e6b46bf500e76c838d1f3\
-432f02e276437b70d569eca49a1d43f0e5d4f40249d83c388a95b7c69137fe8243e2\
-7c871159c8c4b8619d06be36948607f38e06a3eb43088aa1bc7669b8d664fef2d756\
-f3827bd03f391966df24f4cb0d363c2ebab37faaf7011b05faa5877b894d7e034fea\
-610427088d4207697be3e67d568b1b66548e647daf76d07dc1a108d1049a43179861\
-1d9ea37205105c6d9a6da0e4fa1dd82a3c5506cbf6724ed9274ba909b2eda40c6eaf\
-55c12001e6257d3435c8257cd52e81084953d799d9efc45d3d1dcc69d2800c8ae109\
-70f2afc12cdfcbfc5ef9e2e15421a5290f1a7770726788ce374befd484a5772d7fd4\
-b188451f04596ce46af0249f1740ffed577b23df0034993e2a52da4d625888ff8e21\
-ba42d5271ed865873992cd56d38d683bfc2d49fe35841717a6b3a7eee1301ad580c3\
-f1a095a1aa5f4a7026b486126558e7de80ee67f55277fdc4d52715b646d05e25103e\
-ecf4328e9163e6270d47d405f4c2cfc31eca8fc6f2280cb70bd4399817a9fb7c876c\
-69ff763502783a0092f69ddb8f4b2586faa980658be4fd46fa0ecc364c2b21080266\
-76a608157607ad292ef92c6b296da7c0bacebcc3548d5991a4588ef06872690eb962\
-da2cd0633f42b1e0b572ad62b2694288fa8e8e8c812ad6110ee401766c868f07bfed\
-727f63198fb64d0656920aa95673a1970a176f5c82eb2a9a5633eb996a56e0b7676e\
-4996372c683676a37fd58c0f4b0a8db86229b03f06170c2c390d947d80dc0146a836\
-84fb6f074cc323ebabcc8b221446dfbb8c90bc0c0b2b8d38f375959da128aa38b8fd\
-6d92196080a2b2aca00e6923d7cb7b747e4ddaa4b2aaa53c1e3272f3193022c58180\
-9690d75bbd9f771103f1c54ad4bce90d365a220edb2ecdcec7495f5807c19905aff5\
-63a95a609606f5c4b8de354b20229bf3f1a943c7f28e475805ee071f5f01bed6a5c8\
-2daae209bf6c7e70f3fb36772621669b740dc77d54413008d50200070d18d1af0003\
-32d449a1dc0630d8b76fdb727ae663cb856dfdc890791f4049dd904f285cdcc40a80\
-8af0a99b090cdcd0056af3ec79d6696850eb5335ea0c92961dd2ea2b090fcbf3c200\
-7b540362403c35a587a4527fc99734290bfa37df08e3814ac8c97c101c398418bdd7\
-c9a39e1c37650897133166ef19cbaf0c4fd2bedf3bba21ef19d914b4556159c23636\
-ac2be784160f9b18be7ccd43cdd474d5c531487143548fba90493a6402664b3e9fca\
-8eaf96f6628927c14ff4ed890865486b36eba9baadb70de1166bdbc257d01bd342b6\
-a2952b85ec5d7002227fe9ffe99c09f246f4ca4160bd1dc67cade5024a9b4da49e49\
-8cdd52f06b44d037e0bfd74451abc9c89a3fcecc61387893c39d7cae63f3e397291b\
-b3a5ba489de5ea87ad2cffa5b628642a997b14deb2b5d1cd89d090f9692786a16554\
-8f72ea1c92c0f8196005eadd4e5c12a37576240f87e5ef4b7fad0e76136278d6c483\
-3b6375cab98e5cc85eb81c65070cb786e323f1ecde5f4d36dd9206cc53100d83434e\
-8d56ff662f0138947a8c0984295d2a8103694f393dcffddd37615567781ac8874e08\
-8ec4e732f2d8f621ed0cf0457cb072da8bcb3583577194fe59e08d33d51c1fba7c30\
-7b1cbb1b18f0b0a1d2c8a166c67840354405d16057cb3f21457a5e4fb24facddd0cf\
-e0e83362e3a52a67253b9287ddd4db83373800fc2d637643d0cf815abd789f00caec\
-b5f972dbefa3adc8cde58fea8c5ac02031e6da8857487f24cf08861386bf2f705c7c\
-c129d788b134968bdba6a930fb40142cea703dd1ff96aa39da76984f262005f86305\
-d32dc908c1a77a2b18bf64f6b7551c23468d6e61f7a851cce0278b75b69569b35e65\
-b9461f590204a383573cab9428a6c56dba7b753688b0328d96805b089acbd4589201\
-9201c414a3c84e8631fe7d0178d92f4a3ddb4227e5812f2e4e66a1e4a6fff28c1d43\
-d06cae388a930a48c423c4279f377a61ddbe382ef82700e7bc8a5d4cfccbc97cab90\
-3ae7c00fcab9a59348a4cb1816213b894cd5f41913c1aa5fa3e181fd67cf64c37b41\
-ef93e287f5c28e5230d0c2a03820149683190bec02a506257aa06000121bf61a330a\
-071a9be77c6a0c52f4116ceae2a0caab98df7d27cf0996a48fb7668493b2f8ef37ff\
-d1a5a6711acbd92e0b6723cf697ae08e1b8fefa8e18dab2a9e05656a123339f53c72\
-cf4072523d8791da90fd233826a8a005b6b4099dd73aa3eeb5f0967dac42be4268b8\
-644d726de97965a8351a5f8dabc615c2bae60b5cb7e5b01aedb285e6aeeee1130e52\
-1788e5be9ae0f0bfacc8a9b479bbdb24fa10475333ac4c0ffa47ebe2ad88bf473ca4\
-49d6fbc532622388a0fbf8af5c47456b5c1a63cae6eb4f694539e9227a8868ed1130\
-db897bd3e59c928ed8008ce5af2284682fe5f7fae6e4520477012ff52813adf0968b\
-5801c95606e870287fa856ec652dfab1254a0dac4fbb44871f42766c55c6a63271b3\
-a5524a3902b2fbf6454b56e74d980ab3727268ffe16979346aa06fed5635d72ca4f8\
-2ff126f92d5e6b2618ff4740849af13431e238361f7b96a6b822faacacf1dc33299f\
-06c06823c9dac80ac35b2db09b99bce5a2c8763d0e37cb2b0fd8a4603d933bec414d\
-bf6069238d24fab5513cdbbd276bab4ae4a046db31febd5264a2bb7e2eb3efedbd0a\
-5a4b50638cf1e90f7a419ac89a5d3e6b63f3aafd2d750b73985dee192189a176a301\
-47e4239340d02e41b2e3940949a50b562671e26d8fdb389375dfccf931f6182ce47b\
-92acf0e3672774c8d9b0bf44a41a2bd02a1e68c44db0bfc9db53bcbc214fa136c72d\
-d629bfc4d14085a9877dd78d3e50d615c5c5c184ff6506c23740700b5915c453d9c8\
-dd3818615756a5f82b73d0d5f7de9ce8373ede248634c5be6f06cfcccfdeb794c910\
-3a42818ab668c0da9a6614c279274cfa7b9bca88d39693e70c2766e0505965ddcbcc\
-c66145be7cfc5482bed41ae6102e340e639dc102485b9e2f99d6cf9bb088d32aea77\
-911808d68398f895503de3672b5406b999f13117283c9dd0f7a4b661f34d3128e8da\
-b61e6e6b7ff639e5b2f84b3743b99e22f5ff56dc2be98fbbf3ca33199306cc0a8fc6\
-48f832457f96300c38fa46cacabfadbd31e27b21a77ed8b4acd34e832f104137e9ce\
-a6c443b6b6b8ed7edc8e57b72c3ab697f94df1fddf4e395f87e075a6ce9367abb819\
-145e1f6d423b093b1ffbdd1b91bd1eae1435ccd5febe80cc82b7d84801c05e47340e\
-7256b4bdd796b8214fa8283a3580bfed6542ab64998bd26d0af0dbbe0b533410ffba\
-59340cc69a5ce7e0b10009c8bc735354edc484d8fbe8e6c33e345d0c09bde1ac918c\
-ca2cbc20da50674112edf577eaa61e5e1aaa1927d32ecc8af35daef6a6c4f40f94de\
-04ec657cc50ac8257473fca6a8334332a4e5141d13eb54d3225a5af13823616dfef1\
-1c029d5e65febf19a70db1b8ab04944b2134df1570412d017a8badaeacb6374cecd9\
-c6d48675b9461187cabd7b19681fd6ab4407369a224471e8794f385bcd9dc4950efc\
-6c63ef8505188d731be8a44689bc10ae23cdd3eb4a3d1034070156fc48afd556c15b\
-a61e0d89fc8735465467fa69a1324138ed34073a26474825a689a2adf1a5328aa888\
-6ff686e847c515f443817eba05852d1a42d1e8a5db07b5a243c552aa4fc84a5f93a0\
-c7542fe398a12ff3e66d8c92c758f6fa574ce8e97e639c725e2a0fdeb6c33861b805\
-6eac5c8d5c9aed9134f7394977d84796679f83ab01f121a5db5e3238cebfb1b585b0\
-2e2e55bed96f48041f0baab316820cd89cba0338d4d90099996d0428ba78a8069406\
-f54c09ca97c565cf7c523bcd3704dbec6b04c6d59a494040c020459f60fba6971801\
-c4698e11aa0a5fa3d7c2deee7f1440aeb914a59fb743694e5ea2994ddf217fea170f\
-7b01d0ce9b55ffae15f7bb1b27946c2d7f95cb909fa665462f3b307091a1558e1553\
-9a137ce717f1e01b719014f80d675ae9ee5d9ecd673a79162ee6e6fbec73c0c85b7f\
-f6acafd2372d37d24fb335716bd8110fcbcfb6289f60ecec647f6dec28066c13e0b4\
-6656e8a60b851b80a854347060fa1227c0a4080482a15dcc36f53bc4707907181c63\
-3b3491998b6939c0cfb55c148cecba68013ce03a85c0bafc76dac858fa3bd43735e8\
-d189ef4f3c2732bfd8949babf21996e80dcad604b644d0199d201586dc4281378ed6\
-9eab8ad7c1b2f82d8a4a0622a419ac6906746b1bb445e51a8c2db75ab895003a69cf\
-b5452a5bdf00fc1e376b6c69afb6284dac81d3df5ad5910134d5f4a4d26e11f5088e\
-07b1eaa44f7c7f71db5838be55cdee2fa99b015cccfb8ca1d0091a700ea4462e456e\
-db42932974977cdc832772876b583469dad405060be97632973e9886a8e5c0973d6a\
-dc1f5274ad1033e2ba3dc9febde638e4e8a0fe847c67eeb3e8245ae10fefac504111\
-70f96457f7afe307b6645b41f7550d97298c55c96953647973802231ef419b8871a4\
-4c310d618200fa1926bd2a4f229fd9fd149ff2f1b5caf945ed178ca8b5c4e026ead2\
-4f8179772945e5c4919cb0538450a9c3a98f49ae4982e1a1b9d9d302ef6935cf5ec0\
-302e97a97fff8fb967c78faa9161736cba36113e8337ec75d1b22dabd39cae08ac51\
-a6ad7c98a4b2c5252f0c702dcd3e7dab72e3a9568264acc7914ee0bed17655d368c6\
-f4c27d81f254c2cce6b728ec15264f3746664972a6a3c5e487760c293307f3eefdcf\
-42fcdebace4237f1fe653da2413f7e9e2d3d5923da44d41eca97f565116d76649d63\
-9f3300dd1c43070a7e563841ed18e1268c11a05277598687b668f1790b7812955e1a\
-44c010904758f994beeb7ead9f67bb240a7068d2fc65f9ac2bb70ef09fddb3d43d0b\
-1e93edee91be9a96b186e129427b9795c14b3bbe707467a8b03a798122a4872b0fe8\
-d17700b34a987c0f82040ab35442811cb1daf0bc8f38be392b54e10f9933efef2b10\
-a46d53de8045c27e672a1c6059584023864d796e7137e6b9af7c96613f1b89ba42a6\
-f4a2b913d345f7ca2a430da46d67000eaf685dfdd786816c13b1e4247dbe0733367b\
-255ab3d0323028d3ce17fa0c070c27d48a6055691367b6705f02dd2cc56a0d2a4d10\
-764f32f900da64be53e0792579d1e8ea056de32d6582b0d36a3745da5488fa425423\
-7b8054e7e46deeed6d19ce261d0bb89a54fef0b6b10b3be600d48bdbf9e4f537070e\
-dd9d9382828ebc135af97bb3c1e9499cfa6564b17d92169aedc6e2503135f8e00eb3\
-f166c8875d4cbf5f9acaf47d9d26b273edbfbe665323d1154e4312be1b2f3d136171\
-b8836e244510f66d0f04a90360a61c0cd3d0e4a72d0111d6b3b2448c719dd3d03ce9\
-da2a93927ab7ef5b59296288dabe7511122d7db91c5ff7e98af0c9c4f59551085e20\
-1f3dc8bcad40d85db84947acaa880bc7a6a71ef6092d5607ede73c60761d83a3e31a\
-766000aa0eb11be8c162dd05898911849ffa57e734cedfec3e152cb7239ad081814b\
-ab69fc84db9308507d18553d02f36cec2362616fa8473f2508e9143a47fbc83ddda1\
-683e1f01416bc190b8ed0d5a8df145fed4c489bfcb4d81b7ddc56d6e8149631c34e0\
-b46722d135b321942065538788968846f1f57eb930682b25b1786571eb2ad389a94e\
-7a930ce35cf1aa852a53484de76fe76557dd461f97e11fc624d8cf4e6c31d603309f\
-e23ed24c5c7e4b30c4f70f98f960d22dcf93ed28ac1023dc5d2e4ddeb76f9d67302c\
-6af471c9bd20838b35a0440dd82843eedb5081835f95912e952e3943ca3bc730834f\
-07b5c356deb7e606a4f65a71fa2a1695542dea8848169503108addd5dd1fe838a883\
-e2a6ea496f45a5ea86a7fb633cc4ef5c7d38babd26ed085f5d168a044052723102ea\
-0525833bd45d5b7b45e7e16a8d0a886223b1897544a9a7db7ce2ee5dfd983bf96dbc\
-3e1ee6b1a08a0a4f798707f0651a9c53e1290f89f6ddce13734c999ce0dd0ce84151\
-ba5846d83bc3a530b627016dc899c6b22cc956fa40952febbc539a231c86c6a2b3cf\
-f9de4f1b29062987b4abd3a55e87e2990e0eb0604275e91ced93cd3552619e26fa01\
-bfba688f80a717494f92c46f83aa6a6d190231eb264f3b5373a1b6dce2ea020b1014\
-265f717ab3e1edf51b2c2f3d40495094b8bfc7cedadb2c35465e646da3b2bcdffb7e\
-c002083a3e77c2f7b6d000000000000000000000000000000000000000000814222d\
-2f3638343ffcca25058929504f7b6c89ae1d27d44886139199b04c0e62a265ce7386\
-3b8fc5897c518d23b94cb625f3a24929b5e0de5c0ca2adff498047cff1f11b06cb0f\
-a53cb8e5504fd4519e73147ff14742a1548013147a4fb3e934a8ace0f3a83ffd3e63\
-                                     72b44dae7ec99f09d73ee2c1312700",
-  "raw_composite_public_key": "\
-e45ffc8cc73db885dc662e62a18cd8e3803297117fa5658814a985b5ff1db7b468cf\
-c82bb929f1d86b77ed14f5ae16a65368772ce51912410105e0456975ae91fdb643b5\
-12f124d5e60bd68b8c7e31fe01c7b0dc65ae470501cc565a6e1dfcfcfd12565433c4\
-afedd511821e2e9610c45275e2836dee35ced69d7efa672fd1e4318bef5eb6e897e8\
-b451aa202ded042b2aaef77a7be3f699146da229a8bdb3ffa496445967e75217bfbc\
-9048f9956443d8731f833eb30de10dac96fffe7cf65ea0445c3e31e8601e133be6a1\
-00764fe3196e267726441f31751fbf9a6f5880644f4e7275e57de2b0f105e4db055d\
-50dd1c9c934fddf535b8de28b0c74c0449f222cd2ed0bb8fbc775ccee8c940665b40\
-f712f4f7e00750e9e1e4cd9cff25d1945c3e9bca53ccd4f12eee7581856ebd68f268\
-45956e3e7beb761f0fe75bdd31bfe2fa018113397b387bd59d62a68b8af7fa245ab9\
-32e69f778e2ceefd21304fbb8099ea13d8ea57c1813197a2f75ae251075b51dad38f\
-853669e9d5f98a3655098941993a1594860fba71fe530ee5c29f58f2978af688ccb7\
-5a5838a359c112e98e25a8583ac8dac1f861fd58e2afba5de5a52e020904f5b42bc0\
-874e35befcf3e6119684768f36e008f04712177cebe627607381e56eaaee161c1729\
-b8de51dbde474d48cc68249ea27162b87993e60c84ed6cc6423cb3676d9eb50b2cab\
-5a3a049ef131381d623fa6fbcbc9db1e7cc025ea0418b9dad2cc6ccd4e95fa2cec24\
-feeca70318a751716b7213f63edbf65a63338357f838f94ec071822c248512488851\
-07b3d1c4e924678c7614ea1af038104619f2ae372940becfa69e29cbb5ff6c3e20a4\
-7be4a4f74bac34c133c00a6a706accc6ffd3d8e4fbd69a99704e1283c850d8c58d1e\
-5753cd9587b83c4c346cb9a58137213ec10834c66adfe2bb5c501a8ef2ecadd1b677\
-a3df1a6deb86ebf0722c4f5030e20f9018dd5b6fc53eea24fd92b7b5b4025feae996\
-d3e48fd4c650d82dbad7eaf936639698512f26253d2ef6847c8518e8565cc9a5495c\
-6fff57cde7323882c54a7db470ab2daf8ffd2bf794fa7c692d9e7fbd532eecc1d788\
-0e2ca0b3216128be28b4a9f1d151fac97808b0bd98b7b43a612a9ac865812bfeac6f\
-47460277840b52a3b087f916ca7cedc0f768ea2bd19ea21155f84b4a04c4000ad2ae\
-0587154d560bc0a477a4f9329a8984dd31eb1f2a05e3d918701d630cfca9af61ef08\
-8d2c5581acb463e439902e5d425719e956b8d6df7305b28e0ff27d3ad0de2085d292\
-499b19a3390d4396fb3bac9a8d8cbead2a7a4290fc9ac6fca045f98a614a45a39cbe\
-24360f84d14f8e472712aceb74dbf45b53d49a0e4737e476ffc4d5b2f7cd247aa186\
-d3b764ad9e9cfeee456a73c291d8de3912414ac43911c372173ad7b472af35c6853c\
-ed2fe7b5fe0a89565ab33baa6f65cdd928319d7065e040e7a5e84f9aa903f7648094\
-bad07136b16927b8ec6dbc2bef0cc2856de1e795923e1412c49f24deeb6c21f6c8a9\
-765c9c7986e0da4b4c67d8e0d0c8d466824fb923d8573148990cd2ef133c78ceecab\
-72ed9dd285c5a3766852d54534207ffd34027f6c76ede8fd1a32d72c30048bbaa797\
-d5df6fde27d087de5721ad7b7fa3e8d3f70d6bfc3ab2e252335368bbfa15acb5cb37\
-d4694e8b23cebe25de9c925a221a183b904d3f85df9929a919c54d6f87457373a0d6\
-ecc1403e4cbbe620999435e80696634cd1a8e4747e9825bfa336e5bbad14f73640f1\
-b9febe800dbaefe1630c61fae635b074c564eaa9db189c9e7302873fc64e6d497bc5\
-c29080987a07a21d4af210703a4fa07f2fd816f12fd1e29b4c0f44afe9bd4a1eaa8a\
-7ae6f02a5b4258f52caf6127f62632a67cf4e8310be56a7c28c86b2e277600c3e92c\
-8d23d42586244c571e90568df202f2f6d81f860a565f9eb91a3c78372e2a8b1be61c\
-5418cf49bf2d6c8955d4a482a9919b7660b3f9a4404ffc454ea073e1e4b2689ab2cc\
-a4e46bd7004a6c491fa26ee7a57d60f35edb2b821e6266442c8f335d452d524c772e\
-0353724c23c7dd15b7aa155e91442022140c5fcb0153147edcf3e8952f6f0399a3c8\
-8066a72756c9409915de63f64fa797841c57c796c6fc550ef745dfe9f179457f9475\
-5ae5a2506a764f327e550be3dc14dd41f3b04b147d454938c63a8d69b2ea4c5710ec\
-0b36e3a6c72571fa5d59dde036c42033df35af056966ff0cd1204008971aa6ba9fb9\
-7b685ab9ffa2a9d1778104cd2c3b326de1fcbc242e94d0311c3275b12850ed30ceea\
-d3a2ee6d060508411d4396f5421d8b6d067cf7cb5e826785fbe119e05e21bd879b64\
-f57cb0cd1972c2815f20abe7ce6ab34d0f471af44baad179e90644122f5f33288e68\
-9ddddc5ce833e9755df1e73c65c5a201c4ede2ffa6b19274927719d2d38fdb7a65aa\
-43708b7fa9a94aa7d3210253d78d3b181e1020d0000bd0a1dc05d447f9f58ebeb84c\
-65b36c8afcb83727a1508994e826957a663b0b9b8a003325ab6d6d6462ee4e106019\
-c0dffe10323b7bde7d82a38f85fd08786e860ba66c161b64b0708c363de5c6af62d8\
-db3c243d1e1b712cb1d59e942b9b6b4295a5a500b182cbd5fd1bc6ce9376d91b47a2\
-284f1fbe0ad1c048cc2cfbb4afa3a9eb9697503b69feca990eba7e9441af9ca44cb3\
-ac6b5ed66e591c201fe30efa8a7c471dc613d6254c263a8e132104bec47f1aacb3b2\
-fcd4051b69b5e3fcb1c147a65c2f90c4b5188bafc521cab03c12a309da50b5a75177\
-27ed41228ed123fe1b152f6a6319cd623bf34ad7b8e064ab993260bcbd405f5b7fff\
-9b2fa40ba5ed5630242539e5d96823e89dc818a13d16675ee3079d976f694f5acc97\
-60ae789e9b3391b289e0e22a7ef17cc6a4577157b6d95c09baa4fd532e3ee0a29081\
-0ed35e56bb19d9b61fb98a97c617425b06093d98a5cf0ee2dd127f0eea600b9a0c67\
-fbe761db9b77e5d5bba9701da1b883e521a0cfe88451f57bd36085b67e56f061f84a\
-2e6a152a71bce6e522daab6a0a33ce22e537fa9793d28b617e6c0a4176a83aa3be57\
-8afac0f2f5547c5516d218984755b7445c7143afa4e551fce0071bdb873b34e6b9e2\
-b9e79ed0c69d288ed6421f237e860a0c6492ebbdd2a44c2c4f368dbe99941b1e8561\
-d859d3859f496cee3d741f252973f8fcc539c409e35cc80a5ed6df23cc3a65601313\
-f5d681fd9540c5291a9e30a72e38c96413c47c61ff84fde78d011b01b4154d1b920a\
-f003f7abb1e1999dea6a766cf9fd2702b3ce0ee57af931b62124b0861b163a3b91aa\
-4bea28076c3432df3b29b6c4e1ba588def420071fc157de90eb2722ecc9ab00df3c6\
-69383a61a91bb67bd287ce349b4745ee7a479dbceef166b9acc412eb579fcd643730\
-7edda253d606b7be7599c38092bc52a8598480edab8b82b1d21c565d2137ceae0b66\
-42619b16133d91205d6355029e9cdfeb9a28b373d95916b6b707d4c712c09cf36daf\
-1a511b2bedb1aa70ee58d46a0666bb287784b0a3840c589a7a04d5d6f2216be90aa4\
-a512d5632f5c9bfe7b8b13382f999b95d367c7c46b968074ce315197a5ff3545c7b7\
-7a804ade56a95b5c24cdece5937b5c0366d93ad03da9bc5db1b551dfb91e9b343d2b\
-57b763439686d4a35b3afe03878a49b28232d4f1a442aebde109f807acef7dfd9a7f\
-      65b962fe52d6547312cacecff04337508f9d2529a8f1669169b21c32c48000"
-}
-</pre>
-</div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
-<a href="#name-ml-dsa-87-ed448-3" class="selfRef">ML-DSA-87-Ed448</a>
           </figcaption></figure>
 </div>
 </section>
@@ -4934,7 +3975,7 @@ a512d5632f5c9bfe7b8b13382f999b95d367c7c46b968074ce315197a5ff3545c7b7\
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-cose" class="section-name selfRef">COSE</a>
         </h3>
 <span id="name-ml-dsa-44-es256-4"></span><div id="cose_example_ML_DSA_44_ES256">
-<figure id="figure-8">
+<figure id="figure-6">
           <div class="alignLeft art-text artwork" id="appendix-A.2-1.1">
 <pre>
 / ML-DSA seed (32 bytes) /
@@ -5108,12 +4149,12 @@ bead'
 ])
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-ml-dsa-44-es256-4" class="selfRef">ML-DSA-44-ES256</a>
           </figcaption></figure>
 </div>
 <span id="name-ml-dsa-44-ed25519-4"></span><div id="cose_example_ML_DSA_44_Ed25519">
-<figure id="figure-9">
+<figure id="figure-7">
           <div class="alignLeft art-text artwork" id="appendix-A.2-2.1">
 <pre>
 / ML-DSA seed (32 bytes) /
@@ -5284,12 +4325,12 @@ e21ac849ce0a75816c44fe833a3813eaab74e722d23d859b70a2f92bb12e48b1
 ])
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-ml-dsa-44-ed25519-4" class="selfRef">ML-DSA-44-Ed25519</a>
           </figcaption></figure>
 </div>
 <span id="name-ml-dsa-65-es256-4"></span><div id="cose_example_ML_DSA_65_ES256">
-<figure id="figure-10">
+<figure id="figure-8">
           <div class="alignLeft art-text artwork" id="appendix-A.2-3.1">
 <pre>
 / ML-DSA seed (32 bytes) /
@@ -5512,12 +4553,12 @@ h'436f6d706f73697465416c676f726974686d5369676e61747572657332303235
 ])
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-ml-dsa-65-es256-4" class="selfRef">ML-DSA-65-ES256</a>
           </figcaption></figure>
 </div>
 <span id="name-ml-dsa-65-es384-4"></span><div id="cose_example_ML_DSA_65_ES384">
-<figure id="figure-11">
+<figure id="figure-9">
           <div class="alignLeft art-text artwork" id="appendix-A.2-4.1">
 <pre>
 / ML-DSA seed (32 bytes) /
@@ -5743,237 +4784,13 @@ d28b8c2c60b1befe5fc27b2ee0193537feee42bdd049245fbff880567dfad8f4
 ])
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-ml-dsa-65-es384-4" class="selfRef">ML-DSA-65-ES384</a>
           </figcaption></figure>
 </div>
-<span id="name-ml-dsa-65-ed25519-4"></span><div id="cose_example_ML_DSA_65_Ed25519">
-<figure id="figure-12">
-          <div class="alignLeft art-text artwork" id="appendix-A.2-5.1">
-<pre>
-/ ML-DSA seed (32 bytes) /
-h'0000000000000000000000000000000000000000000000000000000000000000'
-
-/ Ed25519 seed (32 bytes) /
-h'0000000000000000000000000000000000000000000000000000000000000000'
-
-/ AKP COSE_Key /
-{
-  / kty AKP /                1: 7,
-  / alg ML-DSA-65-Ed25519 /  3: -59,
-  / kid /                    2: h'93fe1616a4131f5a',
-  / public key /             -1:
-h'424b2f267e58d5b3b44d71acfc6a656bb26950d57c61db1c880bcfa1feab443f
-  0942ab8bdbad7d708abbc356078f6d99a252271fe62c74091eb94afb9b9264c5
-  0a888e0dfed80cd5fb2cbd3667e60d539ebe44930219cd4faed15dbb3455a264
-  802b9f49bce42ee7550feffdd4642a55ade693868a460cbec03f4fc99a4e30bc
-  cffa8a475e5395396674ebb81a94937587880f6dbd27bf1c4f5a9ee43cdd8b0e
-  53b3b7fb49c73adfbc2d4f8c54303520c29bf97e26ee57db342d957c89393652
-  2d0942b41d82ee3772a00570adfb545c1143922b0496f826a0a970064b36ddf5
-  34b5f8e1c1cd0b5565ea846b45431f0618143ece89777bb3f61179ad20295fe0
-  a6e062ae6eecbc2ef38f2ac1a22dc93b7b126336223c55b61eb8c0795542bbb2
-  dc65e722eadc6866ffa9683beb8a999ad7a83e5e6e016c2e4c35f6f7649ad3bd
-  52ec67ec1c5c6e7b9972771218be9554bba7727f0b84c44b9b0a8bd831fcff2c
-  9779ccd4ca30c6ad75b04983e41de893ee5f39ea7355180b709c7045c22d33a0
-  83f6ae07a114746d1bfdccbee5b9043879bb5a2e120e2a4636283f4a1cd4924a
-  2de6a4aa3d99ddd88f48aaa4e88bfd1ea769d82c10779f2ded796db542971ca2
-  89b76863ede5997b7e9ce183b43ccec278b10d92b87442ce0435bb1625171db5
-  554b470239c50d2a0c3a41b2a38807db070b47bfb3e7d10f3cd979d69963c8d7
-  9f8029cc4a48eb04fcb3d708844febaa8b6ddff01ab64d59358e6505c4ec1d7c
-  bb14ed2212df458ecefc03fe03037b1505a4c9444322f5f98dfa91a4cb8c4586
-  0a2dadc7515350bb6d431e49a6bc8f5ba956e682b0e513321a97d1962602891c
-  9078f62a8a9646a31387a6f09684264837899e0d8ec7d11c565901298b20b345
-  081690eb4c562c1aa3a25bef06566cb34c79bc0b25e4095d6ba793e81311e41a
-  3329152686f00d4897f84fc4edf4b26d545365785ead8d63aef64a87c0b91a2e
-  5500383956cdf5f6e37cf9d5482d1c8e3a5be38f17259ac45c9fa1c4bd3bf177
-  d312ee52a6da023c05722a8738274dda8d1b04e99831cf57c87282a256c565c2
-  96d0524a063a3a41a48a83009978d98d8abf61af68e8013b594fe151d9bec199
-  902c4c70b49584201743c6b53103d2fd24bdf078dc90b5a188b4f8d772179988
-  d0416c94d4c57c0860b9d7b53d4cd261f332a1851565d52ac37f008747cafe32
-  0f363d9beb6e4117db43fd8aeebe5e0ce2f54e3f0367eb3cc971bbe0c301a8e5
-  2f96094936035c6ee3ca2d13db483a0dd04dc16247de0e0894ad7cb7e1ae7ebd
-  4f8f900582b20021e77f70254501c6ac3dd15d43bbb7931c5283244312158c2e
-  b1b3e1117e194f0a1e4c783efbc62c9f81c21562d0d34a5f042b5eaaf32f31f9
-  5c5b055f4e7a2070fb096f56c415549cde74f3864e8b9fc27e3299724b463998
-  6044b55928fd6972785b280c25a3e21aab814ecbfb0c3cbec0914907ec907f25
-  a1d88bce3d319ae8222a35945db62af7cc75cd29c1f5d98fcb93f750dc303107
-  6979bb51dfc37d23e8eea78073a24d3e26c68e7bb10e459f2577b90080359ae0
-  aec10318dcd9e0f9e34029c31b3e54b1855645db420618783346dad5b55eddb4
-  f977b326a655525ebe2195eca9cec38a3c0d2273b77d3e68f1901c2ca5149734
-  a51177bcb089476b18cba09fa8b9b46d94a2946f358e1decb1998652c58a9085
-  2423e2c85e79d19724461627e6390d1a81fb1a72f9c7edc4bd747dd5c85217b5
-  856141028414ddbe71458f0a0b2b589df2e1b051783b8f718676b1defbae98ba
-  496c2a935e92eeadea0a8393ef59f9e914f0743fe65640ddf9981cea6dbdd957
-  a534ad4e790efc974ee89938ad99d53c5b680775399326834729bb37b082e795
-  f8d87f52e6c8a8db68e515c277bbea82a7570d4280896c987a0608903e306c63
-  2a223c55f0ea3682039c4a3f5440f4b5ac3e6ed2b2dc900cecc72b72f50e49b2
-  629ad30f0487b2707b86286f8c4f55659b25f9bdd7a6af460cc3c57a3982663b
-  b717461581e196894929d84153d87a7f482d284b5b894ce1a78216b2a011f2b8
-  8742cee52d5133e8fe77edae242f5af91637c37ffca32430509b2fe4756303a9
-  a3659fe32528af1e10d8d43bea991b2d109786cc66d35b1d78df254b92cdaa40
-  f91a987e4a922ca81050e5bc3530ca85493bdf2a825374d0a8310a6860284ec3
-  ec732326eeeffc42bbd42bc91b73e5e7c6b599d016490637629f3876c3e42f8d
-  b590e66a85a7838c818f78fffb4853cbef09434989803545dca87657cf7c7e7e
-  6afa71382bc10fa0bb6480f243eea1b861101006fa0cff3275621943cc58eb4d
-  c3a0428a5e425670fe82268de71c511d8ffbdc11b0d0f961120e971015ad5f44
-  8886b802e3fac11672319d487c84f1001339cb969784cb57344f2807f8b425f1
-  d73caf8496d742ed237f4c9fcd5a4e84fba7e27fb1a8ae12c4f0427ae24e910d
-  951bd8c35d61f8a678db01caea8ef789a95b62ee1b8c5d32c6baa536ba88a107
-  0ea61aabbf59294e3f6f974c4c91cafc5bbf6b7ecfd57a18fb7557d71e06e900
-  d281b0b49aa00feabb35714af33870edd7ac2393d93177f79ee5606c9df176f0
-  25ce49a6e5ff51a2a412ebf86ac0f40471c96ad4c119df230be6173df530ed65
-  6cbd8069214741ecdd0271c603fb6c4a8614ff878d33e726cac6693e938ca3fb
-  a82c4995c14a2d4af9014fe4c4c50b794cac596b52189f66a7106fb325b526ea
-  3b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da29',
-  / private key /            -2:
-h'0000000000000000000000000000000000000000000000000000000000000000
-  0000000000000000000000000000000000000000000000000000000000000000'
-}
-
-/ Sig_structure (M) /
-[
-  "Signature1",
-  &lt;&lt; {
-    / alg ML-DSA-65-Ed25519 /  1: -59,
-    / kid /                    4: h'93fe1616a4131f5a'
-  } &gt;&gt;,
-  / external_aad / h'',
-  / payload /
-  h'68656c6c6f20706f7374207175616e74756d207369676e617475726573'
-]
-
-/ Message representative M' = Prefix || Label || 0x00 || PH(M) /
-h'436f6d706f73697465416c676f726974686d5369676e61747572657332303235
-434f4d505349472d4d4c44534136352d456432353531392d53484135313200d2
-7cfe7e2fc5fe46ed5af81f6b9a7428b4dafeb4fe7107433bc42efe2b42b93d68
-e52b606e38e1319fd243ef0a20f0f566b49e8de1d68d85da93c7dd7b020432'
-
-/ COSE_Sign1 /
-18([
-  &lt;&lt; {
-    / alg ML-DSA-65-Ed25519 /  1: -59,
-    / kid /                    4: h'93fe1616a4131f5a'
-  } &gt;&gt;,
-  / unprotected / {},
-  / payload /
-  h'68656c6c6f20706f7374207175616e74756d207369676e617475726573',
-  / signature /
-  h'4137288f58044a10f47911e155f1fa50df9ba2525d4ca424c8a57ba69380affb
-  3be527163b849e7667e5529f2cb0bd0ff483e16e8ccf9b5ded22afcd88d7b7d5
-  6237eb5ff0f96bcfebab1e6f0602dfefc270451dee3e870dc32fe669c720d085
-  bcc39adef67f3a99c7a884e361920a2754c0e47442473e662e784b1a5f509f7e
-  51c41b38fd49231f068d3b871c256d64291dd02789723b2160b3b1bb821baa63
-  a6d11038f0e8c1b65aac8e74cb02c331ed4a8ba9d695fad39b7f93fd7069f5fa
-  95d755ff75f849f36fcb06c6c24192412aae6769782fe20a34473acdbb111acb
-  7930031eeb7cd8dae1f823fa549b56592751559131986b18d2d32d73a507b1df
-  20f7c24fa9399e8bfa1b21187d608cc289fd1108b9ce427b9c2884b17fc42845
-  b7d94aa48865747a5f6cd9c36cbad13cc2e9aa8bb12f933df6a0dac625937363
-  bca110b6848fc77af8fcd5f00ea3d09ce52da5d5f6899b0963a24ce6ae2ec90e
-  8230f52dcf863d11dd8b70f6220dac80213fd3048d04b5bc2382b2dbf0b18788
-  f049705996b3b8fd54b2c5a2fd945609fb6735dab8627d118718a6cca9f2225a
-  ca3e2251ae4e7fb27048cfd8733c98e273148a5b284a56dea2c25a47715df32d
-  3a46d3a58360e5bde530f3b2f72d86ee22c7a8da4ecfe0c06f9805ba7d79b148
-  a01d7c8fd510c2ae42930ffdd541718b4ff19cce50d97b2c0f7c8288504dae41
-  4440f1e727cb2a1c1eae7c7b9cf371f7eb168ae774baeb529bf814019817830c
-  ab92e140b5431a8020a0a8a16e540ffce1900dc8b6aeb3c4e2ec734f41ea57f4
-  8d7a8838f062f6f7543f9f5d0d831d3877892f69ed40f56f990bfad1f5d9dd4a
-  d0a587a6c79cf6cfa5d74e60deceec90e25c69c86391cde3901c8e6bacc59f83
-  d26fa94a5c84ddf153759631fbadb5192c8575be3bfadf28ca6d8038fc86b524
-  397d308fd9c05c35f34f190d4b5942f905abd6fa3e2c98cb6d35ff592eb2867b
-  2eda8b502458fdb60e06aacad135135719835d7fcebe2319479b33cf310c7e2f
-  179fd87ea8aa89bd35549c1202482b977e26d413aaadc06c2a39948328ac6486
-  97533fac497264408fead75e4bc6639e6da069090d6e2ddae03961dfa6f8751a
-  dea13941e149b4c933d204bea7b0a7037c05388a4437da03b283dd603e22d606
-  3a0736f949eca9f264dadb6b7fd3c2636325ec46720008cbcb84a1205476aa6f
-  34aa3dbe197dba9dc34b50aaedf80445dcd78262dfac533b5fefe1c4e9adc9eb
-  e4e345d3e0386dee5fe1fa93bf74acfe9db2e6cf74c21bf2526a39dced406ad1
-  5594cf422b8209b002a85da83f7191a1eda15b9adb6c404b7dd8618367ada44b
-  71dd6373c24781d4d745a0ebde538bb8ecedb1e2b2b973904ad289e8cbc9b9d8
-  53e510e127662f77c2b447d48c06125d819e372959a3f4655d626b4c919fbe45
-  1a4ce5de52976cf896002d262ccc21d39842416dec72d85d72617a097af6c432
-  55454a454161920ddff53149c30393a6f70ddb1068bab35976160934aec18d3f
-  9fd0d1dfcbe10600fda161a46abbb0194e1819ba8e762610258e4764e805e103
-  b092e868da02fa127da47dca0d49b327915e7b2b0693554ec9b613145e9b08bd
-  f0c7e594214200467f16b0f797df98a5c72d833dfee6e47c0b7bd8f523b62d4a
-  a4f366523b97feb6c690ccb0cdf3ee8886254bac466a47c2a1bb0f579491ff84
-  714fa2fd84cf326f4ce7dfb148577943921378bf4d36bb37eb60e790c236e156
-  d47ce70031bdb75b009edc185a89a2a5e8d670e08077d8e08fb4e831fa573436
-  2a621d165612bd13ac78c4b591344cf022063bfe54b44abb0f18303214871fbc
-  6a2c77312bb386fbd6849314992fcaf3877ff35b040788ae3b7c53f6cd564e6d
-  6639919d161dc7de2636f439347f4b467c2a020d67c521914f3999a4429456f1
-  d60807703c432995edb9833aacca97e0a1fdf236bd1ca61699851d9a4641f834
-  5162afe158d74725607c8f47295a4a18bba7064f648e417388dd6e4d0adc2e97
-  ffbb96e9a300066738ab90eb7a6871a9dc3c8df320f8a8cf559a491345ac0289
-  3c7f6bdbb2d89b16548703771140e36e6615213ddcda49197823b83bec6384d5
-  85e959066d994ffd72d3a5481906c18e36d284a3f75e07127d1bcfbf728565a3
-  def04ce3f9fad8b687c89fc98a71746059d812a45b9ef9c15ff664ab18349ea0
-  d30e2dade45057066587d570978263a8d5db3aed59b1a913544ae2a92cfb54b7
-  eba921b9541978e7811a4b8478e1694ffb665d2cd768ee2fcfe2c681c8a83e73
-  b66b012769cbd62acc291dd1e5b9fd285ae67eef765230543a068cdbdbfd7fcb
-  d0a2e7e04f7757e0f17fb42237f942f5ff3103dbc69b668f98c3c8d407433e4f
-  aa17a947fd27f32fe624aaf02f423be85ba0f65f498bcb931f6d747705faa765
-  09a61d72c15ddc5f7ade5c8749df10b7219619c42e7271d588b1adc5bd33ef11
-  7a76e8f356343e0275bf3afded4f521dc5a164e6eebe4885707de1448ad8b019
-  9fbc702d1bf638453377d942ff2c468f7ef99009fbc6cd64deba2c2108539486
-  b6e95a22a05a1de2feedfef52367f186ba11d8dda024e05a446eaf708a64edbe
-  a854bbb75a5169a36034bfa1667ba160b4a8346b4f001c0afe95a19886860d89
-  afe05e0e4114241894fa411991555b6be4cb6dff51ec5d81ce230247158397a5
-  8ca14f502eb7126a941b51062e4c81eae60c181ebb9de42999003535d2fdf570
-  ce7f32b80c121552be38f468a2ac2f4ae44a90cdd7a983ae4a4453ed0c70a5ad
-  da0c583805da62fac306cb5e1fe1e8a6a928abd836def927fced5c4e2baebc88
-  c7e2c5acbb2cb1467b1c933f8a39ee1d5e44ce5ddeddd789287b7b882c7c0793
-  ded528186c9d10ca09c31bfa8dc4ba605a40a1ef3548e8d34397a3550632e683
-  28dc10560ad576fdb8207e0067909140cd6f3c615c7e6af3e3d7f44b2dc0cd49
-  4decc5ef992a2b4f3c1623aa22947369bb5f515437d20039c588249d49c08da9
-  27fd1430661d6f7f7f6570bf72623eefb44b84d128e7bf0fed3f2ec5d211529e
-  6e6daa066549185062071295e05e49aa71ea3af49da7303b1b7a1f5e131411f7
-  cd07d3574bed1fd41e5c850f7635e952b5535f1ff45a33a33eead1ce01c4b469
-  2504e539f4f5fd7929c3c8554c6dbd4286d58408f6c2ec084c130d18b1a11f2b
-  43376b27d0ecbee98d6eb5ef06f71501ff42579ce5dad799860859c794372d12
-  ea465389d511e5bd2b412214b4722eb34148dfe825a1c920b29ee2d35d30bb49
-  8f17e44bf2be1be90415a34f6cbe627aa741ad345c3cc727cd088061b321d4d9
-  6bc49d8a8e25b77dd90134c5ed85e115307b9b46bcf7c0208f25a442d5175350
-  139e2978290b6eac75c3e62e98f4be6bfe1ec0b056d20b2a98397ce242dd1940
-  3942c30508ce9c0f86b3e655eb57b448f60087bf834c7f9dfae832913d927c40
-  b5ce3b92d84fd7ca8e85000ee3e3ac0a6f924b59007c59797fa10faeaa0c5fcc
-  3ad94ec4617be4e57866636af7de240a9dc83da8956e271f00445d937b43a1eb
-  5b73601536864308aa1d21aa28f258811781c7c2259cd78404de978652ca076f
-  d1ade0f712535442c5cf8bcfe24e2a47dcffbabc9e60dd7af1caf576c9ae1f68
-  e9f66a8539cfc82e9b01e3d04285ae3b50357575b219b83268effea10e31979d
-  c9d18cd7ad87508b21c902aa6da0b50d9f512840afaa2874de11179df94ebd69
-  d1acd63c6da4fc1a21b4ae0e81ff356e51b0d2ff0118e480205914fb4425042f
-  26a8bf677fd961e0884bf7fb432e6b0354d4e2d39bdb178ff38cb9636e5183d6
-  02dceb17e6b1ac7e02452f337af66bdb60efe9edef5a8800dac1a3dea9f7ab91
-  caf52205da92bb2b37bcdfafd5beb75783e7182c21d9a95bfce176e4e23d92d2
-  d8d6ef342b64c432abea2a32a42ab7ecb89e856d3db3f3129debd0d512bedd11
-  7aa08f0c9230b353e9ceb4a70dd8d27fbe9b9f23c96b049952bb8230402ff660
-  fde27ed112f90a38c98190403b42f9b66d003f6efe12b4c3193e736a7261c501
-  c1c1b8e0a60bf90b63033cb0e7b93705857e9ec3af127c4ce141d1f5a0f20655
-  15d85b21dce502cfa385db9ba08851763f129f0716a3faa77c1137333e920edb
-  e08841541eb4a12234dbf20efe374731cb6e736ad3d2de8227988eeb95c96367
-  a06d06ddbcc37969c9bfde4d7082fd4f07e68a06fc1c8bcca1b3769a4460e68e
-  092b24ea1afe5a8bfec06eaa8bb6f02b86424b04995c21191e60de99f5033c05
-  90e9cadf4727a11a581979160b55f2405a7c903181de943b828ed47eda4e6829
-  a9b34b986134a0c2daf1d055ff7dd1853525879b2c3f10b7846b659494c2ebc9
-  2284e2d6a5ccaeaee75a5795b8ab01d67b72464f8e530292defe5d520d2669c2
-  8f3e9eabe6a4a85b04c480ca4f00238bd4ec1259bd3b1a65ceb4c7cdc0c043fd
-  fcef81934f9ff815ee364f8c4fe2394355316475f505ae0437dec4c32797b482
-  d5d639f5f13f4fee31fb9fee27bc37301455db12dcd819e6f5fac02ab0a4e89c
-  e567b73c68b72a4f660c5a52a6b8864e09202e535f7a7e9fb1b4b9c4d6e72f3c
-  b9c7273d87c4c5cbcddef92e386c87989a000000000000000000000000000000
-  00000000000000040e121b1e2156d5f0b67c59091e99501f48e0a427b19342d6
-  b065f4f589277eeb5a68e45a0e6ec3bdf3a1df6bac396a638a1a6c0c61f40ef7
-  9da701a73ae284d8f48f69e600'
-])
-</pre>
-</div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
-<a href="#name-ml-dsa-65-ed25519-4" class="selfRef">ML-DSA-65-Ed25519</a>
-          </figcaption></figure>
-</div>
 <span id="name-ml-dsa-87-es384-4"></span><div id="cose_example_ML_DSA_87_ES384">
-<figure id="figure-13">
-          <div class="alignLeft art-text artwork" id="appendix-A.2-6.1">
+<figure id="figure-10">
+          <div class="alignLeft art-text artwork" id="appendix-A.2-5.1">
 <pre>
 / ML-DSA seed (32 bytes) /
 h'0000000000000000000000000000000000000000000000000000000000000000'
@@ -6259,298 +5076,8 @@ h'436f6d706f73697465416c676f726974686d5369676e61747572657332303235
 ])
 </pre>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-ml-dsa-87-es384-4" class="selfRef">ML-DSA-87-ES384</a>
-          </figcaption></figure>
-</div>
-<span id="name-ml-dsa-87-ed448-4"></span><div id="cose_example_ML_DSA_87_Ed448">
-<figure id="figure-14">
-          <div class="alignLeft art-text artwork" id="appendix-A.2-7.1">
-<pre>
-/ ML-DSA seed (32 bytes) /
-h'0000000000000000000000000000000000000000000000000000000000000000'
-
-/ Ed448 seed (57 bytes) /
-h'0000000000000000000000000000000000000000000000000000000000000000
-00000000000000000000000000000000000000000000000000'
-
-/ AKP COSE_Key /
-{
-  / kty AKP /                1: 7,
-  / alg ML-DSA-87-Ed448 /    3: -60,
-  / kid /                    2: h'a03b6fee7d98ff7a',
-  / public key /             -1:
-h'e45ffc8cc73db885dc662e62a18cd8e3803297117fa5658814a985b5ff1db7b4
-  68cfc82bb929f1d86b77ed14f5ae16a65368772ce51912410105e0456975ae91
-  fdb643b512f124d5e60bd68b8c7e31fe01c7b0dc65ae470501cc565a6e1dfcfc
-  fd12565433c4afedd511821e2e9610c45275e2836dee35ced69d7efa672fd1e4
-  318bef5eb6e897e8b451aa202ded042b2aaef77a7be3f699146da229a8bdb3ff
-  a496445967e75217bfbc9048f9956443d8731f833eb30de10dac96fffe7cf65e
-  a0445c3e31e8601e133be6a100764fe3196e267726441f31751fbf9a6f588064
-  4f4e7275e57de2b0f105e4db055d50dd1c9c934fddf535b8de28b0c74c0449f2
-  22cd2ed0bb8fbc775ccee8c940665b40f712f4f7e00750e9e1e4cd9cff25d194
-  5c3e9bca53ccd4f12eee7581856ebd68f26845956e3e7beb761f0fe75bdd31bf
-  e2fa018113397b387bd59d62a68b8af7fa245ab932e69f778e2ceefd21304fbb
-  8099ea13d8ea57c1813197a2f75ae251075b51dad38f853669e9d5f98a365509
-  8941993a1594860fba71fe530ee5c29f58f2978af688ccb75a5838a359c112e9
-  8e25a8583ac8dac1f861fd58e2afba5de5a52e020904f5b42bc0874e35befcf3
-  e6119684768f36e008f04712177cebe627607381e56eaaee161c1729b8de51db
-  de474d48cc68249ea27162b87993e60c84ed6cc6423cb3676d9eb50b2cab5a3a
-  049ef131381d623fa6fbcbc9db1e7cc025ea0418b9dad2cc6ccd4e95fa2cec24
-  feeca70318a751716b7213f63edbf65a63338357f838f94ec071822c24851248
-  885107b3d1c4e924678c7614ea1af038104619f2ae372940becfa69e29cbb5ff
-  6c3e20a47be4a4f74bac34c133c00a6a706accc6ffd3d8e4fbd69a99704e1283
-  c850d8c58d1e5753cd9587b83c4c346cb9a58137213ec10834c66adfe2bb5c50
-  1a8ef2ecadd1b677a3df1a6deb86ebf0722c4f5030e20f9018dd5b6fc53eea24
-  fd92b7b5b4025feae996d3e48fd4c650d82dbad7eaf936639698512f26253d2e
-  f6847c8518e8565cc9a5495c6fff57cde7323882c54a7db470ab2daf8ffd2bf7
-  94fa7c692d9e7fbd532eecc1d7880e2ca0b3216128be28b4a9f1d151fac97808
-  b0bd98b7b43a612a9ac865812bfeac6f47460277840b52a3b087f916ca7cedc0
-  f768ea2bd19ea21155f84b4a04c4000ad2ae0587154d560bc0a477a4f9329a89
-  84dd31eb1f2a05e3d918701d630cfca9af61ef088d2c5581acb463e439902e5d
-  425719e956b8d6df7305b28e0ff27d3ad0de2085d292499b19a3390d4396fb3b
-  ac9a8d8cbead2a7a4290fc9ac6fca045f98a614a45a39cbe24360f84d14f8e47
-  2712aceb74dbf45b53d49a0e4737e476ffc4d5b2f7cd247aa186d3b764ad9e9c
-  feee456a73c291d8de3912414ac43911c372173ad7b472af35c6853ced2fe7b5
-  fe0a89565ab33baa6f65cdd928319d7065e040e7a5e84f9aa903f7648094bad0
-  7136b16927b8ec6dbc2bef0cc2856de1e795923e1412c49f24deeb6c21f6c8a9
-  765c9c7986e0da4b4c67d8e0d0c8d466824fb923d8573148990cd2ef133c78ce
-  ecab72ed9dd285c5a3766852d54534207ffd34027f6c76ede8fd1a32d72c3004
-  8bbaa797d5df6fde27d087de5721ad7b7fa3e8d3f70d6bfc3ab2e252335368bb
-  fa15acb5cb37d4694e8b23cebe25de9c925a221a183b904d3f85df9929a919c5
-  4d6f87457373a0d6ecc1403e4cbbe620999435e80696634cd1a8e4747e9825bf
-  a336e5bbad14f73640f1b9febe800dbaefe1630c61fae635b074c564eaa9db18
-  9c9e7302873fc64e6d497bc5c29080987a07a21d4af210703a4fa07f2fd816f1
-  2fd1e29b4c0f44afe9bd4a1eaa8a7ae6f02a5b4258f52caf6127f62632a67cf4
-  e8310be56a7c28c86b2e277600c3e92c8d23d42586244c571e90568df202f2f6
-  d81f860a565f9eb91a3c78372e2a8b1be61c5418cf49bf2d6c8955d4a482a991
-  9b7660b3f9a4404ffc454ea073e1e4b2689ab2cca4e46bd7004a6c491fa26ee7
-  a57d60f35edb2b821e6266442c8f335d452d524c772e0353724c23c7dd15b7aa
-  155e91442022140c5fcb0153147edcf3e8952f6f0399a3c88066a72756c94099
-  15de63f64fa797841c57c796c6fc550ef745dfe9f179457f94755ae5a2506a76
-  4f327e550be3dc14dd41f3b04b147d454938c63a8d69b2ea4c5710ec0b36e3a6
-  c72571fa5d59dde036c42033df35af056966ff0cd1204008971aa6ba9fb97b68
-  5ab9ffa2a9d1778104cd2c3b326de1fcbc242e94d0311c3275b12850ed30ceea
-  d3a2ee6d060508411d4396f5421d8b6d067cf7cb5e826785fbe119e05e21bd87
-  9b64f57cb0cd1972c2815f20abe7ce6ab34d0f471af44baad179e90644122f5f
-  33288e689ddddc5ce833e9755df1e73c65c5a201c4ede2ffa6b19274927719d2
-  d38fdb7a65aa43708b7fa9a94aa7d3210253d78d3b181e1020d0000bd0a1dc05
-  d447f9f58ebeb84c65b36c8afcb83727a1508994e826957a663b0b9b8a003325
-  ab6d6d6462ee4e106019c0dffe10323b7bde7d82a38f85fd08786e860ba66c16
-  1b64b0708c363de5c6af62d8db3c243d1e1b712cb1d59e942b9b6b4295a5a500
-  b182cbd5fd1bc6ce9376d91b47a2284f1fbe0ad1c048cc2cfbb4afa3a9eb9697
-  503b69feca990eba7e9441af9ca44cb3ac6b5ed66e591c201fe30efa8a7c471d
-  c613d6254c263a8e132104bec47f1aacb3b2fcd4051b69b5e3fcb1c147a65c2f
-  90c4b5188bafc521cab03c12a309da50b5a7517727ed41228ed123fe1b152f6a
-  6319cd623bf34ad7b8e064ab993260bcbd405f5b7fff9b2fa40ba5ed56302425
-  39e5d96823e89dc818a13d16675ee3079d976f694f5acc9760ae789e9b3391b2
-  89e0e22a7ef17cc6a4577157b6d95c09baa4fd532e3ee0a290810ed35e56bb19
-  d9b61fb98a97c617425b06093d98a5cf0ee2dd127f0eea600b9a0c67fbe761db
-  9b77e5d5bba9701da1b883e521a0cfe88451f57bd36085b67e56f061f84a2e6a
-  152a71bce6e522daab6a0a33ce22e537fa9793d28b617e6c0a4176a83aa3be57
-  8afac0f2f5547c5516d218984755b7445c7143afa4e551fce0071bdb873b34e6
-  b9e2b9e79ed0c69d288ed6421f237e860a0c6492ebbdd2a44c2c4f368dbe9994
-  1b1e8561d859d3859f496cee3d741f252973f8fcc539c409e35cc80a5ed6df23
-  cc3a65601313f5d681fd9540c5291a9e30a72e38c96413c47c61ff84fde78d01
-  1b01b4154d1b920af003f7abb1e1999dea6a766cf9fd2702b3ce0ee57af931b6
-  2124b0861b163a3b91aa4bea28076c3432df3b29b6c4e1ba588def420071fc15
-  7de90eb2722ecc9ab00df3c669383a61a91bb67bd287ce349b4745ee7a479dbc
-  eef166b9acc412eb579fcd6437307edda253d606b7be7599c38092bc52a85984
-  80edab8b82b1d21c565d2137ceae0b6642619b16133d91205d6355029e9cdfeb
-  9a28b373d95916b6b707d4c712c09cf36daf1a511b2bedb1aa70ee58d46a0666
-  bb287784b0a3840c589a7a04d5d6f2216be90aa4a512d5632f5c9bfe7b8b1338
-  2f999b95d367c7c46b968074ce315197a5ff3545c7b77a804ade56a95b5c24cd
-  ece5937b5c0366d93ad03da9bc5db1b551dfb91e9b343d2b57b763439686d4a3
-  5b3afe03878a49b28232d4f1a442aebde109f807acef7dfd9a7f65b962fe52d6
-  547312cacecff04337508f9d2529a8f1669169b21c32c48000',
-  / private key /            -2:
-h'0000000000000000000000000000000000000000000000000000000000000000
-  0000000000000000000000000000000000000000000000000000000000000000
-  00000000000000000000000000000000000000000000000000'
-}
-
-/ Sig_structure (M) /
-[
-  "Signature1",
-  &lt;&lt; {
-    / alg ML-DSA-87-Ed448 /    1: -60,
-    / kid /                    4: h'a03b6fee7d98ff7a'
-  } &gt;&gt;,
-  / external_aad / h'',
-  / payload /
-  h'68656c6c6f20706f7374207175616e74756d207369676e617475726573'
-]
-
-/ Message representative M' = Prefix || Label || 0x00 || PH(M) /
-h'436f6d706f73697465416c676f726974686d5369676e61747572657332303235
-434f4d505349472d4d4c44534138372d45643434382d5348414b453235360006
-021f2af2ec0baf9f24cf03bb25c52395adea4ecd783ca310e3a37da65b90af56
-e5802c404e38856d70e44b24efc9742e28169cf4c39ccc4597bf2582ab9f2d'
-
-/ COSE_Sign1 /
-18([
-  &lt;&lt; {
-    / alg ML-DSA-87-Ed448 /    1: -60,
-    / kid /                    4: h'a03b6fee7d98ff7a'
-  } &gt;&gt;,
-  / unprotected / {},
-  / payload /
-  h'68656c6c6f20706f7374207175616e74756d207369676e617475726573',
-  / signature /
-  h'99df04038794328c1b7b3e8c5d773ca5ab2fe723ee77777ae30db0a71b39bb16
-  ee7c928c1f1c7bffe6a30a5802f69c60f38fdc895d69fe60e755c1632b0fafea
-  2476b386ab96bc6df4bfe6d44391814afe69ee11ecb3f297b052ce380faf01da
-  920c41651314f89e197ce9a020a9a13af4a6e7720806e435bfb12720f8f425e8
-  a220827d9c30cf7a08600ae3d5c310ec600d5aea409c853f2fb29943d0ad0ca2
-  5f5d977941371dc5c0f17dd480286613dfd8b800774d79edde180736dfb99c6f
-  d6b06b714b4324799fa7274c0688790614c95888ac31acbf685f766f0f62604f
-  3d4debd9589ec5836d12b44b8fda910308cc2c11f1d3b015565f22b16bb713fb
-  df4e2994cf7874599d1f41606a812e960f7ad0412ab6411da23913f5284bc206
-  86ad00e8ce286427015744b79d68c66907fe7d896b701aaa11e52e880dfd1132
-  feb32e985bec961314175e963996ae9aea5fb499da378e2c3732fdb3db47324d
-  fd271ca841ac40cb52d8a2261caa6a1731c856b21b197e479a5337aebdb6bb97
-  96f3a2fe95bdc56ce3aa068b949ba70be28577ea8459f72bc542dc40569bda5e
-  1e1f128bb22a2d4a6e52ebe16dce3bf8c05ac988285fb86cc54a6954c3a1cfd4
-  b09ff51711a3434a44e6558b0c4175e8a4df607673f0303d2c5f04d5f0c1cf35
-  64900c80a658b9d034481f3227f46984eb04d0612930d6dbcff0156f5dd0b6ff
-  7811074c086e6c23ef437487ba3adfa2ef1712ce501613057a2d4b6ae9159c0e
-  a13bceabaa9c572028de5c205fa638a2dc400767e755541cc6efd7aea4dc9dff
-  f777a7911801c86e17376234766fbb1af0f6a7dd4f52c782d3e619b8fd6c3505
-  e25f756a6595f102a4745066dcd09bff8498dd221058d625d759a2b459423bc2
-  94d9fb6fc8a1a2691d74fd44b17159edf36516a8e2fce30547b594e489e345a5
-  be12d048c3fc53400425f95771faaf15a8784fbcec4ebcf9b219f277214a0b03
-  6a0ee9c107c7ebc3974c71ce110a74d612a08c1ebbd5a8417dc6ca42c94c8470
-  c905714f208a82dd652be86e919c855b6c4ae4d37722c433a5a78d1a9f662e06
-  9fed2f872c703d5409af9defe789ed8c5b653e3a792ed22a71af663542408237
-  1a8c72f3fb75e40a28c500ed3b3adb8afb2542412793fe12028826fa173dd94e
-  f448d465ec0664ceb587bdeea50ed939cef8491fcaa56d3d6616fa88d3c13305
-  92d40ab5c10b78ed3f12d36a7a416f8eeb3d5a912a3bd39a547c1fdac44e0f23
-  bc16bc2beaa14114486bb9a570077a1f6eaefceab57c601436f7c04ea517081d
-  1e4f5e34d9ea0469263f18d2168e5ac42b3d75d10f58064cca55e74f0bad9bd8
-  5acf2f0b2070193e02a9d44df37743648ac881406d6f312004b75f893688eaa9
-  477eefb36d44e44ef8893c3235335febcc63517118224521af12b6154dab172a
-  225d00da3718aea860a1ff35ead084dfda718801c1df95345348eab0fd021736
-  c78536783e08d102c16806a88b7f892e42753958fd2b8dbe39b567824344e5cb
-  3b069e5f025494dccad1f8ac7742a78b5d8f9be206fdff7b0d490d17592e8988
-  2d2fec466a98d32dd3b7dec0213e42cf42e05282ff9ec5e85de961666dcec528
-  d0e4a6c7e27a250fef7cea02ccda4d7e3f0f99502bc11407850b7a7e39f4141a
-  be5aef52b51264f84b8ef6fccd3a0dcd86a5960fb93c11051cb581ab8b48b1e6
-  e06c4cdb2372a08fe493340e683eb553d222c8093bde97eab774bcc7015f68f5
-  e4ef883d38aab8d46ddd4c52ad0dc74d9f41105421a4d116f183e23c45177d94
-  7ca36849badfebf20fee75551481a89af9a1a2744b279869f3cbda42f8d4e3f0
-  7491b4e5ab17bda52b09763e5e3bd7e288ddab56375d72e9327b8ff15df5795e
-  c2bc5bffa13adddda12f23b962310217faf6ebe0826a023a9b94a7e19f335126
-  b960a3545ad3fd7cb95c905d186db6dc690c55691b6e16aa3a96cecbf1780a5a
-  c7a8ce2376593d96e3ed5beaf2a6aaed84996e784824802054a5473632e07bc1
-  118564ae1f0454abae846038d502a08e4f48171103d9b0922b65f01a220e23dd
-  4e32e1510f37589484bb8b990cf291bbd440fff06499a65ebcbdaad969d85778
-  308473a97660b68072ed16e95938d0dcd47d433d643b434d6b63034a401c0df5
-  e5f783e6b27dc4f00e8c6034dd87d909b6209014a0c2b36b24ecbb1692ade619
-  b138fb2ab4d3dec961958e1d08d4e81b89fce89799b8372e2ab804545a1c0600
-  36c614a9c259952056c595369e86fce2352290a78d2c1f6a407a2d43e96617f0
-  3e42097fb70eff8065e134c7c56e11830730684dd728eae2fe30a4397baad38a
-  c8dc3fe30f80f7eeee60fd7b97fff0c6c708cd9863b931fba8f2e8fc3c83057b
-  c8941ed0ad7c24882b0609bb4edd43b3246103fdc6d79d94fef2f0318bf0dcff
-  3ad430ced41567d4b0a99df5323f51b89689ecf78a93c3886d53138d59194e3e
-  d48658ed79181ab646c2fa5b0398a0965d48648cc0957c905fffcefa4dc3ed67
-  331d57f277b61cc489a142dc637e4cf2920585b49eb7fd903e2d771ad167a91f
-  2e6f53e2d97fb8ed23f6a00fd95c769c0d78aa2fd3cdb05faa43484550d155e9
-  788f71cefbcf844b8fc2c003decc19d9a59e7ee6cc3d532d75a5741688fd3e7f
-  9727f430ca221010e436276b7d88025ce13de290296ce34945a33c21d04f82cd
-  6929492d08b2ca2d430f44fda2f29710ef05f7063e826a85d64f7ef317f37833
-  5d13c8134902c303bd1e7b974e5e800a6d5a2f91e515c333b00456e10fdfc54f
-  f75833ae374a148baaf8802c4e8eb13bb9049395940066eb1fc88a601efe92d5
-  7846b05d3e9386097feeaf48b5bd05b3718b662ff4063d8031943cc2bf586e14
-  3120952ddd80dc74d0de5b355810f1a64e53d550b3e3d24fb1b9e2ee91274790
-  5adce85920a7b15db6a45a0df051cdbea8014662d444e27942655ba87674f056
-  49ebd3633423061edd1b82450af954f5e4f30ad92e60a7fe37461f171dbaa410
-  cd0074e27661ad5f7601d71c5455def8bd7d5c89d018359fd53f23ddb7cd9860
-  4b74e1438134ddc06d373296fa5308f773971f1f0db7a3aafb28851245695314
-  269c33ff875d7c4aa3368434514aaf6a7aec702ece5c67a312ad53d3941e060e
-  91d7b88d9820cfbc66fc1a969dfe4b4e80c97f08cef8e4e5e1e55bef8b709de1
-  d3a0d218431634f3d52e56175548bf17bcbbb436022de17148dc9b3d23752d93
-  ada12b1bbd10c589fb1a196983a3dfd80b4724b05d492210756b997720be5800
-  917b38b593c2ae0389835b01eb5f99a19dfabe18a3e6c68a6bfd6f847e21734e
-  869dee1445b7ec35e980c71d2b392f476f9be827bf8c78a0d4b89641e38b6db1
-  2a9ac08d5f74e16918f8d60424d783aa591f95c9021bc6b0193298f51a54c773
-  c20b3fef82f25b3127cdf54419c83070c40800a8ff90e529bf5c15214e37d43c
-  bb4bb4e21ef14ae6772da1e360abae83ff8758df42012f2c96978af55b6c65f7
-  4706fe465add60d3ad167b84fd31197c55f76edb13eed219ec094d1154466370
-  47dd3c4bd1c3dbe7b5e9a8c4e17d07eccdfbe969608a1511f56f40a1382e0250
-  a759a1ef77502d46504ece40e8d3422c8d389772494beabb1c41e363852727bd
-  94db6f1440b0be17389494836e849575005a1c62ebbc182a00d158548faff029
-  1b8a81fea89b49e6864d9d2f49b903babce125b37203ef37b4313148762e9aa6
-  63840b1912f4c7f675e1fd6b3dc3bb73f96dd8ac36048f156d6df376332fdbc9
-  9ca7164dafa090d19b4b2a87f11c98173218d4b52e0fdcb041b3e35acbd3bb6f
-  ecca0ef5fc1908d2d5cfeed37c30e9010feb4fa3dedccf0b8756d0d5942d9e77
-  b1990edfa7e5bae07b632ebad1ac25a5edc256e4abfef6089f3c5d0c99865bd5
-  5b494971ba08eb136aa82fbd2d82f1f51bf72be45c0497f84776ee60ebbb9ec2
-  b8f1c225749160c00e02fb51ad860b34f7885ddcf58b7a137eb598c96e9c2ca2
-  a1c2175cece06f1a7a2f2b23e1c9c721edd46db7c31d27527610603855611615
-  6f439e379441ac0974d6eea7073c3713c0cdd4af7b2afc71998aae8a798822f6
-  561d364f7b2c9653064941d7f9c8f785336a3ebe9af91c1b23b7c82c7dbce223
-  951c3d415e86ca95c6ead999f580d0d744fd4b7f876e650ba12cc37d98c6a494
-  3b46774d3a73d2a50b1be7d2b8071953e8e44547c3f1e7a770ff316848ae9dbf
-  b57db576722f6083262617165d3b0ab85aa6f0b8ee936482e14cc6878bc50e92
-  7db16eda81c95fb1afe563ef9ddf78554e6415c15254795b263c20425925314d
-  647f09f47c25cfd741fdf924d4f61fec4592321bc06d9355bb97ea58351109e2
-  c03b49d4a36facd2c98cbc13b1d6f9e94a02004fa70661eb6d24291f594f2e79
-  255804e141e1b1f7be56362c27f7e8ae03939aeca253074a219564874cfe4d63
-  697a200ec343b12742ee3fe003ac8886740198ae95535e99df164e1ba8a4744e
-  965bda5cf2e20c56d82ae4cf5d478189520d4bc3e4e049aedb43755fc1d49ad6
-  f7b78f625142508c20ad9a181df462fcbff3b9f82fd76255cfca19b74b99aef6
-  e94133be0f608e91f0b43c5f716eb9c7e4c2a590dd000dda2f3d3be287959d8d
-  af9c64e78eb7209995e2d2abcf66f6e8667fe47d0fcc9b77a5843a49d1a2318e
-  10a00757da2244f2a10e7c6cb13db4e1486858b5047e189d2777385ea91a2e0e
-  14895d7e59810e368fc1370d74ce8890fbcf01f9cb15e408ca93bb7e079e83bf
-  63d8edb8fde579f19f7dc1e5ce42ce7f15b8b60a7dc1fe2abe2ace68acc054d2
-  6d3165d0488992c8e47ab77db3033e2b312c19d449f9eb4bd7bbda819b94ee5c
-  067207fc117d6c4723ab667a3eb4b6de7e7f8d8f95de8d0f37e81c047f7b7398
-  44c7a55b508f319b904c80d6fb521661e7024513161b0bfc3885abe0cf6278d4
-  57261a3195db36ff23bd74758a757fdfdfe022d34ea3b7b7c347b7c878b2ba77
-  d6c5b6b497c064ad225a8fa50970b1b45148edbfd85bda76e6d49a2084c117cc
-  3d861df73773bef3bc274855b6caefea40b610e484665e8e0a4e6d6bf18f5267
-  e52326fb79b957d3aeae7cf8978f655b8f5d989cedaafea15d6c44b7157d8899
-  b114d8d889c601c8cdfab81a1025bc3307020e2fa9853df3a192b4c99e1bf85f
-  cfcb8a6e88fdf62994b1d3b32c673060e71a02924678564a6d84917f34b66429
-  45642dbafc26254f87eefe18e81be34ef113d3e14df5288207405fd0c9f73f51
-  7480e2961987d0d4b180676b2dbe6467f684ecad0eff1d3ea46f92240ba7b303
-  909cbe6602198377afbc7f77862c832a4c8238f6d267091cf72f17617c580096
-  48d9c7390d27e6c60526cadcd6ebc5640a0690c89f614f2d4727aea7a2d0982b
-  b33ff37eb3caf4ae41092dc061e24c1dbd702a77066d7f7a58eab1200eaa0b01
-  23c00a1f4bf8e1e8ad5950d84e6bf1beb363e28fee3dc144a975ba68c2c9c03f
-  552bce22a1083ccaa32105e4887cfaf7ce235cd3addda8e1f4f4418384a1f477
-  5f15ee16ea4c6aacb853dd312792f5973657e2503fa9f0fac07af1c575f0ba14
-  8987b426ad6ece34e8668022110178d122080f74401203bfcfe985f632b8b338
-  18959d87be4ebf2864ac63d0caa007ad6b71a8204041b6962e204da558e79a0c
-  0a3306ab60905fe0131c08a2047941b285b337bfd0b4e603433fda92d4e7c362
-  a4fe6433650128ad21a521f3960dd6454825916d6794e4c0512a5097815ce11f
-  d55e55f9b67a7930ce139fbed31a845323a48204333cd1ce25defa7fdaeade04
-  55caf7e2a289d5f8bd626714ab449ca522c7f590ef7b174d97d05e33e8bfa1fb
-  ab3a8daf7acee956314fdbc4f03a43ebcb2dc86940d93006e1181cf1c3d2bc66
-  52c7264a07b60310c402a11083ad1d47688dc02569a946002f5c07dce2309061
-  c7189753d932811dc2e6f5f43801ddda3ba4bd44f49e24e34f543ca9affcdab5
-  b39ed564df7b620b171fd71388775641a088aca69408d34dd931fef5c3b79394
-  3f6dc5b885c6205bc9d029b05e12a31538557ff129d44ac3907f6ab184d310e1
-  b0f8fa5e59d096dc4496732b97985a6f16e790a0498e062e0312b64791c06219
-  38109b2ef3d7dfb5c46d4337f440e8b5d3c87668c7faac009f8f6325c1765c8d
-  5ccfbf5f8d0264a13a78bec41b2bf9fa2fd2f6c1475248da60eced672879cedd
-  3869e3c3d13c2a1dedc12c679652ed41d7c25f493cfb77229d7528d91f37bcae
-  976f3bdb15d454f42a9c9a61dbf592f77d65f48183ef00d5d6f7232d1e67aa81
-  fa2f04ec87ce121d4d6867701d6fce611a9e163a6d636ab33365b21b71b1353f
-  54923bcc3c94e0b889a58d5693993ab9da6083c6d8bc56dcbb89460ab9c556da
-  15a41e7b7e88e0ec008083a4b8b945768e90acbce8728d8eb3f4233c55629abf
-  dd0e1b2530557475b1bcc0e1ec2478a2a5d8e2f6000000000000000000000000
-  000000000000000000000002080e151a212d341b8bad86b7475f8e4330ddd683
-  9eddeda3d877d7ac02f819ccc6988c46ceda9e792c9578527c324c5d68ec6691
-  708e013b6b401b814c9406000a77fa163affed788a1491c6d5d8d1e67c3df240
-  a049edd34a220acb63f78e029b239e35cbae299d1d166f73609f3da1aa580583
-  5596f81e00'
-])
-</pre>
-</div>
-<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
-<a href="#name-ml-dsa-87-ed448-4" class="selfRef">ML-DSA-87-Ed448</a>
           </figcaption></figure>
 </div>
 </section>
