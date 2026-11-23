@@ -15,10 +15,8 @@ import (
 	"strings"
 
 	"github.com/cloudflare/circl/sign"
-	"github.com/cloudflare/circl/sign/ed448"
 	"github.com/cloudflare/circl/sign/schemes"
 	"github.com/fxamacker/cbor/v2"
-	"golang.org/x/crypto/sha3"
 )
 
 const (
@@ -41,7 +39,7 @@ type KeyMaterial struct {
 	ECDSAPrivKey []byte // Private key d for ECDSA
 	ECDSAPubKeyX []byte // Public key X for ECDSA
 	ECDSAPubKeyY []byte // Public key Y for ECDSA
-	EdDSASeed    []byte // Seed for EdDSA (32 bytes for Ed25519, 57 bytes for Ed448)
+	EdDSASeed    []byte // Seed for Ed25519 (32 bytes)
 }
 
 var algorithms = map[string]AlgorithmConfig{
@@ -88,20 +86,6 @@ var algorithms = map[string]AlgorithmConfig{
 		TradAlg: "Ed25519",
 		PreHash: "SHA512",
 	},
-	"ML-DSA-65-Ed25519": {
-		Name:    "ML-DSA-65-Ed25519",
-		Label:   "COMPSIG-MLDSA65-Ed25519-SHA512",
-		COSEAlg: -59,
-		TradAlg: "Ed25519",
-		PreHash: "SHA512",
-	},
-	"ML-DSA-87-Ed448": {
-		Name:    "ML-DSA-87-Ed448",
-		Label:   "COMPSIG-MLDSA87-Ed448-SHAKE256",
-		COSEAlg: -60,
-		TradAlg: "Ed448",
-		PreHash: "SHAKE256",
-	},
 }
 
 // COSE Key labels
@@ -126,7 +110,6 @@ type TradKeyPair struct {
 	ECDSAPriv *ecdsa.PrivateKey
 
 	Ed25519Priv ed25519.PrivateKey
-	Ed448Priv   ed448.PrivateKey
 }
 
 // MLDSAKeyPair holds ML-DSA keys
@@ -209,16 +192,6 @@ func generateEd25519Key(keyMaterial *KeyMaterial) (ed25519.PrivateKey, error) {
 	return ed25519.NewKeyFromSeed(seed), nil
 }
 
-func generateEd448Key(keyMaterial *KeyMaterial) (ed448.PrivateKey, error) {
-	var seed []byte
-	if keyMaterial != nil && len(keyMaterial.EdDSASeed) == ed448.SeedSize {
-		seed = keyMaterial.EdDSASeed
-	} else {
-		seed = make([]byte, ed448.SeedSize)
-	}
-	return ed448.NewKeyFromSeed(seed), nil
-}
-
 func generateTraditionalKey(config AlgorithmConfig, keyMaterial *KeyMaterial) (*TradKeyPair, error) {
 	tradKeys := &TradKeyPair{}
 	var err error
@@ -228,8 +201,6 @@ func generateTraditionalKey(config AlgorithmConfig, keyMaterial *KeyMaterial) (*
 		tradKeys.ECDSAPriv, err = generateECDSAKey(config.CurveName, keyMaterial)
 	case "Ed25519":
 		tradKeys.Ed25519Priv, err = generateEd25519Key(keyMaterial)
-	case "Ed448":
-		tradKeys.Ed448Priv, err = generateEd448Key(keyMaterial)
 	default:
 		return nil, fmt.Errorf("unsupported traditional algorithm: %s", config.TradAlg)
 	}
@@ -375,8 +346,6 @@ func buildCompositePublicKey(mldsaPubKey []byte, tradKeys *TradKeyPair, tradAlg 
 		pubBytes = append(pubBytes, x962UncompressedPoint(&tradKeys.ECDSAPriv.PublicKey)...)
 	case "Ed25519":
 		pubBytes = append(pubBytes, tradKeys.Ed25519Priv.Public().(ed25519.PublicKey)...)
-	case "Ed448":
-		pubBytes = append(pubBytes, tradKeys.Ed448Priv.Public().(ed448.PublicKey)...)
 	}
 
 	return pubBytes
@@ -404,8 +373,6 @@ func buildCompositePrivateKey(mldsaSeed []byte, tradKeys *TradKeyPair, tradAlg s
 		privBytes = append(privBytes, ecPrivDER...)
 	case "Ed25519":
 		privBytes = append(privBytes, tradKeys.Ed25519Priv.Seed()...)
-	case "Ed448":
-		privBytes = append(privBytes, []byte(tradKeys.Ed448Priv)[:ed448.SeedSize]...)
 	}
 
 	return privBytes, nil
@@ -498,8 +465,6 @@ func signTraditional(tradKeys *TradKeyPair, message []byte, config AlgorithmConf
 		return signECDSA(tradKeys.ECDSAPriv, message, config.TradHash)
 	case "Ed25519":
 		return ed25519.Sign(tradKeys.Ed25519Priv, message), nil
-	case "Ed448":
-		return ed448.Sign(tradKeys.Ed448Priv, message, ""), nil
 	default:
 		return nil, fmt.Errorf("unsupported traditional algorithm: %s", config.TradAlg)
 	}
@@ -569,12 +534,6 @@ func computeHash(data []byte, hashName string) ([]byte, error) {
 	case "SHA512":
 		h := sha512.Sum512(data)
 		return h[:], nil
-	case "SHAKE256":
-		shake := sha3.NewShake256()
-		shake.Write(data)
-		output := make([]byte, 64)
-		shake.Read(output)
-		return output, nil
 	default:
 		return nil, fmt.Errorf("unsupported hash algorithm: %s", hashName)
 	}
@@ -692,7 +651,7 @@ func main() {
 	ecdsaPrivHex := flag.String("ecdsa-priv", "", "ECDSA private key d (hex, optional)")
 	ecdsaPubXHex := flag.String("ecdsa-pubx", "", "ECDSA public key X (hex, optional)")
 	ecdsaPubYHex := flag.String("ecdsa-puby", "", "ECDSA public key Y (hex, optional)")
-	eddsaSeedHex := flag.String("eddsa-seed", "", "EdDSA seed (32 bytes for Ed25519, 57 for Ed448, hex, optional)")
+	eddsaSeedHex := flag.String("eddsa-seed", "", "Ed25519 seed (32 bytes in hex, optional)")
 	payloadStr := flag.String("payload", "hello post quantum signatures", "Payload to sign")
 
 	flag.Parse()
@@ -734,13 +693,9 @@ func main() {
 		}
 	}
 
-	if config.TradAlg == "Ed25519" || config.TradAlg == "Ed448" {
-		expectedLen := ed25519.SeedSize
-		if config.TradAlg == "Ed448" {
-			expectedLen = ed448.SeedSize
-		}
+	if config.TradAlg == "Ed25519" {
 		if *eddsaSeedHex != "" {
-			keyMaterial.EdDSASeed, err = parseHexSeed(*eddsaSeedHex, expectedLen)
+			keyMaterial.EdDSASeed, err = parseHexSeed(*eddsaSeedHex, ed25519.SeedSize)
 			if err != nil {
 				log.Fatalf("Invalid EdDSA seed: %v", err)
 			}
@@ -773,8 +728,6 @@ func main() {
 		fmt.Printf("/ ECDSA private key d (%d bytes) /\n%s\n\n", keySize, wrapHex(dBytes, ""))
 	case "Ed25519":
 		fmt.Printf("/ Ed25519 seed (32 bytes) /\n%s\n\n", wrapHex(tradKeys.Ed25519Priv.Seed(), ""))
-	case "Ed448":
-		fmt.Printf("/ Ed448 seed (57 bytes) /\n%s\n\n", wrapHex([]byte(tradKeys.Ed448Priv)[:ed448.SeedSize], ""))
 	}
 
 	fmt.Printf("/ AKP COSE_Key /\n%s\n\n", renderCOSEKey(config, kid, pub, priv))

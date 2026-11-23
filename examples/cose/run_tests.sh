@@ -6,8 +6,6 @@ algorithms=(
     "ML-DSA-65-ES384"
     "ML-DSA-87-ES384"
     "ML-DSA-44-Ed25519"
-    "ML-DSA-65-Ed25519"
-    "ML-DSA-87-Ed448"
 )
 echo "Generation of COSE Test Vectors..."
 for alg in "${algorithms[@]}"
