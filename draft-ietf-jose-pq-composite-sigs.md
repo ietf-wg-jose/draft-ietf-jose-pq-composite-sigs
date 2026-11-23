@@ -60,7 +60,7 @@ normative:
   RFC5915:
   RFC9052:
   RFC9964:
-  I-D.draft-ietf-lamps-pq-composite-sigs: COMPOSITE-LAMPS
+  RFC10073: COMPOSITE-LAMPS
   IANA.JOSE:
     title: "JSON Object Signing and Encryption (JOSE)"
     date: ~
@@ -281,7 +281,7 @@ each for P-256, 48 bytes each for P-384).
 
 # Composite Signature Instantiations
 
-The ML-DSA signature scheme supports three possible parameter sets, each of which corresponding to a specific security strength. See {{FIPS.204}} for more considerations on that matter.
+The ML-DSA signature scheme supports three possible parameter sets, each corresponding to a specific security strength. See {{FIPS.204}} for more considerations on that matter.
 
 The combinations in {{tab-jose-algs}} and {{tab-cose-algs}} are a subset of those defined in {{-COMPOSITE-LAMPS}}. As explained there, each ML-DSA parameter set is paired with commonly deployed traditional algorithms, rather than with a traditional algorithm of exactly the same security level, as such an exact match is difficult to define, since there is no consensus on how to compare security against classical adversaries with security against quantum adversaries.
 
@@ -298,8 +298,6 @@ The following table defines a list of algorithms associated with specific PQ/T c
 | ML-DSA-65-ES384  | ML-DSA-65 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-87-ES384  | ML-DSA-87 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-44-Ed25519 | ML-DSA-44  | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
-| ML-DSA-65-Ed25519 | ML-DSA-65  | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
-| ML-DSA-87-Ed448   | ML-DSA-87  | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
 {: #tab-jose-algs title="JOSE Composite Signature Algorithms for ML-DSA"}
 
 Examples can be found in {{appdx-jose}}.
@@ -316,8 +314,6 @@ The following table defines a list of algorithms associated with specific PQ/T c
 | ML-DSA-65-ES384           | TBD (request assignment -56) | ML-DSA-65 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-65 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-87-ES384           | TBD (request assignment -57) | ML-DSA-87 | ecdsa-with-SHA384 with P-384 | SHA512 | Composite Signature with ML-DSA-87 and ECDSA using P-384 curve and SHA384 |
 | ML-DSA-44-Ed25519         | TBD (request assignment -58) | ML-DSA-44 | Ed25519 | SHA512 | Composite Signature with ML-DSA-44 and Ed25519 |
-| ML-DSA-65-Ed25519         | TBD (request assignment -59) | ML-DSA-65 | Ed25519 | SHA512 | Composite Signature with ML-DSA-65 and Ed25519 |
-| ML-DSA-87-Ed448           | TBD (request assignment -60) | ML-DSA-87 | Ed448   | SHAKE256 | Composite Signature with ML-DSA-87 and Ed448 |
 {: #tab-cose-algs title="COSE Composite Signature Algorithms for ML-DSA"}
 
 Examples can be found in {{appdx-cose}}.
@@ -335,8 +331,6 @@ They are represented here as ASCII strings, but implementers MUST convert them t
 | ML-DSA-65-ES384   | COMPSIG-MLDSA65-ECDSA-P384-SHA512 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 43 44 53 41 2D 50 33 38 34 2D 53 48 41 35 31 32 |
 | ML-DSA-87-ES384   | COMPSIG-MLDSA87-ECDSA-P384-SHA512 | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 38 37 2D 45 43 44 53 41 2D 50 33 38 34 2D 53 48 41 35 31 32 |
 | ML-DSA-44-Ed25519 | COMPSIG-MLDSA44-Ed25519-SHA512    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 34 34 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32 |
-| ML-DSA-65-Ed25519 | COMPSIG-MLDSA65-Ed25519-SHA512    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 36 35 2D 45 64 32 35 35 31 39 2D 53 48 41 35 31 32 |
-| ML-DSA-87-Ed448   | COMPSIG-MLDSA87-Ed448-SHAKE256    | 43 4F 4D 50 53 49 47 2D 4D 4C 44 53 41 38 37 2D 45 64 34 34 38 2D 53 48 41 4B 45 32 35 36 |
 {: #tab-sig-alg-label title="JOSE/COSE Composite Label Values"}
 
 # Security Considerations
@@ -356,7 +350,7 @@ An important objective of Composite ML-DSA is to provide protection against CRQC
 By requiring the successful verification of both the ML-DSA component and the traditional component, this construction ensures:
 
 * An adversary that compromises only one of the component algorithms cannot produce cryptographically protected JOSE/COSE objects as long as the other component remains secure. In particular, this prevents JOSE/COSE signature spoofing and impersonation attacks even if the traditional signature component is compromised.
-* The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function `PH` is collision-resistant. This is the case for all combinations present in this document: ML-DSA, ECDSA and EdDSA are designed to be EUF-CMA secure (the latter two against classical adversaries only), and the pre-hash functions used (SHA-256, SHA-512, and SHAKE256 with 64-byte output) are collision-resistant.
+* The scheme provides existential unforgeability under chosen-message attack (EUF-CMA) provided that at least one component algorithm is EUF-CMA secure and the pre-hash function `PH` is collision-resistant. This is the case for all combinations present in this document: ML-DSA, ECDSA and EdDSA are designed to be EUF-CMA secure (the latter two against classical adversaries only), and the pre-hash functions used (SHA-256 and SHA-512) are collision-resistant.
 
 ## Component Key Integrity and Reuse
 
@@ -373,7 +367,7 @@ The Composite ML-DSA signature combiner defined in {{-COMPOSITE-LAMPS}} prepends
 * By binding the two component signatures to the specific composite algorithm, the composite scheme achieves "weak non-separability" as defined in {{RFC9955}}.
 * The label, specific to each composite algorithm, helps protect against component signatures being removed from the composite and used in another context. However, it does not fully prevent it as the traditional component still verifies under the traditional algorithm as a signature over `M'`, which is why key reuse is forbidden.
 
-For more information about the security properties relative to the signature combiner, the user can read {{-COMPOSITE-LAMPS}}.
+For more information about the security properties relative to the signature combiner, see {{-COMPOSITE-LAMPS}}.
 
 ## Security Objectives and Limitations
 
@@ -381,7 +375,7 @@ In JOSE/COSE, the security objective of digital signatures is to ensure that onl
 
 Therefore, users should be aware of specific scenarios where Composite ML-DSA may not be appropriate:
 
-* The ECDSA combinations are not SUF-CMA secure against classical or quantum adversaries, since ECDSA signatures are malleable. The Ed25519 and Ed448 combinations are SUF-CMA secure against classical adversaries, but are not SUF-CMA secure against quantum adversaries, who can break the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement SHOULD NOT use Composite ML-DSA. An application can still use it, after carefully weighing the security implications, if it only needs strong unforgeability against classical adversaries and uses an Ed25519 or Ed448 combination, or if it needs strong unforgeability only to obtain a unique identifier for an object and identifies the object by a signed identifier such as `jti` {{RFC7519}} or `cti` {{RFC8392}} rather than by the signature value.
+* The ECDSA combinations are not SUF-CMA secure against classical or quantum adversaries, since ECDSA signatures are malleable. The Ed25519 combination is SUF-CMA secure against classical adversaries, but is not SUF-CMA secure against quantum adversaries, who can break the traditional component. Consequently, applications for which SUF-CMA security is a strict requirement SHOULD NOT use Composite ML-DSA. An application can still use it, after carefully weighing the security implications, if it only needs strong unforgeability against classical adversaries and uses the Ed25519 combination, or if it needs strong unforgeability only to obtain a unique identifier for an object and identifies the object by a signed identifier such as `jti` {{RFC7519}} or `cti` {{RFC8392}} rather than by the signature value.
 * Composite ML-DSA does not guarantee that a message has a single valid signature. Applications therefore cannot use the signature value, or a hash of the complete JWS or COSE object, as a unique identifier.
 * Replay protection is not handled by the signature itself but must be addressed through claims such as `exp`, `nbf`, and `jti` in JOSE ({{Section 4.1 of RFC7519}}) or the equivalent claims in COSE ({{Section 3 of RFC8392}}).
 
@@ -400,7 +394,7 @@ They are represented following the registration template provided in {{RFC7518}}
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
 * Specification Document(s): RFC XXXX
-* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
+* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-65-ES256
 
@@ -410,7 +404,7 @@ They are represented following the registration template provided in {{RFC7518}}
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
 * Specification Document(s): RFC XXXX
-* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
+* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-65-ES384
 
@@ -420,7 +414,7 @@ They are represented following the registration template provided in {{RFC7518}}
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
 * Specification Document(s): RFC XXXX
-* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
+* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-87-ES384
 
@@ -430,32 +424,12 @@ They are represented following the registration template provided in {{RFC7518}}
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
 * Specification Document(s): RFC XXXX
-* Algorithm Analysis Documents(s): {{-COMPOSITE-LAMPS}}
+* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
 
 ### ML-DSA-44-Ed25519
 
 * Algorithm Name: ML-DSA-44-Ed25519
 * Algorithm Description: Composite Signature with ML-DSA-44 and Ed25519 using SHA-512
-* Algorithm Usage Location(s): alg
-* JOSE Implementation Requirements: Optional
-* Change Controller: IETF
-* Specification Document(s): RFC XXXX
-* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
-
-### ML-DSA-65-Ed25519
-
-* Algorithm Name: ML-DSA-65-Ed25519
-* Algorithm Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512
-* Algorithm Usage Location(s): alg
-* JOSE Implementation Requirements: Optional
-* Change Controller: IETF
-* Specification Document(s): RFC XXXX
-* Algorithm Analysis Document(s): {{-COMPOSITE-LAMPS}}
-
-### ML-DSA-87-Ed448
-
-* Algorithm Name: ML-DSA-87-Ed448
-* Algorithm Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256
 * Algorithm Usage Location(s): alg
 * JOSE Implementation Requirements: Optional
 * Change Controller: IETF
@@ -517,26 +491,6 @@ They are represented following the registration template provided in {{RFC9053}}
 * Reference: RFC XXXX
 * Recommended: No
 
-### ML-DSA-65-Ed25519
-
-* Name: ML-DSA-65-Ed25519
-* Value: TBD (request assignment -59)
-* Description: Composite Signature with ML-DSA-65 and Ed25519 using SHA-512
-* Capabilities: `[kty]`
-* Change Controller: IETF
-* Reference: RFC XXXX
-* Recommended: No
-
-### ML-DSA-87-Ed448
-
-* Name: ML-DSA-87-Ed448
-* Value: TBD (request assignment -60)
-* Description: Composite Signature with ML-DSA-87 and Ed448 using SHAKE-256
-* Capabilities: `[kty]`
-* Change Controller: IETF
-* Reference: RFC XXXX
-* Recommended: No
-
 --- back
 
 # Examples {#appdx}
@@ -564,19 +518,9 @@ They are represented following the registration template provided in {{RFC9053}}
 {: #jose_example_ML_DSA_65_ES384 title="ML-DSA-65-ES384"}
 
 ~~~~~~~~~~
-{::include-fold ./examples/jose/examples/ML-DSA-65-Ed25519.jose.json}
-~~~~~~~~~~
-{: #jose_example_ML_DSA_65_Ed25519 title="ML-DSA-65-Ed25519"}
-
-~~~~~~~~~~
 {::include-fold ./examples/jose/examples/ML-DSA-87-ES384.jose.json}
 ~~~~~~~~~~
 {: #jose_example_ML_DSA_87_ES384 title="ML-DSA-87-ES384"}
-
-~~~~~~~~~~
-{::include-fold ./examples/jose/examples/ML-DSA-87-Ed448.jose.json}
-~~~~~~~~~~
-{: #jose_example_ML_DSA_87_Ed448 title="ML-DSA-87-Ed448"}
 
 ## COSE {#appdx-cose}
 
@@ -601,19 +545,9 @@ They are represented following the registration template provided in {{RFC9053}}
 {: #cose_example_ML_DSA_65_ES384 title="ML-DSA-65-ES384"}
 
 ~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-65-Ed25519.cose.diag}
-~~~~~~~~~~
-{: #cose_example_ML_DSA_65_Ed25519 title="ML-DSA-65-Ed25519"}
-
-~~~~~~~~~~
 {::include-fold ./examples/cose/examples/ML-DSA-87-ES384.cose.diag}
 ~~~~~~~~~~
 {: #cose_example_ML_DSA_87_ES384 title="ML-DSA-87-ES384"}
-
-~~~~~~~~~~
-{::include-fold ./examples/cose/examples/ML-DSA-87-Ed448.cose.diag}
-~~~~~~~~~~
-{: #cose_example_ML_DSA_87_Ed448 title="ML-DSA-87-Ed448"}
 
 # Acknowledgments
 
